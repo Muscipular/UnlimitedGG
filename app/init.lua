@@ -1,5 +1,6 @@
 local BASE = (...) .. '.'
-
+require("lib.love")
+require(BASE..'util')
 require(BASE..'class')
 require(BASE..'component')
-require(BASE..'app')
+return require(BASE..'app')
