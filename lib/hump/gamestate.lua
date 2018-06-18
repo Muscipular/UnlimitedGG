@@ -85,12 +85,12 @@ for k in pairs(love.handlers) do
 	all_callbacks[#all_callbacks+1] = k
 end
 
-function GS.registerEvents(callbacks)
+function GS.registerEvents(obj, callbacks)
 	local registry = {}
 	callbacks = callbacks or all_callbacks
 	for _, f in ipairs(callbacks) do
-		registry[f] = love[f] or __NULL__
-		love[f] = function(...)
+		registry[f] = obj[f] or __NULL__
+		obj[f] = function(...)
 			registry[f](...)
 			return GS[f](...)
 		end

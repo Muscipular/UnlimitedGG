@@ -8,15 +8,13 @@
 --
 ---@class Base
 ---@field protected super
-local Object = {}
-Object.__index = Object
+local Base = {}
+Base.__index = Base
 
-
-function Object:new()
+function Base:new()
 end
 
-
-function Object:extend()
+function Base:extend()
     local cls = {}
     for k, v in pairs(self) do
         if k:find("__") == 1 then
@@ -29,9 +27,8 @@ function Object:extend()
     return cls
 end
 
-
-function Object:implement(...)
-    for _, cls in pairs({...}) do
+function Base:implement(...)
+    for _, cls in pairs({ ... }) do
         for k, v in pairs(cls) do
             if self[k] == nil and type(v) == "function" then
                 self[k] = v
@@ -40,8 +37,7 @@ function Object:implement(...)
     end
 end
 
-
-function Object:is(T)
+function Base:is(T)
     local mt = getmetatable(self)
     while mt do
         if mt == T then
@@ -52,17 +48,19 @@ function Object:is(T)
     return false
 end
 
-
-function Object:__tostring()
+function Base:__tostring()
     return "Object"
 end
 
-
-function Object:__call(...)
-    local obj = setmetatable({}, self)
+local id = 1
+function Base:__call(...)
+    id = id + 1
+    local obj = setmetatable({
+        _id = id
+    }, self)
     obj:new(...)
     return obj
 end
 
-_G.Base = Object;
-return Object
+_G.Base = Base;
+return Base

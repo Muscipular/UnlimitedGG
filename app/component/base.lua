@@ -1,7 +1,7 @@
 ---@class Component : Base
 ---@protected children Component[]
 ---@protected super Component
-Component = Base:extend()
+local Component = Base:extend()
 
 function Component:new()
     ---@type Component[]
@@ -37,9 +37,9 @@ function Component:removeChild(comp)
     return false
 end
 
-function Component:draw()
+function Component:draw(x, y)
     for i, v in ipairs(self.children) do
-        v:draw()
+        v:draw(x, y)
     end
 end
 
@@ -53,3 +53,5 @@ end
 function Component:getChildren()
     return self.children;
 end
+
+return Component
