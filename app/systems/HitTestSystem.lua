@@ -23,12 +23,13 @@ local HitTestSystem = tiny.system(Base:extend())
 ---@field public children HitTestTree[]
 
 function HitTestSystem:new(layer)
-    self.filter = tiny.requireAll("pos", "size", 'zIndex', "hitTest", function(s, e)
+    self.filter = tiny.requireAll("pos", "size", 'zIndex', function(s, e)
         return e.layer == layer
     end)
     self.objects = {}
     self.roots = {}
     self.jmp = {}
+    self.dt = 0
 end
 
 ---@param e HitTestTree
@@ -38,8 +39,16 @@ local function check(e, x, y)
     return e.pos.x <= x and e.pos.x + e.size.w >= x and e.pos.y <= y and e.pos.y + e.size.h >= y
 end
 
+local frameDt = 1 / 60
+
 function HitTestSystem:update(dt)
     if not love.window.hasFocus() then
+        return
+    end
+    self.dt = self.dt + dt
+    if (self.dt >= frameDt) then
+        self.dt = 0
+    else
         return
     end
     local x, y = love.mouse.getPosition()
@@ -47,10 +56,11 @@ function HitTestSystem:update(dt)
         self.hitObject.mouseOver = false
         self.hitObject = nil
     end
-    local keys = map(keys(self.roots), function(e) return tonumber(e) end)
+    local keys = map(keys(self.roots), function(e)
+        return tonumber(e)
+    end)
     printAsJson(keys)
-    sort(keys)
-    revert(keys)
+    sort(keys, function(b, a) return b > a end)
     printAsJson(keys)
     local hit = false
     for i, v in pairs(keys) do
@@ -129,9 +139,15 @@ function HitTestSystem:onAdd(e)
     print('jmp')
     printAsJson(jmp)
     print('roots', #self.roots)
-    printAsJson(toDictionary(self.roots, function(e, i) return i, map(e, function(c) return c._id end) end))
+    printAsJson(toDictionary(self.roots, function(e, i)
+        return i, map(e, function(c)
+            return c._id
+        end)
+    end))
     print('objects', #self.objects)
-    printAsJson(map(self.objects, function(c) return c._id end))
+    printAsJson(map(self.objects, function(c)
+        return c._id
+    end))
 end
 
 function HitTestSystem:onRemove(e)
