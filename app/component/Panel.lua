@@ -65,12 +65,12 @@ function Panel:_draw()
         end
         g.draw(bg, x, y, 0, w / self.size.w, h / self.size.h)
     end
-    g.setColor(rgba('#f00'))
-    if self.mouseOver then
-        g.print(self._id .."Mouse Over", self. pos.x, self. pos.y + 20)
-    else
-        g.print(self._id, self. pos.x, self. pos.y + 20)
-    end
+    --g.setColor(rgba('#f00'))
+    --if self.mouseOver then
+    --    g.print(self._id .."Mouse Over", self. pos.x, self. pos.y + 20)
+    --else
+    --    g.print(self._id, self. pos.x, self. pos.y + 20)
+    --end
     g.pop()
 end
 
