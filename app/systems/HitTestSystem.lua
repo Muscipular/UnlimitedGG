@@ -36,7 +36,12 @@ end
 ---@param y number
 ---@param x number
 local function check(e, x, y)
-    return e.pos.x <= x and e.pos.x + e.size.w >= x and e.pos.y <= y and e.pos.y + e.size.h >= y
+    --if e.parent then
+        --print(e.parent.pos.x + x, e.parent.pos.y + y, x, y)
+    --end
+    local ex = (e.parent and e.parent.pos.x or 0) + e.pos.x
+    local ey = (e.parent and e.parent.pos.y or 0) + e.pos.y
+    return ex <= x and ex + e.size.w >= x and ey <= y and ey + e.size.h >= y
 end
 
 local frameDt = 1 / 60
@@ -56,12 +61,8 @@ function HitTestSystem:update(dt)
         self.hitObject.mouseOver = false
         self.hitObject = nil
     end
-    local keys = map(keys(self.roots), function(e)
-        return tonumber(e)
-    end)
-    printAsJson(keys)
+    local keys = map(keys(self.roots), function(e) return tonumber(e) end)
     sort(keys, function(b, a) return b > a end)
-    printAsJson(keys)
     local hit = false
     for i, v in pairs(keys) do
         hit = self:check(x, y, self.roots[v], not hit)
@@ -76,6 +77,7 @@ function HitTestSystem:check(x, y, elements, unhit)
         local hit = unhit and e.hitTest and check(e, x, y)
         if e.children and #e.children > 0 then
             unhit = not self:check(x, y, e.children, unhit)
+            hit = unhit
         end
         unhit = unhit and not hit
         e.mouseOver = hit
@@ -146,7 +148,7 @@ function HitTestSystem:onAdd(e)
     end))
     print('objects', #self.objects)
     printAsJson(map(self.objects, function(c)
-        return c._id
+        return tostring(c)
     end))
 end
 

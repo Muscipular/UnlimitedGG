@@ -6,32 +6,24 @@
 ---@field bg string|number[]|Drawable
 ---@field children {draw}[]
 
+local UIComponent = require("app.component.UIComponent")
+
 ---@type Panel
-local Panel = Base:extend()
+local Panel = UIComponent:extend("Panel")
 local deep = require('lib.deep')
 
+---@return Panel
 function Panel:new(layer, x, y, w, h, z, background, ...)
+    UIComponent.new(self)
     self.pos = { x = x, y = y }
     self.size = { w = w, h = h }
     self.bg = background
     self.zIndex = z or 0
-    self.children = { ... }
     --print(#self.children)
     self.layer = layer
-    self.alpha = 1
     self.hitTest = true
-end
-
-function Panel:drawPanel(dt)
-    deep.queue(self.layer * 100 + self.zIndex, function(e)
-        e:_draw()
-    end, self);
-    for i = 1, #self.children do
-        local x, y = self.pos.x, self.pos.y
-        deep.queue(self.layer * 100 + self.zIndex + (self.children[i].zIndex or 0), function(e, x, y)
-            --print(e.id)
-            e:draw(x, y)
-        end, self.children[i], x, y)
+    for i, v in ipairs({ ... }) do
+        self:addChild(v)
     end
 end
 
@@ -39,7 +31,7 @@ function Panel:addChildren(c)
     table.insert(self.children, c)
 end
 
-function Panel:_draw()
+function Panel:onDraw(dt, x, y, z)
     if self.alpha <= 0 then
         return
     end
@@ -51,10 +43,10 @@ function Panel:_draw()
     g.push(StackType.all)
     if type(bg) == 'string' then
         g.setColor(rgba(bg))
-        g.rectangle(DrawMode.fill, self.pos.x, self.pos.y, self.size.w, self.size.h)
+        g.rectangle(DrawMode.fill, self.pos.x + x, self.pos.y + y, self.size.w, self.size.h)
     elseif type(bg) == 'table' and (#bg == 3 or #bg == 4) then
         g.setColor(bg)
-        g.rectangle(DrawMode.fill, self.pos.x, self.pos.y, self.size.w, self.size.h)
+        g.rectangle(DrawMode.fill, self.pos.x + x, self.pos.y + y, self.size.w, self.size.h)
     else
         local w, h = unpack(self.size)
         if bg.getWidth then
@@ -63,19 +55,16 @@ function Panel:_draw()
         if bg.getHeight then
             h = bg.getHeight()
         end
-        g.draw(bg, x, y, 0, w / self.size.w, h / self.size.h)
+        g.draw(bg, self.pos.x + x, self.pos.y + y, 0, w / self.size.w, h / self.size.h)
     end
-    --g.setColor(rgba('#f00'))
-    --if self.mouseOver then
-    --    g.print(self._id .."Mouse Over", self. pos.x, self. pos.y + 20)
-    --else
-    --    g.print(self._id, self. pos.x, self. pos.y + 20)
-    --end
+    if self.mouseOver then
+        --print(tostring(self), "mouse over", application.runTime)
+    end
     g.pop()
 end
 
 function Panel:__tostring()
-    return string.format("Panel(_id: %s, x: %s, y: %s, z: %z, w: %s, h:%s)", self._id, self.pos.x, self.pos.y, self.zIndex, self.size.w, self.size.h)
+    return fmt("Panel(_id: %s, x: %s, y: %s, z: %s, w: %s, h:%s)", self._id, self.pos.x, self.pos.y, self.zIndex, self.size.w, self.size.h)
 end
 
 return Panel

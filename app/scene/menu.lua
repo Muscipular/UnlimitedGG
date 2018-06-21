@@ -5,6 +5,7 @@ local drawFilter = tiny.requireAll('isDrawSystem')
 local updateFilter = tiny.rejectAny('isDrawSystem')
 
 local Panel = require("app.component.Panel")
+local Button = require("app.component.Button")
 
 ---@class MenuScene :Component
 ---@field world ECS_World
@@ -18,19 +19,19 @@ function MenuScene:enter()
     self.world = tiny.world(
             --require('app.systems.ChildrenSystem')(),
             require('app.systems.HitTestSystem')(Layers.fg),
-            require('app.systems.PanelSystem')(Layers.bg),
-            require('app.systems.PanelSystem')(Layers.fg)
+            --require('app.systems.UISystem')(Layers.bg),
+            require('app.systems.UISystem')(Layers.fg)
     )
     local world = self.world
-    world:add(Panel(Layers.fg, 100, 100, 200, 200, 1, '#efcce1', {
-        id = 1,
-        draw = function(self, x, y)
-            love.graphics.push(StackType.all)
-            love.graphics.setColor(rgba("#000000"))
-            love.graphics.print("111111AAAA", x, y)
-            love.graphics.pop()
-        end
-    }))
+    world:add(Panel(Layers.fg, 100, 100, 200, 200, 1, '#efcce1', Button({
+        x = 2,
+        y = 2,
+        w = 100,
+        h = 50,
+        content = "1234",
+        bg = "#fff",
+        layer = Layers.fg
+    })))
     print(world:getSystemCount(), world:getEntityCount())
 end
 

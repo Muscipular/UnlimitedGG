@@ -14,7 +14,7 @@ Base.__index = Base
 function Base:new()
 end
 
-function Base:extend()
+function Base:extend(name)
     local cls = {}
     for k, v in pairs(self) do
         if k:find("__") == 1 then
@@ -22,6 +22,7 @@ function Base:extend()
         end
     end
     cls.__index = cls
+    cls._name = name
     cls.super = self
     setmetatable(cls, self)
     return cls
@@ -49,7 +50,7 @@ function Base:is(T)
 end
 
 function Base:__tostring()
-    return "Object"
+    return self._name or "Object"
 end
 
 local id = 1
