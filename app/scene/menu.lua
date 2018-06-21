@@ -17,20 +17,32 @@ end
 
 function MenuScene:enter()
     self.world = tiny.world(
-            --require('app.systems.ChildrenSystem')(),
+    --require('app.systems.ChildrenSystem')(),
             require('app.systems.HitTestSystem')(Layers.fg),
-            --require('app.systems.UISystem')(Layers.bg),
+    --require('app.systems.UISystem')(Layers.bg),
             require('app.systems.UISystem')(Layers.fg)
     )
     local world = self.world
-    world:add(Panel(Layers.fg, 100, 100, 200, 200, 1, '#efcce1', Button({
-        x = 2,
-        y = 2,
-        w = 100,
-        h = 50,
+    world:add(Panel({
+        x = 100, y = 100, h = 200, w = 250, zIndex = 10,
+        bg = "#ecf", radius = 2, border = 1, borderColor = '#000',
+        layer = Layers.fg,
+    }, Button({
+        x = 2, y = 2, w = 100, h = 50,
         content = "1234",
-        bg = "#fff",
-        layer = Layers.fg
+        bg = "#fff", color = "#000", radius = 2, border = 1, borderColor = '#000',
+        layer = Layers.fg,
+        states = {
+            mouseOver = { bg = "#ddd", color = "#600", border = 1, borderColor = '#eee', }
+        }
+    }), Button({
+        x = 2, y = 54, w = 100, h = 50,
+        content = "1234",
+        bg = "#fff", color = "#000", radius = 2,
+        layer = Layers.fg,
+        states = {
+            mouseOver = { bg = "#ddd", color = "#600", }
+        }
     })))
     print(world:getSystemCount(), world:getEntityCount())
 end

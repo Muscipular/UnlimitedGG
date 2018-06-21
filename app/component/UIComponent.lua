@@ -14,6 +14,7 @@ function UIComponent:new()
     self.position = 0
     self.ui = true
     self.alpha = 1
+    self.isDeferDraw = true
 end
 
 function UIComponent:draw(dt, x, y, zIndex)
@@ -28,7 +29,7 @@ function UIComponent:draw(dt, x, y, zIndex)
         local child = self.children[i];
         local _x, _y = self.pos.x + x, self.pos.y + y
         if child.isDeferDraw then
-            child:draw(_x, _y, self.zIndex + zIndex)
+            child:draw(dt, _x, _y, self.zIndex + zIndex)
         else
             deep.queue(z + (child.zIndex or 0), child.draw, child, dt, _x, _y, self.zIndex + zIndex)
         end
@@ -36,8 +37,8 @@ function UIComponent:draw(dt, x, y, zIndex)
 end
 
 function UIComponent:attach(parent)
-    --print(tostring(parent))
     self.parent = parent;
+    self.layer = parent.layer
 end
 
 function UIComponent:detach(parent)

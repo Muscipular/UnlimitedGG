@@ -1,5 +1,5 @@
 ---The different distance models.
----
+--- 
 --- Extended information can be found in the chapter "3.4. Attenuation By Distance" of the OpenAL 1.1 specification.
 ---@class DistanceModel
 ---@type DistanceModel
@@ -19,7 +19,7 @@ DistanceModel['exponent'] = 'exponent'
 ---@field exponentclamped @Exponential attenuation. Gain is clamped. In version 0.9.2 and older this is named exponent clamped.
 DistanceModel['exponentclamped'] = 'exponentclamped'
 ---Types of audio sources.
----
+--- 
 --- A good rule of thumb is to use stream for music files and static for all short sound effects. Basically, you want to avoid loading large files into memory at once.
 ---@class SourceType
 ---@type SourceType
@@ -351,7 +351,7 @@ WrapMode['mirroredrepeat'] = 'mirroredrepeat'
 ---@field clampzero @Clamp the texture. Fills the area outside the texture's normal range with transparent black (or opaque black for textures with no alpha channel.)
 WrapMode['clampzero'] = 'clampzero'
 ---Compressed image data formats. Here and here are a couple overviews of many of the formats.
----
+--- 
 --- Unlike traditional PNG or jpeg, these formats stay compressed in RAM and in the graphics card's VRAM. This is good for saving memory space as well as improving performance, since the graphics card will be able to keep more of the image's pixels in its fast-access cache when drawing it.
 ---@class CompressedImageFormat
 ---@type CompressedImageFormat
@@ -811,11 +811,11 @@ KeyConstant['apprefresh'] = 'apprefresh'
 ---@field appbookmarks @Application bookmarks key
 KeyConstant['appbookmarks'] = 'appbookmarks'
 ---Keyboard scancodes.
----
+--- 
 --- Scancodes are keyboard layout-independent, so the scancode "w" will be generated if the key in the same place as the "w" key on an American QWERTY keyboard is pressed, no matter what the key is labelled or what the user's operating system settings are.
----
+--- 
 --- Using scancodes, rather than keycodes, is useful because keyboards with layouts differing from the US/UK layout(s) might have keys that generate 'unknown' keycodes, but the scancodes will still be detected. This however would necessitate having a list for each keyboard layout one would choose to support.
----
+--- 
 --- One could use textinput or textedited instead, but those only give back the end result of keys used, i.e. you can't get modifiers on their own from it, only the final symbols that were generated.
 ---@class Scancode
 ---@type Scancode
@@ -1307,9 +1307,9 @@ PowerState['charging'] = 'charging'
 ---@field charged @Plugged in, battery is fully charged.
 PowerState['charged'] = 'charged'
 ---Types of fullscreen modes.
----
+--- 
 --- In normal fullscreen mode, if a window size is used which does not match one of the monitor's supported display modes, the window will be resized to the next largest display mode.
----
+--- 
 --- Normal fullscreen mode is sometimes avoided by users because it can cause issues in some window managers and with multi-monitor setups. In OS X it prevents switching to a different program until fullscreen mode is exited. The "desktop" fullscreen mode generally avoids these issues.
 ---@class FullscreenType
 ---@type FullscreenType

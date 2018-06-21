@@ -1,4 +1,7 @@
 function rgba(hex)
+    if type(hex) == "table" then
+        return hex
+    end
     hex = hex:gsub("#", "")
     local l = string.len(hex)
     if l == 3 then

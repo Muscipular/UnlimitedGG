@@ -77,7 +77,7 @@ function HitTestSystem:check(x, y, elements, unhit)
         local hit = unhit and e.hitTest and check(e, x, y)
         if e.children and #e.children > 0 then
             unhit = not self:check(x, y, e.children, unhit)
-            hit = unhit
+            hit = hit and unhit
         end
         unhit = unhit and not hit
         e.mouseOver = hit
