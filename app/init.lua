@@ -1,5 +1,6 @@
 local BASE = (...) .. '.'
 require("lib.love")
+require("lib.nuklear.enum")
 JSON = require("lib.json")
 require(BASE .. 'util')
 require(BASE .. 'class')
