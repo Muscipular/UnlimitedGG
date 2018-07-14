@@ -4,8 +4,9 @@
 ---@field protected fontDir string
 ---@field protected fontDefault Font
 local Application = Base:extend()
-local MainScene = require('app.scene.menu')
+local MenuScene = require('app.scene.menu')
 local Gamestate = require "lib.hump.gamestate"
+local deep = require('lib.deep')
 
 function Application:new()
     local graphics = love.graphics
@@ -24,7 +25,7 @@ function Application:new()
 end
 
 function Application:start()
-    Gamestate.switch(MainScene())
+    Gamestate.switch(MenuScene())
 end
 
 ---@param scene Component
@@ -57,6 +58,7 @@ function Application:update(dt)
 end
 
 function Application:draw()
+    deep.execute()
     --self.super.draw(self);
     love.graphics.print("FPS: " .. love.timer.getFPS())
     local state = love.graphics.getStats()

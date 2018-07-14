@@ -33,8 +33,8 @@ local deep = require('lib.deep')
 ---@param opt PanelOpt
 function Panel:new(opt, ...)
     UIComponent.new(self)
-    self.pos = { x = opt.x, y = opt.y }
-    self.size = { w = opt.w, h = opt.h }
+    self.pos = { x = opt.x or 0, y = opt.y or 0 }
+    self.size = { w = opt.w or 0, h = opt.h or 0 }
     self.zIndex = opt.zIndex or 0
     self.layer = opt.layer
     self.hitTest = true
