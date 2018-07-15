@@ -72,6 +72,17 @@ function toDictionary(t, fn)
     return r
 end
 
+function take(t, n, skip)
+    local r = {}
+    if not skip then
+        skip = 0
+    end
+    for i = 1 + skip, math.min(#t, n) do
+        r[i] = t[i]
+    end
+    return r;
+end
+
 ----@return {key,value}[]
 function dicToArray(t)
     local r = {}

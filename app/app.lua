@@ -7,6 +7,10 @@ local Application = Base:extend()
 local MenuScene = require('app.scene.menu')
 local Gamestate = require "lib.hump.gamestate"
 local deep = require('lib.deep')
+---@type nuklear
+local nk = require('nuklear')
+---@type Registry
+local Signal = require('lib.hump.signal')
 
 function Application:new()
     local graphics = love.graphics
@@ -17,6 +21,11 @@ function Application:new()
     self.fontDir = "/font/"
     self.fontDefaultPath = self.fontDir .. "sh.otf"
     self.fontDefault = graphics.newFont(self.fontDefaultPath, 14)
+    self.font14Px = self.fontDefault
+    self.font32Px = graphics.newFont(self.fontDefaultPath, 32);
+    self.font24Px = graphics.newFont(self.fontDefaultPath, 24);
+    self.font18Px = graphics.newFont(self.fontDefaultPath, 18);
+    self.font12Px = graphics.newFont(self.fontDefaultPath, 12);
     graphics.setFont(self.fontDefault)
     graphics.setColor({ 0, 0, 0 })
     graphics.setBackgroundColor(rgba("#FFFFFF"))
@@ -26,11 +35,6 @@ end
 
 function Application:start()
     Gamestate.switch(MenuScene())
-end
-
----@param scene Component
-function Application:switch(scene)
-    Gamestate.switch(scene)
 end
 
 function Application:registerEvents()
@@ -50,6 +54,21 @@ function Application:registerEvents()
             return self[f](self, ...)
         end
     end
+    Signal.register('sceneChange', function(s, ...)
+        if type(s) == 'string' then
+            s = require('app.scene.' + s)();
+        end
+        Gamestate:switch(s, ...);
+    end)
+    Signal.register('scenePush', function(s, ...)
+        if type(s) == 'string' then
+            s = require('app.scene.' .. s)();
+        end
+        Gamestate.push(s, ...);
+    end)
+    Signal.register('scenePop', function(...)
+        Gamestate.pop(...);
+    end)
 end
 
 function Application:update(dt)
@@ -60,9 +79,10 @@ end
 function Application:draw()
     deep.execute()
     --self.super.draw(self);
-    love.graphics.print("FPS: " .. love.timer.getFPS())
+    local h = love.graphics.getHeight();
+    love.graphics.print("FPS: " .. love.timer.getFPS(), 0, h - 20 * 2)
     local state = love.graphics.getStats()
-    love.graphics.print("draw call: " .. state.drawcalls, 0, 20)
+    love.graphics.print("DrawCall: " .. state.drawcalls, 0, h - 20)
     --love.graphics.print("draw call: " .. state.canvasswitches, 0, 20)
 end
 
