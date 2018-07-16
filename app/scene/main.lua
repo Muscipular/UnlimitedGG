@@ -92,8 +92,8 @@ function MainScene:drawInfo()
     end
 
     deep.queue(layers.control, function()
-        local y = math.random(1, 100);
-        drawBar(ox(45), oy(11 + 60), 100, 3, y / 100, nil, nil, fmt('%s / %s', y, 100))
+        local y = math.floor(love.timer.getTime() * 10) % 100;
+        drawBar(ox(45), oy(11 + 60), 100, 3, y / 100, y < 20 and '#e33' or y < 50 and '#ee3' or nil, nil, fmt('%s / %s', y, 100))
         drawBar(ox(45), oy(11 + 80), 100, 3, 20.0 / 100, '#e33', nil, fmt('%s / %s', 20, 100))
         drawBar(ox(45), oy(11 + 100), 100, 3, 99.5 / 100, nil, nil, fmt('%s / %s', 99.5, 100))
     end)
@@ -144,13 +144,13 @@ function MainScene:drawInfo()
         --g.printf("魔功:", oxc(6), oyc(2), 40, AlignMode.left)
         --g.printf("10", oxc(7), oyc(2), 110, AlignMode.left)
         g.printf("爆伤:", oxc(6), oyc(3), 40, AlignMode.left)
-        g.printf("10", oxc(7), oyc(3), 110, AlignMode.left)
+        g.printf("1000%", oxc(7), oyc(3), 110, AlignMode.left)
         g.printf("护甲:", oxc(6), oyc(4), 40, AlignMode.left)
-        g.printf("10", oxc(7), oyc(4), 110, AlignMode.left)
+        g.printf("1000", oxc(7), oyc(4), 110, AlignMode.left)
         g.printf("魔抗:", oxc(6), oyc(5), 40, AlignMode.left)
-        g.printf("10", oxc(7), oyc(5), 110, AlignMode.left)
+        g.printf("1000", oxc(7), oyc(5), 110, AlignMode.left)
         g.printf("GF:", oxc(6), oyc(6), 40, AlignMode.left)
-        g.printf("100%", oxc(7), oyc(6), 110, AlignMode.left)
+        g.printf("1000%", oxc(7), oyc(6), 110, AlignMode.left)
         g.pop();
     end);
 end

@@ -6,15 +6,20 @@ local Component = require(BASE .. 'base')
 local UIComponent = Component:extend()
 local deep = require('lib.deep')
 
-function UIComponent:new()
+function UIComponent:new(opt)
     Component.new(self)
-    self.pos = { x = 0, y = 0 }
-    self.zIndex = 0;
     self.parent = nil;
-    self.position = 0
-    self.ui = true
-    self.alpha = 1
-    self.isDeferDraw = true
+    if opt then
+        self.x = opt.x or 0;
+        self.y = opt.y or 0;
+        self.zIndex = opt.zIndex or 0;
+        self.alpha = opt.alpha or 1
+    else
+        self.x = 0;
+        self.y = 0;
+        self.zIndex = 0;
+        self.alpha = 1
+    end
 end
 
 function UIComponent:draw(dt, x, y, zIndex)
@@ -27,7 +32,7 @@ function UIComponent:draw(dt, x, y, zIndex)
     end
     for i = 1, #self.children do
         local child = self.children[i];
-        local _x, _y = self.pos.x + x, self.pos.y + y
+        local _x, _y = self.x + x, self.y + y
         if child.isDeferDraw then
             child:draw(dt, _x, _y, self.zIndex + zIndex)
         else
