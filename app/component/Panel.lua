@@ -47,40 +47,42 @@ function Panel:new(opt, ...)
     end
 end
 
-function Panel:onDraw(dt, x, y, z)
+function Panel:onDraw(x, y, z)
     if self.alpha <= 0 then
         return
     end
     local bg = self.bg
     local g = love.graphics
+    g.push(StackType.all)
     if bg then
-        g.push(StackType.all)
         if type(bg) == 'string' then
-            g.setColor(rgba(bg))
-            g.rectangle(DrawMode.fill, self.pos.x + x, self.pos.y + y, self.size.w, self.size.h, self.radius, self.radius, 2)
+            bg = rgba(bg)
+            self.bg = bg;
+            g.setColor(bg)
+            g.rectangle(DrawMode.fill, self.x + x, self.y + y, self.w, self.h, self.radius, self.radius)
         elseif type(bg) == 'table' and (#bg == 3 or #bg == 4) then
             g.setColor(bg)
-            g.rectangle(DrawMode.fill, self.pos.x + x, self.pos.y + y, self.size.w, self.size.h, self.radius, self.radius, 2)
+            g.rectangle(DrawMode.fill, self.x + x, self.y + y, self.w, self.h, self.radius, self.radius)
         else
-            local w, h = unpack(self.size)
+            local w, h = self.w, self.h;
             if bg.getWidth then
                 w = bg.getWidth()
             end
             if bg.getHeight then
                 h = bg.getHeight()
             end
-            g.draw(bg, self.pos.x + x, self.pos.y + y, 0, w / self.size.w, h / self.size.h)
+            g.draw(bg, self.x + x, self.y + y, 0, w / self.w, h / self.h)
         end
     end
     if self.border then
         g.setColor(self.borderColor)
-        g.rectangle(DrawMode.line, self.pos.x + x, self.pos.y + y, self.size.w - self.border, self.size.h - self.border, self.radius, self.radius, self.border)
+        g.rectangle(DrawMode.line, self.x + x, self.y + y, self.w - self.border, self.h - self.border, self.radius, self.radius)
     end
     g.pop()
 end
 
 function Panel:__tostring()
-    return fmt("Panel(_id: %s, x: %s, y: %s, z: %s, w: %s, h:%s)", self._id, self.pos.x, self.pos.y, self.zIndex, self.size.w, self.size.h)
+    return fmt("Panel(_id: %s, x: %s, y: %s, z: %s, w: %s, h:%s)", self._id, self.x, self.y, self.zIndex, self.w, self.h)
 end
 
 return Panel

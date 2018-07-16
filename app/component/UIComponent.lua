@@ -4,7 +4,6 @@ local Component = require(BASE .. 'base')
 
 ---@class UIComponent : Component
 local UIComponent = Component:extend()
-local deep = require('lib.deep')
 
 function UIComponent:new(opt)
     Component.new(self)
@@ -22,22 +21,22 @@ function UIComponent:new(opt)
     end
 end
 
-function UIComponent:draw(dt, x, y, zIndex)
+function UIComponent:onDraw(x, y, zIndex)
+
+end
+
+function UIComponent:draw(x, y, zIndex)
     if self.alpha <= 0 then
         return
     end
     local z = self.layer * 100 + self.zIndex + zIndex
     if self.onDraw then
-        deep.queue(z, self.onDraw, self, dt, x, y, zIndex);
+        self:onDraw(x, y, zIndex);
     end
     for i = 1, #self.children do
         local child = self.children[i];
         local _x, _y = self.x + x, self.y + y
-        if child.isDeferDraw then
-            child:draw(dt, _x, _y, self.zIndex + zIndex)
-        else
-            deep.queue(z + (child.zIndex or 0), child.draw, child, dt, _x, _y, self.zIndex + zIndex)
-        end
+        child:draw(_x, _y, self.zIndex + zIndex)
     end
 end
 
