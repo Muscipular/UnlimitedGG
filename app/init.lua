@@ -11,7 +11,7 @@ _G.Layers = {
     mask = 2,
 }
 
-deep = require('lib.deep')
-
+--deep = require('lib.deep')
+require('app.lib.deep')
 --require(BASE..'component')
 return require(BASE .. 'app')

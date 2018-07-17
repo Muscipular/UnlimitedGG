@@ -6,7 +6,7 @@
 local Application = Base:extend()
 local MenuScene = require('app.scene.menu')
 local Gamestate = require "lib.hump.gamestate"
-local deep = require('lib.deep')
+--local deep = require('lib.deep')
 ---@type nuklear
 local nk = require('nuklear')
 ---@type Registry
@@ -77,7 +77,7 @@ function Application:update(dt)
 end
 
 function Application:draw()
-    deep.execute()
+    deep:execute()
     --self.super.draw(self);
     local h = love.graphics.getHeight();
     love.graphics.print("FPS: " .. love.timer.getFPS(), 0, h - 20 * 2)

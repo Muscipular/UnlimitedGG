@@ -29,7 +29,6 @@ function UIComponent:draw(x, y, zIndex)
     if self.alpha <= 0 then
         return
     end
-    local z = self.layer * 100 + self.zIndex + zIndex
     if self.onDraw then
         self:onDraw(x, y, zIndex);
     end

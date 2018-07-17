@@ -127,8 +127,10 @@ function all(t, fn)
     return true
 end
 
----@class ECS_World
----@field add func(...):World
-
----@class ECS_System
----@field world ECS_World
+function contains(t, v)
+    for i, v in pairs(t) do
+        if v == t then
+            return true;
+        end
+    end
+end

@@ -2,7 +2,7 @@
 local nk = require 'nuklear'
 local Component = require('app.component.base')
 local helper = require('app.scene.helper')
-local deep = require('lib.deep')
+--local deep:= require('lib.deep:)
 
 ---@class MainScene : Component
 local MainScene = Component:extend()
@@ -37,14 +37,14 @@ local layers = {
 function MainScene:draw()
     g.clear(rgba('#ccc'))
     self:drawInfo();
-    deep.queue(layers.panel, function()
+    deep:queue(layers.panel, function()
         g.push(StackType.all)
         g.setColor(rgba('#eeeeee'))
         g.rectangle(DrawMode.fill, 5, 160, 450, g.getHeight() - 160 - 5);
         g.pop();
     end);
 
-    deep.queue(layers.text, function()
+    deep:queue(layers.text, function()
         g.push(StackType.all)
         g.setColor(rgba('#000'))
         g.printf("SSS", 10, 160 + 10, 50, AlignMode.left)
@@ -60,7 +60,7 @@ function MainScene:drawInfo()
     local function oxc(n) return ox(cols[n + 1] + 5) end
     local function oy(y) return y + 5 end
     local function oyc(n) return oy(n * 20 + 5) end
-    deep.queue(layers.panel, function()
+    deep:queue(layers.panel, function()
         g.push(StackType.all)
         g.setColor(rgba('#eeeeee'))
         g.rectangle(DrawMode.fill, ox(0), oy(0), maxWidth, maxHeight);
@@ -79,7 +79,7 @@ function MainScene:drawInfo()
         local x1 = love.mouse.getX();
         local y1 = love.mouse.getY();
         if tips and (x1 >= x2 and x1 <= x2 + w and y1 >= y2 and y1 <= y2 + h) then
-            deep.queue(layers.pop, function()
+            deep:queue(layers.pop, function()
                 local txt = g.newText(application.fontDefault, "");
                 txt:setf(tips, 100, AlignMode.left);
                 g.setColor(rgba('#ccc'))
@@ -91,14 +91,14 @@ function MainScene:drawInfo()
         g.pop();
     end
 
-    deep.queue(layers.control, function()
+    deep:queue(layers.control, function()
         local y = math.floor(love.timer.getTime() * 10) % 100;
         drawBar(ox(45), oy(11 + 60), 100, 3, y / 100, y < 20 and '#e33' or y < 50 and '#ee3' or nil, nil, fmt('%s / %s', y, 100))
         drawBar(ox(45), oy(11 + 80), 100, 3, 20.0 / 100, '#e33', nil, fmt('%s / %s', 20, 100))
         drawBar(ox(45), oy(11 + 100), 100, 3, 99.5 / 100, nil, nil, fmt('%s / %s', 99.5, 100))
     end)
 
-    deep.queue(layers.text, function()
+    deep:queue(layers.text, function()
         g.push(StackType.all)
         g.setColor(rgba('#333'))
         g.printf("名字:", oxc(0), oyc(0), 40, AlignMode.left)
