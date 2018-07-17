@@ -1,6 +1,4 @@
 ---@class Button :UIComponent
----@field pos Position
----@field size Size
 ---@field zIndex number
 ---@field layer number
 ---@field bg string|number[]|Drawable
@@ -9,8 +7,8 @@
 local UIComponent = require('app.component.UIComponent');
 ---@type Button
 local Button = require("app.component.UIComponent"):extend("Button")
-local deep = require('lib.deep')
-
+--local deep = require('lib.deep')
+--
 
 ---@class BtnState
 ---@field bg string|number[]|Drawable
@@ -29,12 +27,14 @@ local deep = require('lib.deep')
 ---@field content string|UIComponent|Drawable
 ---@field states table<string, BtnState>
 
----@return Panel
+---@return Button
 ---@param btnOpt BtnOpt
 function Button:new(btnOpt, ...)
     UIComponent.new(self)
-    self.pos = { x = btnOpt.x, y = btnOpt.y }
-    self.size = { w = btnOpt.w, h = btnOpt.h }
+    self.x = btnOpt.x;
+    self.y = btnOpt.y;
+    self.w = btnOpt.w
+    self.h = btnOpt.h;
     self.padding = { top = 0, left = 0, right = 0, bottom = 0 }
     self.zIndex = btnOpt.zIndex or 0
     self.layer = btnOpt.layer
