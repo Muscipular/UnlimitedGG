@@ -20,7 +20,7 @@ namespace UGG.Core.Utilities
             Marshal.Copy(p, s, 0, size);
             return s;
         }
-        
+
         public static int[] Copy32(this IntPtr p, int size)
         {
             var s = new int[size];

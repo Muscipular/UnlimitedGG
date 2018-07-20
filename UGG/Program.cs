@@ -1,4 +1,7 @@
 ﻿using System;
+using UGG.Core.Utilities;
+using UGG.Core.Utilities.Platform;
+using UGG.DX.Platform;
 
 namespace UGG
 {
@@ -13,6 +16,7 @@ namespace UGG
         [STAThread]
         static void Main()
         {
+            SimpleIoc.Instance.Register<IPlatformTool>(new PlatformTool());
             using (var game = new GoodGameCore())
                 game.Run();
         }

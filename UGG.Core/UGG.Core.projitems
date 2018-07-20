@@ -17,6 +17,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ColorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\FontUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\LRUCache.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\PlatformTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\SimpleIoc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\UnsafeUtil.cs" />
   </ItemGroup>
   <ItemGroup>
