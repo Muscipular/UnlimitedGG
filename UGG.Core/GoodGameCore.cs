@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
+using MonoGame.Extended.Input.InputListeners;
+using SharpFont;
+using TestGame;
+using UGG.Core.Component;
+using UGG.Core.Utilities;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
+
+[assembly: InternalsVisibleTo("UGG.Test")]
+
+namespace UGG
+{
+    public class GoodGameCore : Game
+    {
+        GraphicsDeviceManager graphics;
+
+        SpriteBatch spriteBatch;
+
+        private InputListenerComponent _inputListenerComponent;
+
+
+        public GoodGameCore()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        protected override void Initialize()
+        {
+            FontUtil.Init(GraphicsDevice);
+            _inputListenerComponent = new InputListenerComponent(this);
+            var item = new KeyboardListener();
+            item.KeyReleased += KeyReleased;
+            _inputListenerComponent.Listeners.Add(item);
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+        }
+
+        protected override void UnloadContent()
+        {
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            _inputListenerComponent.Update(gameTime);
+            base.Update(gameTime);
+        }
+
+        private void KeyReleased(object sender, KeyboardEventArgs e)
+        {
+            if (e.Key == Keys.Q && (e.Modifiers & KeyboardModifiers.Alt) == KeyboardModifiers.Alt)
+            {
+                Exit();
+            }
+        }
+
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.White);
+
+            spriteBatch.Begin();
+            var p2 = new Panel(spriteBatch, new Rectangle(0, 0, 300, 300), Color.Aqua, new BorderDefine(1, Color.Black));
+            p2.AddChild(new TextComponent(spriteBatch, "asdasdASDASD134132das_c.:;,?!啊\n啊啊啊啊撒旦鬼地方鬼地方广泛的啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊^", Color.Red, FontUtil.FontDefault, Point.Zero));
+            p2.Draw(gameTime);
+            var panel = new Panel(spriteBatch, new Rectangle(10, 50, 300, 300), Color.Aqua, new BorderDefine(1, Color.Black));
+            panel.AddChild(new TextComponent(spriteBatch, "asdsdASD啊实打实cda12313F:ASD<?123213", Color.Blue, FontUtil.RequestFace(16), new Point(20, 20)));
+            panel.Draw(gameTime);
+            spriteBatch.End();
+            base.Draw(gameTime);
+            Window.Title = $"GG(DX) FPS:{(1 / gameTime.GetElapsedSeconds()):0} Draw:{GraphicsDevice.Metrics.DrawCount} Primitive:{GraphicsDevice.Metrics.PrimitiveCount} Texture:{GraphicsDevice.Metrics.TextureCount}";
+        }
+    }
+}
