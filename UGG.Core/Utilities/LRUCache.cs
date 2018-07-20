@@ -91,17 +91,17 @@ namespace UGG.Core.Utilities
             n.Next.Prev = n.Prev;
         }
 
-        public class ListNode<T>
+        public class ListNode<TValue>
         {
-            public ListNode<T> Prev;
+            public ListNode<TValue> Prev;
 
-            public ListNode<T> Next;
+            public ListNode<TValue> Next;
 
-            public T Value;
+            public TValue Value;
 
             public int Key;
 
-            public ListNode(int key, T val)
+            public ListNode(int key, TValue val)
             {
                 Value = val;
                 Key = key;
