@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpFont;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
+
 
 namespace UGG.Core.Graphics
 {
@@ -75,6 +71,10 @@ namespace UGG.Core.Graphics
             public Texture2D Texture;
 
             public Rectangle Rectangle;
+
+            public int Index;
+
+            public char? Pre;
         }
 
         private struct FontDesc : IEquatable<FontDesc>
@@ -184,22 +184,36 @@ namespace UGG.Core.Graphics
             int offsetX = 0;
             int offsetY = 0;
             width = width ?? batch.GraphicsDevice.Viewport.Width;
-            height = height ?? batch.GraphicsDevice.Viewport.Height;
-            foreach (var s in text)
+            height = (height ?? batch.GraphicsDevice.Viewport.Height) - y;
+            int countX = 0;
+            var textLength = text.Length;
+            char pre = '\0';
+            for (var i = 0; i < textLength; i++)
             {
-                if (!dic2.TryGetValue(s, out var cache))
+                var ch = text[i];
+                if (!dic2.TryGetValue(ch, out var cache))
                 {
-                    cache = BuildCache(batch.GraphicsDevice, s, font);
-                    dic2.Add(s, cache);
+                    cache = BuildCache(batch.GraphicsDevice, ch, font);
+                    dic2.Add(ch, cache);
                 }
 
-                if (warpLine && offsetX + cache.Rectangle.Width > width || s == '\n')
+                if (warpLine && offsetX + cache.Rectangle.Width + countX > width || ch == '\n')
                 {
+//                    if (countX > 0)
+//                    {
+//                        var rectangle = cache.Rectangle;
+//                        rectangle.X = rectangle.X - countX - rectangle.Width;
+//                        rectangle.Width = countX;
+//                        batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), rectangle, color);
+//                        offsetX += countX;
+//                        countX = 0;
+//                    }
+
                     offsetY += cache.Rectangle.Height;
                     offsetX = 0;
                 }
 
-                if (s == '\n' || s == '\r')
+                if (ch == '\n' || ch == '\r')
                 {
                     continue;
                 }
@@ -214,8 +228,26 @@ namespace UGG.Core.Graphics
                     return;
                 }
 
-                batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), cache.Rectangle, color);
-                offsetX += cache.Rectangle.Width;
+//                if (cache.Pre == pre)
+//                {
+//                    countX += cache.Rectangle.Width;
+//                }
+//                else
+                {
+//                    if (countX > 0)
+//                    {
+//                        var rectangle = cache.Rectangle;
+//                        rectangle.X = rectangle.X - countX - rectangle.Width;
+//                        rectangle.Width = countX;
+//                        batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), rectangle, color);
+//                        offsetX += countX;
+//                        countX = 0;
+//                    }
+                    batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), cache.Rectangle, color);
+                    offsetX += cache.Rectangle.Width;
+                }
+
+                pre = ch;
             }
         }
 
@@ -296,8 +328,8 @@ namespace UGG.Core.Graphics
                 if (!(bitmapGlyph.Bitmap.Width == 0 || bitmapGlyph.Bitmap.Rows == 0))
                 {
                     var cBox = glyph.GetCBox(GlyphBBoxMode.Pixels);
-                    var ascender = font.Size.Metrics.Ascender.Ceiling();
-                    var rectangle = new Rectangle(x + cBox.Left, y + (ascender - cBox.Top), bitmapGlyph.Bitmap.Width, bitmapGlyph.Bitmap.Rows);
+                    var bearingY = font.Glyph.Metrics.VerticalAdvance.Ceiling();
+                    var rectangle = new Rectangle(x + cBox.Left, y + (bearingY - cBox.Top), bitmapGlyph.Bitmap.Width, bitmapGlyph.Bitmap.Rows);
                     var dataLength = bitmapGlyph.Bitmap.BufferData.Length;
                     if (dataLength > buffer.Length)
                     {
@@ -310,12 +342,13 @@ namespace UGG.Core.Graphics
                         buffer[i] = (ushort)((c << 4) | (c << 8) | (c << 12) | c);
                     }
 
-                    if (ch == '_')
-                    {
-                        rectangle.Y -= 1;
-                    }
-                    // else if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '.')
-                    else if (ch < 255)
+//                    if (ch == '_')
+//                    {
+//                        rectangle.Y -= 1;
+//                    }
+//                    // else if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch == '.')
+                    //else 
+                    if (ch < 255 && ch != '_')
                     {
                         rectangle.Y += 1;
                     }
@@ -330,6 +363,11 @@ namespace UGG.Core.Graphics
                         rectangle.Offset(0, -rectangle.Y);
                     }
 
+                    if (glyph.Advance.X.Ceiling() != rectangle.Width)
+                    {
+                        rectangle.Offset(Math.Abs(rectangle.Width - glyph.Advance.X.Ceiling()) / 2, 0);
+                    }
+
                     Texture.SetData(0, rectangle, buffer, 0, dataLength);
                 }
 
@@ -342,7 +380,9 @@ namespace UGG.Core.Graphics
                 var cache = new CharCache()
                 {
                     Rectangle = new Rectangle(x, y, advanceX, font.Size.Metrics.Height.Ceiling()),
-                    Texture = Texture
+                    Texture = Texture,
+                    Index = Count - 1,
+                    Pre = chars.Count > 1 ? chars[Count - 2] : (char?)null,
                 };
                 x += advanceX;
                 return cache;
