@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace UGG.Core.Utilities
+namespace UGG.Core.Graphics
 {
     static class C
     {

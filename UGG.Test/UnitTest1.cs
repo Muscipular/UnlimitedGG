@@ -9,14 +9,14 @@ namespace UGG.Test
         [Fact]
         public void Test1()
         {
-            var color = C.Parse("#f00");
-            Assert.Equal(255, color.R);
-            color = C.Parse("#ff0000");
-            Assert.Equal(255, color.R);
-            color = C.Parse("#ff0000");
-            Assert.Equal(255, color.R);
-            color = C.Parse("#ff0000ef");
-            Assert.Equal(0xef, color.A);
+//            var color = C.Parse("#f00");
+//            Assert.Equal(255, color.R);
+//            color = C.Parse("#ff0000");
+//            Assert.Equal(255, color.R);
+//            color = C.Parse("#ff0000");
+//            Assert.Equal(255, color.R);
+//            color = C.Parse("#ff0000ef");
+//            Assert.Equal(0xef, color.A);
         }
     }
 }

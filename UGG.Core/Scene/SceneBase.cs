@@ -8,11 +8,11 @@ namespace UGG.Core.Scene
 {
     abstract class SceneBase
     {
-        public List<UIContainerBase> Components;
+        public List<UIBase> Components;
 
         protected SceneBase()
         {
-            Components = new List<UIContainerBase>();
+            Components = new List<UIBase>();
         }
 
         public virtual void Update(GameTime time)

@@ -10,11 +10,11 @@ using SharpFont;
 using Color = Microsoft.Xna.Framework.Color;
 using Point = Microsoft.Xna.Framework.Point;
 
-namespace TestGame
+namespace UGG.Core.Graphics
 {
     static class FontUtil
     {
-        public static string FontPath = @".\Content\font.ttf";
+        public static string FontPath = @".\Content\font.ttc";
 
         private static Library library;
 
@@ -48,6 +48,7 @@ namespace TestGame
                 font.SetTransform();
                 fontCache.Add(key, font);
             }
+
             return font;
         }
 
@@ -135,6 +136,7 @@ namespace TestGame
             {
                 caches.Add(fontDesc, dic2 = new Dictionary<char, CharCache>());
             }
+
             foreach (var s in text)
             {
                 if (!dic2.TryGetValue(s, out var cache))
@@ -143,6 +145,16 @@ namespace TestGame
                     dic2.Add(s, cache);
                 }
             }
+        }
+
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int width)
+        {
+            batch.DrawStringEx(text, font, color, x, y, width, null);
+        }
+
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position, int width)
+        {
+            batch.DrawStringEx(text, font, color, position.X, position.Y, width, null);
         }
 
         public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y)
@@ -167,10 +179,11 @@ namespace TestGame
             {
                 caches.Add(fontDesc, dic2 = new Dictionary<char, CharCache>());
             }
+
+            var warpLine = width.HasValue;
+            int offsetX = 0;
+            int offsetY = 0;
             width = width ?? batch.GraphicsDevice.Viewport.Width;
-            int sx = 0;
-            int sy = 0;
-            var warp = width.HasValue;
             height = height ?? batch.GraphicsDevice.Viewport.Height;
             foreach (var s in text)
             {
@@ -179,25 +192,30 @@ namespace TestGame
                     cache = BuildCache(batch.GraphicsDevice, s, font);
                     dic2.Add(s, cache);
                 }
-                if (warp && sx + cache.Rectangle.Width > width || s == '\n')
+
+                if (warpLine && offsetX + cache.Rectangle.Width > width || s == '\n')
                 {
-                    sy += cache.Rectangle.Height;
-                    sx = 0;
+                    offsetY += cache.Rectangle.Height;
+                    offsetX = 0;
                 }
+
                 if (s == '\n' || s == '\r')
                 {
                     continue;
                 }
-                if (sy > height)
+
+                if (offsetY > height)
                 {
                     return;
                 }
-                if (!warp && sx > width)
+
+                if (!warpLine && offsetX > width)
                 {
                     return;
                 }
-                batch.Draw(cache.Texture, new Microsoft.Xna.Framework.Vector2(sx + x, sy + y), cache.Rectangle, color);
-                sx += cache.Rectangle.Width;
+
+                batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), cache.Rectangle, color);
+                offsetX += cache.Rectangle.Width;
             }
         }
 
@@ -222,22 +240,6 @@ namespace TestGame
             private static int Height = 1024;
 
 
-            public TextureCache(GraphicsDevice device, FontDesc fontDesc)
-            {
-                FontDesc = fontDesc;
-                switch (device.GraphicsProfile)
-                {
-                    case GraphicsProfile.HiDef:
-                        Height = Width = 2048;
-                        break;
-                    case GraphicsProfile.Reach:
-                        Width = 2048;
-                        Height = 1024;
-                        break;
-                }
-                Texture = new Texture2D(device, Width, Height, false, SurfaceFormat.Color);
-            }
-
             public CharCache AddChar(char ch, Face font, FontDesc fontDesc)
             {
                 var charIndex = font.GetCharIndex(ch);
@@ -255,18 +257,37 @@ namespace TestGame
                             y += font.Size.Metrics.Height.Ceiling();
                             x = 0;
                         }
+
                         if (y >= Height - font.Size.Metrics.Height.Ceiling())
                         {
                             full = true;
                             cache = new TextureCache(Texture.GraphicsDevice, fontDesc);
                             textures.Add(cache);
                         }
+
                         return cache.AddChar(ch, font, glyph, bitmapGlyph);
                     }
                 }
             }
 
-            private static uint[] buffer = new uint[1024];
+            private static ushort[] buffer = new ushort[1024];
+
+            public TextureCache(GraphicsDevice device, FontDesc fontDesc)
+            {
+                FontDesc = fontDesc;
+                switch (device.GraphicsProfile)
+                {
+                    case GraphicsProfile.HiDef:
+                        Height = Width = 2048;
+                        break;
+                    case GraphicsProfile.Reach:
+                        Width = 2048;
+                        Height = 1024;
+                        break;
+                }
+
+                Texture = new Texture2D(device, Width, Height, false, SurfaceFormat.Bgra4444);
+            }
 
             private CharCache AddChar(char ch, Face font, Glyph glyph, BitmapGlyph bitmapGlyph)
             {
@@ -280,13 +301,15 @@ namespace TestGame
                     var dataLength = bitmapGlyph.Bitmap.BufferData.Length;
                     if (dataLength > buffer.Length)
                     {
-                        buffer = new uint[dataLength];
+                        buffer = new ushort[dataLength];
                     }
+
                     for (int i = 0; i < dataLength; i++)
                     {
-                        var c = bitmapGlyph.Bitmap.BufferData[i];
-                        buffer[i] = (uint)((c << 8) | (c << 16) | (c << 24) | c);
+                        var c = bitmapGlyph.Bitmap.BufferData[i] >> 4;
+                        buffer[i] = (ushort)((c << 4) | (c << 8) | (c << 12) | c);
                     }
+
                     if (ch == '_')
                     {
                         rectangle.Y -= 1;
@@ -296,13 +319,26 @@ namespace TestGame
                     {
                         rectangle.Y += 1;
                     }
+
+                    if (rectangle.X < 0)
+                    {
+                        rectangle.Offset(-rectangle.X, 0);
+                    }
+
+                    if (rectangle.Y < 0)
+                    {
+                        rectangle.Offset(0, -rectangle.Y);
+                    }
+
                     Texture.SetData(0, rectangle, buffer, 0, dataLength);
                 }
+
                 var advanceX = glyph.Advance.X.Ceiling();
                 if (ch == '\t')
                 {
                     advanceX = font.Size.Metrics.NominalWidth * 2;
                 }
+
                 var cache = new CharCache()
                 {
                     Rectangle = new Rectangle(x, y, advanceX, font.Size.Metrics.Height.Ceiling()),

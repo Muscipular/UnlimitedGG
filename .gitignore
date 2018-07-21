@@ -8,3 +8,4 @@ node_modules/
 .idea
 /lua
 /UGG.Core/Content/*.ttf
+/UGG.Core/Content/*.ttc
