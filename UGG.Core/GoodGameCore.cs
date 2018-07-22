@@ -79,7 +79,7 @@ namespace UGG
 //            panel.Draw(gameTime);
 //            spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.BackToFront);
             var s = "啊实打实ABCDabcd_;'../,./\\\"|[]{}-=_+";
             spriteBatch.DrawStringEx(s, FontUtil.FontDefault, Color.Red, 0, 400, graphics.GraphicsDevice.Viewport.Width);
             spriteBatch.End();
