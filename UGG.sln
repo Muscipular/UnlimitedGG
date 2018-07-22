@@ -14,6 +14,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		UGG.Core\UGG.Core.projitems*{6cfc7a6a-b04f-47bf-9bae-814508dc45a0}*SharedItemsImports = 4
+		UGG.Core\UGG.Core.projitems*{763d1a73-bc4c-4bb7-9c40-38d897a024f9}*SharedItemsImports = 4
 		UGG.Core\UGG.Core.projitems*{b7074e28-c085-4bfe-a91e-7595681b8323}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

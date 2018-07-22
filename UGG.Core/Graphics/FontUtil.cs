@@ -172,6 +172,16 @@ namespace UGG.Core.Graphics
             batch.DrawStringEx(text, font, color, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
 
+        static void DrawCounted(SpriteBatch batch, ref CharCache cache, ref Color color, ref int x, ref int y, ref int countX1, ref int offsetY1, ref int offsetX1)
+        {
+            var rectangle = cache.Rectangle;
+            rectangle.Width = countX1;
+            batch.Draw(cache.Texture, new Vector2(offsetX1 + x, offsetY1 + y), rectangle, color);
+            offsetX1 += countX1;
+            countX1 = 0;
+            cache = null;
+        }
+
         public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int? width, int? height)
         {
             var fontDesc = new FontDesc(font);
@@ -188,6 +198,7 @@ namespace UGG.Core.Graphics
             int countX = 0;
             var textLength = text.Length;
             char pre = '\0';
+            CharCache headCache = null;
             for (var i = 0; i < textLength; i++)
             {
                 var ch = text[i];
@@ -199,15 +210,10 @@ namespace UGG.Core.Graphics
 
                 if (warpLine && offsetX + cache.Rectangle.Width + countX > width || ch == '\n')
                 {
-//                    if (countX > 0)
-//                    {
-//                        var rectangle = cache.Rectangle;
-//                        rectangle.X = rectangle.X - countX - rectangle.Width;
-//                        rectangle.Width = countX;
-//                        batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), rectangle, color);
-//                        offsetX += countX;
-//                        countX = 0;
-//                    }
+                    if (countX > 0)
+                    {
+                        DrawCounted(batch, ref headCache, ref color, ref x, ref y, ref countX, ref offsetY, ref offsetX);
+                    }
 
                     offsetY += cache.Rectangle.Height;
                     offsetX = 0;
@@ -228,21 +234,21 @@ namespace UGG.Core.Graphics
                     return;
                 }
 
-//                if (cache.Pre == pre)
-//                {
-//                    countX += cache.Rectangle.Width;
-//                }
-//                else
+                if (cache.Pre == pre)
                 {
-//                    if (countX > 0)
-//                    {
-//                        var rectangle = cache.Rectangle;
-//                        rectangle.X = rectangle.X - countX - rectangle.Width;
-//                        rectangle.Width = countX;
-//                        batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), rectangle, color);
-//                        offsetX += countX;
-//                        countX = 0;
-//                    }
+                    countX += cache.Rectangle.Width;
+                    if (headCache == null)
+                    {
+                        headCache = cache;
+                    }
+                }
+                else
+                {
+                    if (countX > 0)
+                    {
+                        DrawCounted(batch, ref headCache, ref color, ref x, ref y, ref countX, ref offsetY, ref offsetX);
+                    }
+
                     batch.Draw(cache.Texture, new Vector2(offsetX + x, offsetY + y), cache.Rectangle, color);
                     offsetX += cache.Rectangle.Width;
                 }
@@ -302,7 +308,11 @@ namespace UGG.Core.Graphics
                 }
             }
 
-            private static ushort[] buffer = new ushort[1024];
+#if OPENGL
+            private static uint[] buffer = new uint[4096];
+#else
+            private static ushort[] buffer = new ushort[4096];
+#endif
 
             public TextureCache(GraphicsDevice device, FontDesc fontDesc)
             {
@@ -318,7 +328,11 @@ namespace UGG.Core.Graphics
                         break;
                 }
 
+#if OPENGL
+                Texture = new Texture2D(device, Width, Height, false, SurfaceFormat.Color);
+#else
                 Texture = new Texture2D(device, Width, Height, false, SurfaceFormat.Bgra4444);
+#endif
             }
 
             private CharCache AddChar(char ch, Face font, Glyph glyph, BitmapGlyph bitmapGlyph)
@@ -333,13 +347,22 @@ namespace UGG.Core.Graphics
                     var dataLength = bitmapGlyph.Bitmap.BufferData.Length;
                     if (dataLength > buffer.Length)
                     {
+#if OPENGL
+                        buffer = new uint[dataLength];
+#else
                         buffer = new ushort[dataLength];
+#endif
                     }
 
                     for (int i = 0; i < dataLength; i++)
                     {
+#if OPENGL
+                        var c = bitmapGlyph.Bitmap.BufferData[i];
+                        buffer[i] = (uint)((c << 12) | (c << 16) | (c << 24) | c);
+#else
                         var c = bitmapGlyph.Bitmap.BufferData[i] >> 4;
                         buffer[i] = (ushort)((c << 4) | (c << 8) | (c << 12) | c);
+#endif
                     }
 
 //                    if (ch == '_')

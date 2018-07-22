@@ -13,8 +13,6 @@ using UGG.Core.Graphics;
 using UGG.Core.Component;
 using UGG.Core.Utilities;
 using UGG.Core.Utilities.Platform;
-using Color = Microsoft.Xna.Framework.Color;
-using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 //[assembly: InternalsVisibleTo("UGG.Test")]
 
@@ -71,19 +69,22 @@ namespace UGG
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
-            spriteBatch.Begin();
-            var p2 = new Panel(spriteBatch, new Rectangle(0, 0, 300, 300), Color.Aqua, new BorderDefine(1, Color.Black));
-            p2.AddChild(new TextComponent(spriteBatch, "asdasdASDASD134132das_c.:;,?!啊\n啊啊啊啊撒旦鬼地方鬼地方广泛的啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊^", Color.Red, FontUtil.FontDefault, Point.Zero));
-            p2.Draw(gameTime);
-            var panel = new Panel(spriteBatch, new Rectangle(10, 50, 300, 300), Color.Aqua, new BorderDefine(1, Color.Black));
-            panel.AddChild(new TextComponent(spriteBatch, "asdsdASD啊实打实cda12313F:ASD<?123213", Color.Blue, FontUtil.RequestFace(16), new Point(20, 20)));
-            panel.Draw(gameTime);
+            GraphicsDevice.Clear(C.Parse("#efefef"));
+//            spriteBatch.Begin();
+//            var p2 = new Panel(spriteBatch, new Rectangle(0, 0, 300, 300), Color.Aqua, new BorderDefine(1, Color.Black));
+//            p2.AddChild(new TextComponent(spriteBatch, "asdasdASDASD134132das_c.:;,?!啊\n啊啊啊啊撒旦鬼地方鬼地方广泛的啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊^", Color.Red, FontUtil.FontDefault, Point.Zero));
+//            p2.Draw(gameTime);
+//            var panel = new Panel(spriteBatch, new Rectangle(10, 50, 300, 300), Color.Aqua, new BorderDefine(1, Color.Black));
+//            panel.AddChild(new TextComponent(spriteBatch, "asdsdASD啊实打实cda12313F:ASD<?123213", Color.Blue, FontUtil.RequestFace(16), new Point(20, 20)));
+//            panel.Draw(gameTime);
+//            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             var s = "啊实打实ABCDabcd_;'../,./\\\"|[]{}-=_+";
             spriteBatch.DrawStringEx(s, FontUtil.FontDefault, Color.Red, 0, 400, graphics.GraphicsDevice.Viewport.Width);
             spriteBatch.End();
             base.Draw(gameTime);
-            Window.Title = $"GG({SimpleIoc.Instance.GetService<IPlatformTool>().RendererType}) FPS:{(1 / gameTime.GetElapsedSeconds()):0} Draw:{GraphicsDevice.Metrics.DrawCount} Primitive:{GraphicsDevice.Metrics.PrimitiveCount} Texture:{GraphicsDevice.Metrics.TextureCount}";
+            Window.Title = $"GG({SimpleIoc.Instance.GetService<IPlatformTool>().RendererType}) FPS:{(1 / gameTime.GetElapsedSeconds()):0} Draw:{GraphicsDevice.Metrics.DrawCount} Primitive:{GraphicsDevice.Metrics.PrimitiveCount} Texture:{GraphicsDevice.Metrics.TextureCount} Target:{GraphicsDevice.Metrics.TargetCount} Sprite:{GraphicsDevice.Metrics.SpriteCount}";
         }
     }
 }
