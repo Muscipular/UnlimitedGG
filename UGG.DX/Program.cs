@@ -18,10 +18,11 @@ namespace UGG.DX
         [STAThread]
         static void Main()
         {
-            SimpleIoc.Instance.Register<IPlatformTool>(new PlatformTool());
-            JsonConvert.SerializeObject(new { });
             using (var game = new GoodGameCore())
+            {
+                game.Services.AddService(typeof(IPlatformTool), new PlatformTool());
                 game.Run();
+            }
         }
     }
 

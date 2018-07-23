@@ -60,15 +60,15 @@ namespace UGG.Core.Component
         {
         }
 
-        public event Action<object> OnPressed;
+        public event EventHandler OnPressed;
 
         public ButtonState State => state;
 
         internal void SetState(ButtonState state) => this.state = state;
 
-        protected virtual void OnOnPressed(object obj)
+        protected virtual void OnOnPressed()
         {
-            OnPressed?.Invoke(obj);
+            OnPressed?.Invoke(this, EventArgs.Empty);
         }
     }
 
@@ -80,7 +80,7 @@ namespace UGG.Core.Component
         {
             Color = C.Parse("#000"),
             BgColor = C.Parse("#efefef"),
-            Border = null,
+            Border = new BorderDefine(1, C.Parse("#eee")),
             Texture = null,
         };
 
@@ -88,7 +88,7 @@ namespace UGG.Core.Component
         {
             Color = C.Parse("#000"),
             BgColor = C.Parse("#e3e3e3"),
-            Border = null,
+            Border = new BorderDefine(1, C.Parse("#ddd")),
             Texture = null,
         };
 
@@ -96,7 +96,7 @@ namespace UGG.Core.Component
         {
             Color = C.Parse("#000"),
             BgColor = C.Parse("#cccccc"),
-            Border = null,
+            Border = new BorderDefine(1, C.Parse("#aaa")),
             Texture = null,
         };
 
