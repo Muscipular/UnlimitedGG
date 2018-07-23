@@ -8,6 +8,8 @@ namespace UGG.Core.Component
 {
     internal abstract class UIBase : IDisposable, IDrawable
     {
+        public bool Hittest = true;
+
         public Rectangle Rectangle;
 
         public Rectangle RectangleAbs;

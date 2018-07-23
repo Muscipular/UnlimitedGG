@@ -51,7 +51,6 @@ namespace UGG
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Scene = new MainScene(this);
         }
 
         protected override void UnloadContent()
@@ -60,6 +59,10 @@ namespace UGG
 
         protected override void Update(GameTime gameTime)
         {
+            if (Scene == null)
+            {
+                SwitchToScene(new MainScene(this));
+            }
             _inputListenerComponent.Update(gameTime);
             Scene?.Update(gameTime);
             base.Update(gameTime);
@@ -75,7 +78,7 @@ namespace UGG
 
         private SceneBase Scene;
 
-        internal void SwitchTo(SceneBase scene, object arg)
+        internal void SwitchToScene(SceneBase scene, object arg = null)
         {
             Scene?.OnLeave(arg);
             Scene = scene;
