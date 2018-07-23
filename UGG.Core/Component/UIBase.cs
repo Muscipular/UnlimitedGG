@@ -23,6 +23,12 @@ namespace UGG.Core.Component
             RectangleAbs = rectangle;
         }
 
+        protected UIBase(SpriteBatch spriteBatch, Point location, Point size) : this(spriteBatch, new Rectangle(location, size))
+        {
+        }
+
+        public float Depth = 1;
+
         public int DrawOrder { get; set; }
 
         public bool Visible { get; set; } = true;
@@ -31,6 +37,7 @@ namespace UGG.Core.Component
         {
             Parent = parent;
             RectangleAbs.Offset(parent.ChildArea.Location);
+            Depth = parent.Depth * 100 + 1;
         }
 
         public virtual void Detach()

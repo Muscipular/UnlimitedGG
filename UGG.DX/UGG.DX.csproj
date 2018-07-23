@@ -96,6 +96,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpFont.Dependencies.2.6\build\SharpFont.Dependencies.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)\packages\ILMerge.2.14.1208\tools\ILMerge.exe /t:winexe /out:GG.exe $(TargetPath) $(TargetDir)\SharpDX.Direct2D1.dll $(TargetDir)\SharpDX.dll $(TargetDir)\SharpDX.Direct3D9.dll $(TargetDir)\SharpDX.Direct3D11.dll $(TargetDir)\SharpDX.DXGI.dll $(TargetDir)\SharpDX.MediaFoundation.dll $(TargetDir)\SharpDX.XAudio2.dll $(TargetDir)\SharpDX.XInput.dll $(TargetDir)\MonoGame.Extended.Animations.dll $(TargetDir)\MonoGame.Extended.dll $(TargetDir)\MonoGame.Extended.Graphics.dll $(TargetDir)\MonoGame.Extended.Input.dll $(TargetDir)\MonoGame.Extended.Tweening.dll $(TargetDir)\MonoGame.Framework.dll $(TargetDir)\Newtonsoft.Json.dll $(TargetDir)\SharpFont.dll</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

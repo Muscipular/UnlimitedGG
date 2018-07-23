@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using UGG.Core.Utilities;
 using UGG.Core.Utilities.Platform;
 using UGG.DX.Platform;
@@ -18,7 +19,7 @@ namespace UGG.DX
         static void Main()
         {
             SimpleIoc.Instance.Register<IPlatformTool>(new PlatformTool());
-
+            JsonConvert.SerializeObject(new { });
             using (var game = new GoodGameCore())
                 game.Run();
         }

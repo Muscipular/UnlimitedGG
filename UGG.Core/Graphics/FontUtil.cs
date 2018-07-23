@@ -57,7 +57,7 @@ namespace UGG.Core.Graphics
             var number = "1234567890";
             var engU = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var engL = engU.ToLower();
-            var dotEn = "~`!@#$%^&*()_+-=[]\\{}|;':\",./<>? ";
+            var dotEn = "~`!@#$%^&*()_+-=[]\\{}|;':\",./<>? \t";
             Preload(device, number, FontDefault);
             Preload(device, engU, FontDefault);
             Preload(device, engL, FontDefault);
@@ -198,7 +198,7 @@ namespace UGG.Core.Graphics
             int offsetX = 0;
             int offsetY = 0;
             width = width ?? batch.GraphicsDevice.Viewport.Width;
-            height = (height ?? batch.GraphicsDevice.Viewport.Height) - y;
+            height = height ?? batch.GraphicsDevice.Viewport.Height - y;
             int countX = 0;
             var textLength = text.Length;
             char pre = '\0';
@@ -343,8 +343,9 @@ namespace UGG.Core.Graphics
             {
                 Count++;
                 Chars.Add(ch);
-                var advanceX = glyph.Advance.X.Ceiling();
-                if (!(bitmapGlyph.Bitmap.Width == 0 || bitmapGlyph.Bitmap.Rows == 0))
+                var charIndex = font.GetCharIndex(ch);
+                var advanceX = charIndex > 0 ? glyph.Advance.X.Ceiling() : 0;
+                if ((charIndex > 0 || ch > 255) && !(bitmapGlyph.Bitmap.Width == 0 || bitmapGlyph.Bitmap.Rows == 0))
                 {
                     var cBox = glyph.GetCBox(GlyphBBoxMode.Pixels);
                     var bearingY = font.Glyph.Metrics.VerticalAdvance.Ceiling();
