@@ -88,7 +88,6 @@ namespace UGG
 
         protected override void Draw(GameTime gameTime)
         {
-            Mouse.SetCursor(MouseCursor.Arrow);
             GraphicsDevice.Clear(C.Parse("#054"));
             Scene?.Draw(gameTime);
             base.Draw(gameTime);

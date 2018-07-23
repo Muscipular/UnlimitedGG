@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 
 namespace UGG.Core.Component
 {
     abstract class UIContainerBase : UIBase
     {
+        public bool ChildHitTest = true;
+
         public virtual Rectangle ChildArea => RectangleAbs;
 
         protected List<UIBase> Children;
@@ -26,6 +29,7 @@ namespace UGG.Core.Component
             {
                 throw new ArgumentException();
             }
+
             Children.Add(child);
             child.Attach(this);
         }
@@ -44,6 +48,25 @@ namespace UGG.Core.Component
             {
                 child.Draw(time);
             }
+        }
+
+        public override bool DoHitTest(ref MouseState state, ref bool handled, ref UIBase target)
+        {
+            if (ChildHitTest)
+            {
+                var count = Children.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var child = Children[i];
+                    if (child.DoHitTest(ref state, ref handled, ref target) || handled)
+                    {
+                        handled = true;
+                        return false;
+                    }
+                }
+            }
+
+            return base.DoHitTest(ref state, ref handled, ref target);
         }
     }
 }

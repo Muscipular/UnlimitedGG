@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Input.InputListeners;
 
 namespace UGG.Core.Component
 {
     internal abstract class UIBase : IDisposable, IDrawable
     {
-        public bool Hittest = true;
+        public bool HitTest = true;
 
         public Rectangle Rectangle;
 
@@ -17,6 +19,12 @@ namespace UGG.Core.Component
         public UIContainerBase Parent;
 
         public SpriteBatch SpriteBatch;
+
+        public bool IsMouseHover;
+
+        public bool IsLeftPressed;
+
+        public bool IsRightPressed;
 
         protected UIBase(SpriteBatch spriteBatch, Rectangle rectangle)
         {
@@ -62,6 +70,24 @@ namespace UGG.Core.Component
 
         public virtual void Update(GameTime time)
         {
+        }
+
+        public virtual bool DoHitTest(ref MouseState state, ref bool handled, ref UIBase target)
+        {
+            if (HitTest)
+            {
+                if (RectangleAbs.Contains(state.Position))
+                {
+                    IsMouseHover = true;
+                    target = this;
+                    handled = true;
+                    return true;
+                }
+
+                IsMouseHover = false;
+            }
+
+            return false;
         }
     }
 }
