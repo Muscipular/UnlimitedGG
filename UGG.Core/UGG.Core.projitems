@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Component\IStateComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\ButtonBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\ButtonState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Logical\HitTestManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\Panel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\TextButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\TextComponent.cs" />

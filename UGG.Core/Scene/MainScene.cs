@@ -29,9 +29,9 @@ namespace UGG.Core.Scene
             
         }
 
-        public override void Update(GameTime time)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(time);
+            base.Update(gameTime);
             
         }
     }
