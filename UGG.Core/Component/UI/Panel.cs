@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using UGG.Core.Graphics;
 
 namespace UGG.Core.Component.UI
 {
@@ -8,19 +11,11 @@ namespace UGG.Core.Component.UI
     {
         public BorderDefine? Border;
 
-        public Color? BgColor;
+        public IDrawBrush Bg;
 
-        public IDrawable BgDrawable;
-
-        public Panel(SpriteBatch batch, Rectangle rectangle, Color background, BorderDefine? border = null) : base(batch, rectangle)
+        public Panel(SpriteBatch batch, Rectangle rectangle, IDrawBrush background, BorderDefine? border = null) : base(batch, rectangle)
         {
-            BgColor = background;
-            Border = border;
-        }
-
-        public Panel(SpriteBatch batch, Rectangle rectangle, IDrawable background, BorderDefine? border = null) : base(batch, rectangle)
-        {
-            BgDrawable = background;
+            Bg = background;
             Border = border;
         }
 
@@ -39,25 +34,21 @@ namespace UGG.Core.Component.UI
 
         public override void Draw(GameTime time)
         {
-            var rectangleF = RectangleAbs;
-            if (BgColor.HasValue)
+            var rectangleAbs = RectangleAbs;
+            if (Bg!=null && Bg.Visible)
             {
-                SpriteBatch.FillRectangle(rectangleF, BgColor.Value);
-            }
-            else if (BgDrawable?.Visible == true)
-            {
-                BgDrawable.Draw(time);
+                Bg.Draw(SpriteBatch, rectangleAbs);
             }
             if (Border.HasValue)
             {
-                SpriteBatch.DrawRectangle(rectangleF, Border.Value.Color, Border.Value.Width);
+                SpriteBatch.DrawRectangle(rectangleAbs, Border.Value.Color, Border.Value.Width);
             }
             base.Draw(time);
         }
 
         public override void Dispose()
         {
-            (BgDrawable as IDisposable)?.Dispose();
+            (Bg as IDisposable)?.Dispose();
         }
     }
 }

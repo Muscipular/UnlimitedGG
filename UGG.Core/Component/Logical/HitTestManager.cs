@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Extended.ViewportAdapters;
+using UGG.Core.Component.UI;
 using UGG.Core.Scene;
 
 namespace UGG.Core.Component.Logical
@@ -68,7 +69,7 @@ namespace UGG.Core.Component.Logical
             bool hitHandle = false;
             UIBase target = null;
             var state = Mouse.GetState();
-            var list = scene.Pop;
+            var list = scene.Context;
             var count = list.Count;
             for (var i = 0; i < count && !hitHandle; i++)
             {
@@ -78,8 +79,19 @@ namespace UGG.Core.Component.Logical
 
             if (!hitHandle)
             {
+                list = scene.Pop;
+                count = list.Count;
+                for (var i = 0; i < count && !hitHandle; i++)
+                {
+                    var uiBase = list[i];
+                    uiBase.DoHitTest(ref state, ref hitHandle, ref target);
+                }
+            }
+
+            if (!hitHandle)
+            {
                 list = scene.Panel;
-                count = scene.Panel.Count;
+                count = list.Count;
                 for (var i = 0; i < count && !hitHandle; i++)
                 {
                     var uiBase = list[i];

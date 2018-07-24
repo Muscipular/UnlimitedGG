@@ -7,32 +7,32 @@ namespace UGG.Core.Graphics
 {
     public struct HslColor
     {
-        private const float D1_6 = (1.0f / 6.0f);
+        private const double D1_6 = (1.0 / 6.0);
 
-        private const float D1_3 = (1.0f / 3.0f);
+        private const double D1_3 = (1.0 / 3.0);
 
-        private const float D2_3 = (2.0f / 3.0f);
+        private const double D2_3 = (2.0 / 3.0);
 
         // value from 0 to 1 
-        public float A;
+        public double A;
         // value from 0 to 360 
-        public float H;
+        public double H;
         // value from 0 to 1 
-        public float S;
+        public double S;
         // value from 0 to 1 
-        public float L;
+        public double L;
 
-        private const float TOLERANCE = 0.000001f;
+        private const double TOLERANCE = 0.0000000001f;
 
 
-        private static float ByteToPct(byte v)
+        private static double ByteToPct(byte v)
         {
-            float d = v;
+            double d = v;
             d /= 255;
             return d;
         }
 
-        private static byte PctToByte(float pct)
+        private static byte PctToByte(double pct)
         {
             pct *= 255;
             pct += .5f;
@@ -57,12 +57,12 @@ namespace UGG.Core.Graphics
         {
             HslColor c = new HslColor();
             c.A = 1;
-            float r = ByteToPct(R);
-            float g = ByteToPct(G);
-            float b = ByteToPct(B);
-            float max = Math.Max(b, Math.Max(r, g));
-            float min = Math.Min(b, Math.Min(r, g));
-            float deltaMinMax = max - min;
+            double r = ByteToPct(R);
+            double g = ByteToPct(G);
+            double b = ByteToPct(B);
+            double max = Math.Max(b, Math.Max(r, g));
+            double min = Math.Min(b, Math.Min(r, g));
+            double deltaMinMax = max - min;
             if (Math.Abs(deltaMinMax) < TOLERANCE)
             {
                 c.H = 0;
@@ -100,7 +100,7 @@ namespace UGG.Core.Graphics
             return c;
         }
 
-        public HslColor Lighten(float pct)
+        public HslColor Lighten(double pct)
         {
             HslColor c = new HslColor();
             c.A = this.A;
@@ -110,19 +110,19 @@ namespace UGG.Core.Graphics
             return c;
         }
 
-        public HslColor Darken(float pct)
+        public HslColor Darken(double pct)
         {
             return Lighten(-pct);
         }
 
-        private float norm(float d)
+        private double norm(double d)
         {
             if (d < 0) d += 1;
             if (d > 1) d -= 1;
             return d;
         }
 
-        private float getComponent(float tc, float p, float q)
+        private double getComponent(double tc, double p, double q)
         {
             if (tc < D1_6)
             {
@@ -141,7 +141,7 @@ namespace UGG.Core.Graphics
 
         public Color ToColor()
         {
-            float q = 0;
+            double q = 0;
             if (L < .5)
             {
                 q = L * (1 + S);
@@ -150,11 +150,11 @@ namespace UGG.Core.Graphics
             {
                 q = L + S - (L * S);
             }
-            float p = (2 * L) - q;
-            float hk = H / 360f;
-            float r = getComponent(norm(hk + D1_3), p, q);
-            float g = getComponent(norm(hk), p, q);
-            float b = getComponent(norm(hk - D1_3), p, q);
+            double p = (2 * L) - q;
+            double hk = H / 360f;
+            double r = getComponent(norm(hk + D1_3), p, q);
+            double g = getComponent(norm(hk), p, q);
+            double b = getComponent(norm(hk - D1_3), p, q);
             return new Color(PctToByte(A), PctToByte(r), PctToByte(g), PctToByte(b));
         }
 

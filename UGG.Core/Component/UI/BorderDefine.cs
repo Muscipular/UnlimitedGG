@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace UGG.Core.Component
+namespace UGG.Core.Component.UI
 {
     struct BorderDefine
     {

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Input.InputListeners;
 
-namespace UGG.Core.Component
+namespace UGG.Core.Component.UI
 {
     internal abstract class UIBase : IDisposable, IDrawable
     {

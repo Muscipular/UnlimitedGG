@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using UGG.Core.Component;
 using UGG.Core.Component.Logical;
+using UGG.Core.Component.UI;
 
 namespace UGG.Core.Scene
 {
-
     abstract class SceneBase
     {
         protected readonly SpriteBatch spriteBatch;
@@ -19,10 +19,12 @@ namespace UGG.Core.Scene
 
         public List<UIBase> Pop;
 
+        public List<UIBase> Context;
+
         private readonly GoodGameCore game;
 
         private HitTestManager hitTestManager;
-        
+
         protected SceneBase(GoodGameCore game)
         {
             this.game = game;
@@ -31,11 +33,18 @@ namespace UGG.Core.Scene
             Backgroup = new List<UIBase>();
             Panel = new List<UIBase>();
             Pop = new List<UIBase>();
+            Context = new List<UIBase>();
         }
 
         public virtual void Update(GameTime gameTime)
         {
             hitTestManager.Update(gameTime);
+            for (var i = 0; i < Context.Count; i++)
+            {
+                var uiBase = Context[i];
+                uiBase.Update(gameTime);
+            }   
+            
             for (var i = 0; i < Pop.Count; i++)
             {
                 var uiBase = Pop[i];

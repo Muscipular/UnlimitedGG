@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using UGG.Core.Component;
+using UGG.Core.Component.UI;
 
 namespace UGG.Core.Scene
 {

@@ -9,16 +9,17 @@
     <Import_RootNamespace>UGG.Core</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Component\BorderDefine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\BorderDefine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\IStateComponent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\ButtonBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\ButtonState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\ButtonBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\ButtonState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\Logical\HitTestManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\Panel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\TextButton.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\TextComponent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\UIBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Component\UIContainerBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\IDrawBrush.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\Panel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\TextButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\TextComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\UIBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\UIContainerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FSMsharp\FSM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FSMsharp\FsmSnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FSMsharp\FsmStateBehaviour.cs" />

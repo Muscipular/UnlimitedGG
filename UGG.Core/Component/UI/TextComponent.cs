@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SharpFont;
+using UGG.Core.Graphics;
 
 namespace UGG.Core.Component.UI
 {

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpFont;
 using UGG.Core.Graphics;
 
-namespace UGG.Core.Component
+namespace UGG.Core.Component.UI
 {
     class TextButton : ButtonBase
     {
@@ -15,25 +15,22 @@ namespace UGG.Core.Component
         public static StateStyle DefaultStyle = new StateStyle()
         {
             Color = C.Parse("#000"),
-            BgColor = C.Parse("#efefef"),
+            Bg = new ColorBrush(C.Parse("#efefef")),
             Border = new BorderDefine(1, C.Parse("#eee")),
-            Texture = null,
         };
 
         public static StateStyle DefaultHoverStyle = new StateStyle()
         {
             Color = C.Parse("#000"),
-            BgColor = C.Parse("#e3e3e3"),
-            Border = new BorderDefine(1, C.Parse("#ddd")),
-            Texture = null,
+            Bg = new ColorBrush(C.Parse("#efefef")),
+            Border = new BorderDefine(1, C.Parse("#eee").Darken(0.1f)),
         };
 
         public static StateStyle DefaultPressStyle = new StateStyle()
         {
             Color = C.Parse("#000"),
-            BgColor = C.Parse("#cccccc"),
-            Border = new BorderDefine(1, C.Parse("#aaa")),
-            Texture = null,
+            Bg = new ColorBrush(C.Parse("#efefef")),
+            Border = new BorderDefine(1, C.Parse("#eee").Darken(0.2f)),
         };
 
         public class StateStyle
@@ -42,9 +39,7 @@ namespace UGG.Core.Component
 
             public Face Font;
 
-            public Color BgColor;
-
-            public Texture2D Texture;
+            public IDrawBrush Bg;
 
             public BorderDefine? Border;
 
@@ -82,9 +77,9 @@ namespace UGG.Core.Component
                 style = defaultStyle;
             }
 
-            if (style.BgColor.A > 0)
+            if (style.Bg?.Visible == true)
             {
-                SpriteBatch.FillRectangle(RectangleAbs, style.BgColor, 0);
+                style.Bg.Draw(SpriteBatch, RectangleAbs);
             }
 
             var textRect = RectangleAbs;
