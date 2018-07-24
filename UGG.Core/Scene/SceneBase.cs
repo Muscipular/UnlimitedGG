@@ -42,12 +42,12 @@ namespace UGG.Core.Scene
 
         private void MouseButtonStateChange(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButton.Left)
+            if (e.Button == MouseButton.Left && currentHover != null)
             {
                 currentHover.IsLeftPressed = e.CurrentState.LeftButton == ButtonState.Pressed;
             }
 
-            if (e.Button == MouseButton.Right)
+            if (e.Button == MouseButton.Right && currentHover != null)
             {
                 currentHover.IsRightPressed = e.CurrentState.RightButton == ButtonState.Pressed;
             }
@@ -74,7 +74,7 @@ namespace UGG.Core.Scene
         public virtual void Update(GameTime time)
         {
             bool hitHandle = false;
-            var target = currentHover;
+            UIBase target = null;
             var state = Mouse.GetState();
             for (var i = 0; i < Pop.Count && !hitHandle; i++)
             {

@@ -238,7 +238,7 @@ namespace UGG.Core.Graphics
                     return;
                 }
 
-                if (cache.Pre == pre)
+                if (cache.Pre == pre|| headCache== null)
                 {
                     countX += cache.Rectangle.Width;
                     if (headCache == null)
@@ -258,6 +258,10 @@ namespace UGG.Core.Graphics
                 }
 
                 pre = ch;
+            }
+            if (countX > 0)
+            {
+                DrawCounted(batch, ref headCache, ref color, ref x, ref y, ref countX, ref offsetY, ref offsetX);
             }
         }
 

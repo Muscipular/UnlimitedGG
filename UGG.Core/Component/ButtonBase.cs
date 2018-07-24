@@ -67,12 +67,23 @@ namespace UGG.Core.Component
 
         public void OnClicked(MouseButton button)
         {
-            Clicked?.Invoke(this, button);
+            if (EnsureButtonClicked(button))
+            {
+                Clicked?.Invoke(this, button);
+            }
+        }
+
+        private bool EnsureButtonClicked(MouseButton button)
+        {
+            return button == MouseButton.Left && IsLeftPressed || button == MouseButton.Right && IsRightPressed;
         }
 
         public void OnDoubleClicked(MouseButton button)
         {
-            DoubleClicked?.Invoke(this, button);
+            if (EnsureButtonClicked(button))
+            {
+                DoubleClicked?.Invoke(this, button);
+            }
         }
 
         public event EventHandler<MouseButton> Clicked;

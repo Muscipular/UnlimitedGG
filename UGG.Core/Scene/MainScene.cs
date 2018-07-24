@@ -17,9 +17,11 @@ namespace UGG.Core.Scene
             this.Panel.Add(button);
         }
 
+        private int count;
+
         private void Button_Clicked(object sender, MonoGame.Extended.Input.InputListeners.MouseButton e)
         {
-            
+            (this.Panel[0] as TextButton).Text = (count++).ToString();
         }
 
         private void StartPressed(object sender, EventArgs e)
