@@ -41,24 +41,31 @@ namespace UGG.Core.Component.Logical
             // listener.MouseUp += this.MouseButtonStateChange;
         }
 
-        private void MouseClicked(MouseButton button)
+        private bool MouseClicked(MouseButton button)
         {
             if (currentHover is IClickable clickable)
             {
-                clickable.OnClicked(button);
-                currentHover.IsLeftPressed = false;
-                currentHover.IsRightPressed = false;
+                var b = clickable.OnClicked(button);
+                // currentHover.IsLeftPressed = false;
+                // currentHover.IsRightPressed = false;
+                return b;
             }
+            return false;
         }
 
-        private void MouseDoubleClicked(MouseButton button)
+        private bool MouseDoubleClicked(MouseButton button)
         {
             if (currentHover is IClickable clickable)
             {
-                clickable.OnDoubleClicked(button);
-                currentHover.IsLeftPressed = false;
-                currentHover.IsRightPressed = false;
+                var b = clickable.OnDoubleClicked(button);
+                // if (b)
+                // {
+                //     currentHover.IsLeftPressed = false;
+                //     currentHover.IsRightPressed = false;
+                // }
+                return b;
             }
+            return false;
         }
 
         private UIBase currentHover;
@@ -137,13 +144,20 @@ namespace UGG.Core.Component.Logical
             switch (buttonState)
             {
                 case ButtonState.Released:
-                    if ((PreFrameButtonState & ToFlag(button, ButtonState.Pressed)) != 0 && currentHover == LastClickTarget)
+                    if ((PreFrameButtonState & ToFlag(button, ButtonState.Pressed)) != 0 && currentHover == LastClickTarget && currentHover != null)
                     {
                         var now = DateTime.Now;
                         if ((now - LastClick).TotalMilliseconds < 300)
                         {
-                            MouseDoubleClicked(button);
-                            LastClick = DateTime.MinValue;
+                            if (MouseDoubleClicked(button))
+                            {
+                                LastClick = DateTime.MinValue;
+                            }
+                            else
+                            {
+                                MouseClicked(button);
+                                LastClick = now;
+                            }
                         }
                         else
                         {
@@ -151,6 +165,8 @@ namespace UGG.Core.Component.Logical
                             LastClick = now;
                         }
                         PreFrameButtonState = 0;
+                        LastClickTarget.IsLeftPressed = false;
+                        LastClickTarget.IsRightPressed = false;
                         LastClickTarget = null;
                         return true;
                     }

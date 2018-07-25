@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -65,25 +66,32 @@ namespace UGG.Core.Component.UI
 
         internal void SetState(ButtonState state) => this.state = state;
 
-        public void OnClicked(MouseButton button)
+        public bool OnClicked(MouseButton button)
         {
-            if (EnsureButtonClicked(button))
+            var handler = Clicked;
+            if (EnsureButtonClicked(button) && handler != null)
             {
-                Clicked?.Invoke(this, button);
+                handler(this, button);
+                return true;
             }
+            return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool EnsureButtonClicked(MouseButton button)
         {
             return button == MouseButton.Left && IsLeftPressed || button == MouseButton.Right && IsRightPressed;
         }
 
-        public void OnDoubleClicked(MouseButton button)
+        public bool OnDoubleClicked(MouseButton button)
         {
-            if (EnsureButtonClicked(button))
+            var handler = DoubleClicked;
+            if (EnsureButtonClicked(button) && handler != null)
             {
-                DoubleClicked?.Invoke(this, button);
+                handler(this, button);
+                return true;
             }
+            return false;
         }
 
         public event EventHandler<MouseButton> Clicked;

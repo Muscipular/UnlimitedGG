@@ -13,9 +13,9 @@ namespace UGG.Core.Component
 
     interface IClickable
     {
-        void OnClicked(MouseButton button);
+        bool OnClicked(MouseButton button);
 
-        void OnDoubleClicked(MouseButton button);
+        bool OnDoubleClicked(MouseButton button);
 
         event EventHandler<MouseButton> Clicked;
 
