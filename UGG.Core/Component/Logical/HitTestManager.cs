@@ -100,7 +100,7 @@ namespace UGG.Core.Component.Logical
             UIBase target = null;
             var list = scene.Context;
             var count = list.Count;
-            for (var i = 0; i < count && !hitHandle; i++)
+            for (var i = count - 1; i >= 0 && !hitHandle; i--)
             {
                 var uiBase = list[i];
                 uiBase.DoHitTest(ref state, ref hitHandle, ref target);
@@ -110,7 +110,7 @@ namespace UGG.Core.Component.Logical
             {
                 list = scene.Pop;
                 count = list.Count;
-                for (var i = 0; i < count && !hitHandle; i++)
+                for (var i = count - 1; i >= 0 && !hitHandle; i--)
                 {
                     var uiBase = list[i];
                     uiBase.DoHitTest(ref state, ref hitHandle, ref target);
@@ -121,7 +121,7 @@ namespace UGG.Core.Component.Logical
             {
                 list = scene.Panel;
                 count = list.Count;
-                for (var i = 0; i < count && !hitHandle; i++)
+                for (var i = count - 1; i >= 0 && !hitHandle; i--)
                 {
                     var uiBase = list[i];
                     uiBase.DoHitTest(ref state, ref hitHandle, ref target);
