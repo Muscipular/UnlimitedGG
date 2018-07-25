@@ -22,14 +22,14 @@ namespace UGG.Core.Component.UI
         public static StateStyle DefaultHoverStyle = new StateStyle()
         {
             Color = C.Parse("#000"),
-            Bg = new ColorBrush(C.Parse("#efefef")),
+            Bg = new ColorBrush(C.Parse("#f00")),
             Border = new BorderDefine(1, C.Parse("#eee").Darken(0.1f)),
         };
 
         public static StateStyle DefaultPressStyle = new StateStyle()
         {
             Color = C.Parse("#000"),
-            Bg = new ColorBrush(C.Parse("#efefef")),
+            Bg = new ColorBrush(C.Parse("#ff0")),
             Border = new BorderDefine(1, C.Parse("#eee").Darken(0.2f)),
         };
 
@@ -88,7 +88,7 @@ namespace UGG.Core.Component.UI
                 var thickness = style.Border.Value.Width;
                 SpriteBatch.DrawRectangle(RectangleAbs, style.Border.Value.Color, thickness);
                 textRect.Offset(thickness, thickness);
-                textRect.Inflate(thickness << 1, thickness << 1);
+                textRect.Inflate(-(thickness << 1), -(thickness << 1));
             }
 
             textRect.Offset(style.Padding.W, style.Padding.X);

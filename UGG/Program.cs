@@ -16,9 +16,11 @@ namespace UGG
         [STAThread]
         static void Main()
         {
-            SimpleIoc.Instance.Register<IPlatformTool>(new PlatformTool());
             using (var game = new GoodGameCore())
+            {
+                game.Services.AddService<IPlatformTool>(new PlatformTool());
                 game.Run();
+            }
         }
     }
 }

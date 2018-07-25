@@ -15,7 +15,13 @@ namespace UGG.Core.Scene
             var viewport = spriteBatch.GraphicsDevice.Viewport;
             var button = new TextButton(spriteBatch, new Point(viewport.Width / 2 - 50, viewport.Height / 2 - 16), new Point(100, 32), "AAAAA");
             button.Clicked += this.Button_Clicked;
+            button.DoubleClicked += Button_DoubleClicked;
             this.Panel.Add(button);
+        }
+
+        private void Button_DoubleClicked(object sender, MonoGame.Extended.Input.InputListeners.MouseButton e)
+        {
+            (this.Panel[0] as TextButton).Text = (count++).ToString() + "DB";
         }
 
         private int count;
@@ -27,13 +33,11 @@ namespace UGG.Core.Scene
 
         private void StartPressed(object sender, EventArgs e)
         {
-            
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            
         }
     }
 }

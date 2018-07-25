@@ -72,7 +72,7 @@ namespace UGG.Core.Scene
             }
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.BackToFront);
+            spriteBatch.Begin();
             for (var i = 0; i < Panel.Count; i++)
             {
                 Panel[i].Draw(gameTime);
@@ -81,7 +81,7 @@ namespace UGG.Core.Scene
             spriteBatch.End();
             for (var i = 0; i < Pop.Count; i++)
             {
-                spriteBatch.Begin(SpriteSortMode.BackToFront);
+                spriteBatch.Begin();
                 Pop[i].Draw(gameTime);
                 spriteBatch.End();
             }

@@ -53,7 +53,7 @@ namespace UGG.Core.Component.UI
 
         public sealed override void Update(GameTime time)
         {
-            state = IsMouseHover ? Mouse.GetState().LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed ? ButtonState.Pressed : ButtonState.Hover : ButtonState.Normal;
+            state = IsMouseHover ? IsLeftPressed ? ButtonState.Pressed : ButtonState.Hover : ButtonState.Normal;
             OnUpdate(time);
         }
 
