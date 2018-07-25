@@ -55,7 +55,7 @@ namespace UGG.Core.Component.UI
             if (ChildHitTest)
             {
                 var count = Children.Count;
-                for (int i = 0; i < count; i++)
+                for (int i = count - 1; i >= 0; i--)
                 {
                     var child = Children[i];
                     if (child.DoHitTest(ref state, ref handled, ref target) || handled)
