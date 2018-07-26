@@ -15,26 +15,9 @@ namespace UGG.Core.Scene
             var viewport = spriteBatch.GraphicsDevice.Viewport;
             var button = new TextButton(spriteBatch, new Point(viewport.Width / 2 - 50, viewport.Height / 2 - 16), new Point(100, 32), "AAAAA");
             var button2 = new TextButton(spriteBatch, new Point(viewport.Width / 2 - 0, viewport.Height / 2 - 16), new Point(100, 32), "AAAAA");
-            button.Clicked += this.Button_Clicked;
-            // button.DoubleClicked += Button_DoubleClicked;
+            var p = new TooltipComponent(spriteBatch, this, button2, new Panel(spriteBatch, new Rectangle(0, 0, 100, 50), new ColorBrush(Color.Black)), TooltipComponent.PosistionMode.Parent, new Point(0, 10));
             this.Panel.Add(button);
-            this.Panel.Add(button2);
-        }
-
-        private void Button_DoubleClicked(object sender, MonoGame.Extended.Input.InputListeners.MouseButton e)
-        {
-            (this.Panel[0] as TextButton).Text = (count++).ToString() + "DB";
-        }
-
-        private int count;
-
-        private void Button_Clicked(object sender, MonoGame.Extended.Input.InputListeners.MouseButton e)
-        {
-            (this.Panel[0] as TextButton).Text = (count++).ToString();
-        }
-
-        private void StartPressed(object sender, EventArgs e)
-        {
+            this.Panel.Add(p);
         }
 
         public override void Update(GameTime gameTime)

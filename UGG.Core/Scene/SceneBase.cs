@@ -43,8 +43,8 @@ namespace UGG.Core.Scene
             {
                 var uiBase = Context[i];
                 uiBase.Update(gameTime);
-            }   
-            
+            }
+
             for (var i = 0; i < Pop.Count; i++)
             {
                 var uiBase = Pop[i];
@@ -66,25 +66,40 @@ namespace UGG.Core.Scene
         public virtual void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-            for (var i = 0; i < Backgroup.Count; i++)
+            var list = Backgroup;
+            var count = list.Count;
+            for (var i = 0; i < count; i++)
             {
-                Backgroup[i].Draw(gameTime);
+                list[i].Draw(gameTime);
             }
-
             spriteBatch.End();
+
             spriteBatch.Begin();
-            for (var i = 0; i < Panel.Count; i++)
+            list = Panel;
+            count = list.Count;
+            for (var i = 0; i < count; i++)
             {
-                Panel[i].Draw(gameTime);
+                list[i].Draw(gameTime);
             }
-
             spriteBatch.End();
-            for (var i = 0; i < Pop.Count; i++)
+
+            list = Pop;
+            count = list.Count;
+            for (var i = 0; i < count; i++)
             {
                 spriteBatch.Begin();
-                Pop[i].Draw(gameTime);
+                list[i].Draw(gameTime);
                 spriteBatch.End();
             }
+
+            list = Context;
+            count = list.Count;
+            spriteBatch.Begin();
+            for (var i = 0; i < count; i++)
+            {
+                list[i].Draw(gameTime);
+            }
+            spriteBatch.End();
         }
 
         public virtual void OnEnter(object arg)

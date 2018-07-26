@@ -9,6 +9,7 @@
     <Import_RootNamespace>UGG.Core</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Component\IClickable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\BorderDefine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\IStateComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\ButtonBase.cs" />
@@ -18,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\Panel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\TextButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\TextComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\UI\TooltipComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\UIBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\UI\UIContainerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FSMsharp\FSM.cs" />
