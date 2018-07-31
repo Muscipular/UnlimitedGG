@@ -46,6 +46,19 @@ namespace UGG.Core.Component.UI
             public string Text;
 
             public Vector4 Padding;
+
+            public StateStyle Override(Color? color = null, Face font = null, IDrawBrush bg = null, BorderDefine? border = null, string text = null, Vector4? padding = null)
+            {
+                return new StateStyle()
+                {
+                    Color = color ?? Color,
+                    Font = font ?? Font,
+                    Bg = bg ?? Bg,
+                    Border = border ?? Border,
+                    Text = text ?? Text,
+                    Padding = padding ?? Padding,
+                };
+            }
         }
 
         public Dictionary<ButtonState, StateStyle> Style;
