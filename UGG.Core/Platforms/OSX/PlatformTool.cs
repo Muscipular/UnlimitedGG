@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UGG.Core.Utilities.Platform;
 
-namespace UGG.DX.Platform
+#if WINDOWS
+namespace UGG.Core.Platforms
 {
     class PlatformTool : IPlatformTool
     {
@@ -14,3 +11,4 @@ namespace UGG.DX.Platform
         public PlatformType PlatformType => PlatformType.Window;
     }
 }
+#endif

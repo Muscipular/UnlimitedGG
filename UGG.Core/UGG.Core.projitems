@@ -37,15 +37,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\LRUCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\PlatformTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\UnsafeUtil.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platforms\Win\PlatformTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platforms\OSX\PlatformTool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Content\font.ttf">
+    <Content Include="$(MSBuildThisFileDirectory)Content\font.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Content\font.ttc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="$(MSBuildThisFileDirectory)Platforms\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Platforms\Win\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Platforms\OSX\" />
   </ItemGroup>
 </Project>

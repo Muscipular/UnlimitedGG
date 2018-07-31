@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Input.InputListeners;
 using UGG.Core.Graphics;
+using UGG.Core.Platforms;
 using UGG.Core.Scene;
 using UGG.Core.Utilities.Platform;
 
@@ -27,6 +28,7 @@ namespace UGG
         public GoodGameCore()
         {
             Instance = this;
+            Services.AddService<IPlatformTool>(new PlatformTool());
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }

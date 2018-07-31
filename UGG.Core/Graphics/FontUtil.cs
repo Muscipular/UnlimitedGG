@@ -12,7 +12,7 @@ namespace UGG.Core.Graphics
 {
     static class FontUtil
     {
-        public static string FontPath = @".\Content\font.ttf";
+        public static string FontPath = @"./Content/font.ttf";
 
         private static Library library;
 
