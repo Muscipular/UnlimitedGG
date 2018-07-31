@@ -48,11 +48,23 @@ namespace UGG.Core.Component.UI
             public Vector4 Padding;
         }
 
-        public readonly Dictionary<ButtonState, StateStyle> Style = new Dictionary<ButtonState, StateStyle>();
+        public Dictionary<ButtonState, StateStyle> Style;
 
-        public TextButton(SpriteBatch spriteBatch, Point location, Point size, string text) : base(spriteBatch, location, size)
+        public TextButton(SpriteBatch spriteBatch, Point location, Point size, string text, StateStyle normal = null, StateStyle hover = null, StateStyle pressed = null) : base(spriteBatch, location, size)
         {
+            void AddStyle(ButtonState buttonState1, StateStyle stateStyle)
+            {
+                if (stateStyle != null)
+                {
+                    Style = Style ?? new Dictionary<ButtonState, StateStyle>();
+                    Style.Add(buttonState1, stateStyle);
+                }
+            }
+
             Text = text;
+            AddStyle(ButtonState.Normal, normal);
+            AddStyle(ButtonState.Hover, hover);
+            AddStyle(ButtonState.Pressed, pressed);
         }
 
         protected override void DrawNormal(GameTime time)
@@ -72,7 +84,8 @@ namespace UGG.Core.Component.UI
 
         private void Draw(ButtonState buttonState, StateStyle defaultStyle)
         {
-            if (!Style.TryGetValue(buttonState, out var style))
+            StateStyle style = null;
+            if (Style?.TryGetValue(buttonState, out style) != true)
             {
                 style = defaultStyle;
             }

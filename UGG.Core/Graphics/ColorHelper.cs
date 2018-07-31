@@ -82,5 +82,9 @@ namespace UGG.Core.Graphics
         internal static Color Darken(this Color color, float value) => HslColor.FromColor(color).Darken(value).ToColor();
 
         internal static Color Lighten(this Color color, float value) => HslColor.FromColor(color).Lighten(value).ToColor();
+
+        internal static Color FadeTo(this Color color, float value) => new Color(color, value);
+
+        internal static Color Fade(this Color color, float value) => new Color(color, color.A * value / byte.MaxValue);
     }
 }
