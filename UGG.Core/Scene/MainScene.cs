@@ -18,11 +18,12 @@ namespace UGG.Core.Scene
                 bg: new NinePatchTextureBrush(game.Content.Load<Texture2D>("b"), new Rectangle(10, 10, 10, 10), Color.White),
                 border: BorderDefine.None,
                 padding: new Vector4(10, 10, 10, 10),
-                color: Color.GreenYellow
+                color: Color.Black
             );
             var button = new TextButton(spriteBatch, new Point(0, 0), new Point(100, 32), "啊收到了吗", normal, normal.Override(
                 bg: new NinePatchTextureBrush(game.Content.Load<Texture2D>("b"), new Rectangle(10, 10, 10, 10), Color.Red)
-                ), normal.Override(
+                ), 
+                normal.Override(
                 bg: new NinePatchTextureBrush(game.Content.Load<Texture2D>("b"), new Rectangle(10, 10, 10, 10), Color.Yellow)
                 ));
             var button2 = new TextButton(spriteBatch, new Point(0, 32), new Point(100, 32), "AAAAA", TextButton.DefaultStyle.Override(border: BorderDefine.None));

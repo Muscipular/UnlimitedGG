@@ -10,6 +10,24 @@ using UGG.Core.Utilities.Platform;
 
 namespace UGG.Core.Graphics
 {
+    enum FontAlignment
+    {
+        Left,
+
+        Center,
+
+        Right,
+    }
+
+    enum FontVerticalAlignment
+    {
+        Top,
+
+        Center,
+
+        Bottom,
+    }
+
     static class FontUtil
     {
         public static string FontPath = @"./Content/font.ttf";
@@ -133,7 +151,9 @@ namespace UGG.Core.Graphics
 
         private static Dictionary<FontDesc, Dictionary<char, CharCache>> caches = new Dictionary<FontDesc, Dictionary<char, CharCache>>();
 
-        public static void Preload(GraphicsDevice device, string text, SharpFont.Face font)
+        private static List<(Texture2D texture, Rectangle rectangle, Point location)> list = new List<(Texture2D texture, Rectangle rectangle, Point location)>(100);
+
+        public static void Preload(GraphicsDevice device, string text, Face font)
         {
             var fontDesc = new FontDesc(font);
             if (!caches.TryGetValue(fontDesc, out var dic2))
@@ -151,29 +171,29 @@ namespace UGG.Core.Graphics
             }
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int width, float depth = 0)
+        public static void DrawStringEx(this SpriteBatch batch, string text, Face font, Color color, int x, int y, int width, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, x, y, width, null, depth);
+            batch.DrawStringEx(text, font, color, x, y, width, null, FontAlignment.Left, FontVerticalAlignment.Top, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position, int width, float depth = 0)
+        public static void DrawStringEx(this SpriteBatch batch, string text, Face font, Color color, Point position, int width, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, position.X, position.Y, width, null, depth);
+            batch.DrawStringEx(text, font, color, position.X, position.Y, width, null, FontAlignment.Left, FontVerticalAlignment.Top, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, float depth = 0)
+        public static void DrawStringEx(this SpriteBatch batch, string text, Face font, Color color, int x, int y, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, x, y, null, null, depth);
+            batch.DrawStringEx(text, font, color, x, y, null, null, FontAlignment.Left, FontVerticalAlignment.Top, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position, float depth = 0)
+        public static void DrawStringEx(this SpriteBatch batch, string text, Face font, Color color, Point position, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, position.X, position.Y, null, null, depth);
+            batch.DrawStringEx(text, font, color, position.X, position.Y, null, null, FontAlignment.Left, FontVerticalAlignment.Top, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Rectangle rectangle, float depth = 0)
+        public static void DrawStringEx(this SpriteBatch batch, string text, Face font, Color color, Rectangle rectangle, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, depth);
+            batch.DrawStringEx(text, font, color, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height,FontAlignment.Left,FontVerticalAlignment.Top,  depth);
         }
 
         static void DrawCounted(SpriteBatch batch, ref CharCache cache, ref Color color, ref int x, ref int y, ref int countX1, ref int offsetY1, ref int offsetX1)
@@ -186,12 +206,70 @@ namespace UGG.Core.Graphics
             cache = null;
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int? width, int? height, float depth = 0)
+        public static Rectangle Measure(
+            this SpriteBatch batch,
+            string text,
+            Face font,
+            int? width = null,
+            int? height = null,
+            FontAlignment alignment = FontAlignment.Left,
+            FontVerticalAlignment verticalAlignment = FontVerticalAlignment.Top)
         {
             var fontDesc = new FontDesc(font);
             if (!caches.TryGetValue(fontDesc, out var dic2))
             {
                 caches.Add(fontDesc, dic2 = new Dictionary<char, CharCache>());
+            }
+            if (!width.HasValue)
+            {
+                alignment = FontAlignment.Left;
+            }
+            if (!height.HasValue)
+            {
+                verticalAlignment = FontVerticalAlignment.Top;
+            }
+            throw new NotImplementedException();
+        }
+
+        public static void DrawStringEx(
+            this SpriteBatch batch,
+            string text,
+            Face font,
+            Color color,
+            int x,
+            int y,
+            int? width,
+            int? height,
+            float depth = 0)
+        {
+            batch.DrawStringEx(text, font, color, x, y, width, height, FontAlignment.Left, FontVerticalAlignment.Top, depth);
+        }
+
+        public static void DrawStringEx(
+            this SpriteBatch batch,
+            string text,
+            Face font,
+            Color color,
+            int x,
+            int y,
+            int? width,
+            int? height,
+            FontAlignment alignment = FontAlignment.Left,
+            FontVerticalAlignment verticalAlignment = FontVerticalAlignment.Top,
+            float depth = 0)
+        {
+            var fontDesc = new FontDesc(font);
+            if (!caches.TryGetValue(fontDesc, out var dic2))
+            {
+                caches.Add(fontDesc, dic2 = new Dictionary<char, CharCache>());
+            }
+            if (!width.HasValue)
+            {
+                alignment = FontAlignment.Left;
+            }
+            if (!height.HasValue)
+            {
+                verticalAlignment = FontVerticalAlignment.Top;
             }
 
             var warpLine = width.HasValue;
