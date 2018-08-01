@@ -113,12 +113,13 @@ namespace UGG.Core.Component.UI
             {
                 var thickness = style.Border.Value.Width;
                 SpriteBatch.DrawRectangle(RectangleAbs, style.Border.Value.Color, thickness);
-                textRect.Offset(thickness, thickness);
-                textRect.Inflate(-(thickness << 1), -(thickness << 1));
+                // textRect.Offset(thickness, thickness);
+                textRect.Inflate(-thickness, -thickness);
             }
 
             textRect.Offset(style.Padding.W, style.Padding.X);
-            textRect.Inflate(-style.Padding.Y - style.Padding.W, -style.Padding.X - style.Padding.Z);
+            textRect.Width = (int)(textRect.Width - style.Padding.Y - style.Padding.W);
+            textRect.Height = (int)(textRect.Height - style.Padding.X - style.Padding.Z);
             SpriteBatch.DrawStringEx(style.Text ?? Text, style.Font ?? FontUtil.FontDefault, style.Color, textRect);
         }
     }

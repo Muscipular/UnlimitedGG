@@ -65,7 +65,7 @@ namespace UGG.Core.Scene
 
         public virtual void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Texture);
             var list = Backgroup;
             var count = list.Count;
             for (var i = 0; i < count; i++)
@@ -74,7 +74,7 @@ namespace UGG.Core.Scene
             }
             spriteBatch.End();
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred);
             list = Panel;
             count = list.Count;
             for (var i = 0; i < count; i++)
@@ -87,14 +87,14 @@ namespace UGG.Core.Scene
             count = list.Count;
             for (var i = 0; i < count; i++)
             {
-                spriteBatch.Begin();
+                spriteBatch.Begin(SpriteSortMode.Deferred);
                 list[i].Draw(gameTime);
                 spriteBatch.End();
             }
 
             list = Context;
             count = list.Count;
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred);
             for (var i = 0; i < count; i++)
             {
                 list[i].Draw(gameTime);

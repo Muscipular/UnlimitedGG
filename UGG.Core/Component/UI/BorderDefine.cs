@@ -11,6 +11,8 @@ namespace UGG.Core.Component.UI
 
         public Color Color;
 
+        public static BorderDefine None = new BorderDefine(0, Color.Transparent);
+
         public BorderDefine(int width, Color color)
         {
             Width = width;

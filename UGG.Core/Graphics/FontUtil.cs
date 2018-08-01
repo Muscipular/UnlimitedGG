@@ -151,29 +151,29 @@ namespace UGG.Core.Graphics
             }
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int width)
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int width, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, x, y, width, null);
+            batch.DrawStringEx(text, font, color, x, y, width, null, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position, int width)
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position, int width, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, position.X, position.Y, width, null);
+            batch.DrawStringEx(text, font, color, position.X, position.Y, width, null, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y)
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, x, y, null, null);
+            batch.DrawStringEx(text, font, color, x, y, null, null, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position)
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Point position, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, position.X, position.Y, null, null);
+            batch.DrawStringEx(text, font, color, position.X, position.Y, null, null, depth);
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Rectangle rectangle)
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, Rectangle rectangle, float depth = 0)
         {
-            batch.DrawStringEx(text, font, color, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            batch.DrawStringEx(text, font, color, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height, depth);
         }
 
         static void DrawCounted(SpriteBatch batch, ref CharCache cache, ref Color color, ref int x, ref int y, ref int countX1, ref int offsetY1, ref int offsetX1)
@@ -186,7 +186,7 @@ namespace UGG.Core.Graphics
             cache = null;
         }
 
-        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int? width, int? height)
+        public static void DrawStringEx(this SpriteBatch batch, string text, SharpFont.Face font, Color color, int x, int y, int? width, int? height, float depth = 0)
         {
             var fontDesc = new FontDesc(font);
             if (!caches.TryGetValue(fontDesc, out var dic2))
@@ -238,7 +238,7 @@ namespace UGG.Core.Graphics
                     return;
                 }
 
-                if (cache.Pre == pre|| headCache== null)
+                if (cache.Pre == pre || headCache == null)
                 {
                     countX += cache.Rectangle.Width;
                     if (headCache == null)

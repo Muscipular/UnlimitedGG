@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using UGG.Core.Utilities;
 using UGG.Core.Utilities.Platform;
 

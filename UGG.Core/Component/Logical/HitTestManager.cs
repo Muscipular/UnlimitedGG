@@ -4,9 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
-using MonoGame.Extended.Input.InputListeners;
-using MonoGame.Extended.ViewportAdapters;
 using UGG.Core.Component.UI;
 using UGG.Core.Scene;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -192,4 +189,5 @@ namespace UGG.Core.Component.Logical
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int ToFlag(MouseButton button, ButtonState state) => (int)state << ((int)button - 1);
     }
+
 }

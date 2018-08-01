@@ -4,8 +4,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGame.Extended;
-using MonoGame.Extended.Input.InputListeners;
 using UGG.Core.Graphics;
 using UGG.Core.Platforms;
 using UGG.Core.Scene;
@@ -21,8 +19,6 @@ namespace UGG
 
         internal SpriteBatch spriteBatch;
 
-        private InputListenerComponent _inputListenerComponent;
-
         internal static GoodGameCore Instance = null;
 
         public GoodGameCore()
@@ -36,10 +32,6 @@ namespace UGG
         protected override void Initialize()
         {
             FontUtil.Init(GraphicsDevice);
-            _inputListenerComponent = new InputListenerComponent(this);
-            var item = new KeyboardListener();
-            item.KeyReleased += KeyReleased;
-            _inputListenerComponent.Listeners.Add(item);
             IsMouseVisible = true;
             base.Initialize();
         }
@@ -59,17 +51,8 @@ namespace UGG
             {
                 SwitchToScene(new MainScene(this));
             }
-            _inputListenerComponent.Update(gameTime);
             Scene?.Update(gameTime);
             base.Update(gameTime);
-        }
-
-        private void KeyReleased(object sender, KeyboardEventArgs e)
-        {
-            if (e.Key == Keys.Q && (e.Modifiers & KeyboardModifiers.Alt) == KeyboardModifiers.Alt)
-            {
-                Exit();
-            }
         }
 
         private SceneBase Scene;
@@ -87,7 +70,7 @@ namespace UGG
             GraphicsDevice.Clear(C.Parse("#054"));
             Scene?.Draw(gameTime);
             base.Draw(gameTime);
-            Window.Title = $"GG({Services.GetService<IPlatformTool>().RendererType}) FPS:{(1 / gameTime.GetElapsedSeconds()):0} Draw:{GraphicsDevice.Metrics.DrawCount} Primitive:{GraphicsDevice.Metrics.PrimitiveCount} Texture:{GraphicsDevice.Metrics.TextureCount} Target:{GraphicsDevice.Metrics.TargetCount} Sprite:{GraphicsDevice.Metrics.SpriteCount}";
+            Window.Title = $"GG({Services.GetService<IPlatformTool>().RendererType}) FPS:{(1 / gameTime.ElapsedGameTime.TotalMilliseconds):0} Draw:{GraphicsDevice.Metrics.DrawCount} Primitive:{GraphicsDevice.Metrics.PrimitiveCount} Texture:{GraphicsDevice.Metrics.TextureCount} Target:{GraphicsDevice.Metrics.TargetCount} Sprite:{GraphicsDevice.Metrics.SpriteCount}";
         }
     }
 }

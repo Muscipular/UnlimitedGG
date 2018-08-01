@@ -25,16 +25,8 @@ namespace UGG.Core.Graphics
 
         private static void CreateThePixel(SpriteBatch spriteBatch)
         {
-            var fieldInfo = typeof(MonoGame.Extended.ShapeExtensions).GetField("_texture", BindingFlags.Static | BindingFlags.NonPublic);
-            var value = fieldInfo.GetValue(null);
-            if (value != null)
-            {
-                pixel = (Texture2D)value;
-                return;
-            }
             pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             pixel.SetData(new[] { Color.White });
-            fieldInfo.SetValue(null, pixel);
         }
 
 

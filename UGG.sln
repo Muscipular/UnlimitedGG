@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UGG.DX", "UGG.DX\UGG.DX.csproj", "{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UGG.Test", "UGG.Test\UGG.Test.csproj", "{04EBCCE1-6D7B-415B-9E2C-57BA45BC91C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UGG.Test", "UGG.Test\UGG.Test.csproj", "{04EBCCE1-6D7B-415B-9E2C-57BA45BC91C6}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UGG.Core", "UGG.Core\UGG.Core.shproj", "{B7074E28-C085-4BFE-A91E-7595681B8323}"
 EndProject
@@ -14,7 +14,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		UGG.Core\UGG.Core.projitems*{6cfc7a6a-b04f-47bf-9bae-814508dc45a0}*SharedItemsImports = 4
-		UGG.Core\UGG.Core.projitems*{763d1a73-bc4c-4bb7-9c40-38d897a024f9}*SharedItemsImports = 4
 		UGG.Core\UGG.Core.projitems*{b7074e28-c085-4bfe-a91e-7595681b8323}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,9 +28,9 @@ Global
 		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Debug|x86.ActiveCfg = Debug|x86
 		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Debug|x86.Build.0 = Debug|x86
 		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Release|Any CPU.ActiveCfg = Release|x86
+		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Release|Any CPU.Build.0 = Release|x86
 		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Release|x86.ActiveCfg = Release|x86
 		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Release|x86.Build.0 = Release|x86
-		{6CFC7A6A-B04F-47BF-9BAE-814508DC45A0}.Release|Any CPU.Build.0 = Release|x86
 		{04EBCCE1-6D7B-415B-9E2C-57BA45BC91C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04EBCCE1-6D7B-415B-9E2C-57BA45BC91C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04EBCCE1-6D7B-415B-9E2C-57BA45BC91C6}.Debug|x86.ActiveCfg = Debug|Any CPU

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonoGame.Extended.Input.InputListeners;
+using Microsoft.Xna.Framework;
+using UGG.Core.Component.Logical;
 
 namespace UGG.Core.Component
 {
@@ -21,5 +22,19 @@ namespace UGG.Core.Component
         bool OnHover();
 
         event EventHandler Hovered;
+    }
+
+    public interface IUpdate
+    {
+        void Update(GameTime time);
+    }
+
+    internal enum MouseButton
+    {
+        None,
+
+        Left,
+
+        Right
     }
 }
