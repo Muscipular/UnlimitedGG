@@ -47,7 +47,8 @@ namespace UGG.Core.Component.UI
 
             public Vector4 Padding;
 
-            public StateStyle Override(Color? color = null, Face font = null, IDrawBrush bg = null, BorderDefine? border = null, string text = null, Vector4? padding = null)
+            public StateStyle Override(Color? color = null, Face font = null, IDrawBrush bg = null,
+                BorderDefine? border = null, string text = null, Vector4? padding = null)
             {
                 return new StateStyle()
                 {
@@ -63,7 +64,8 @@ namespace UGG.Core.Component.UI
 
         public Dictionary<ButtonState, StateStyle> Style;
 
-        public TextButton(SpriteBatch spriteBatch, Point location, Point size, string text, StateStyle normal = null, StateStyle hover = null, StateStyle pressed = null) : base(spriteBatch, location, size)
+        public TextButton(SpriteBatch spriteBatch, Point location, Point size, string text, StateStyle normal = null,
+            StateStyle hover = null, StateStyle pressed = null) : base(spriteBatch, location, size)
         {
             void AddStyle(ButtonState buttonState1, StateStyle stateStyle)
             {
@@ -117,10 +119,16 @@ namespace UGG.Core.Component.UI
                 textRect.Inflate(-thickness, -thickness);
             }
 
+
             textRect.Offset(style.Padding.W, style.Padding.X);
-            textRect.Width = (int)(textRect.Width - style.Padding.Y - style.Padding.W);
-            textRect.Height = (int)(textRect.Height - style.Padding.X - style.Padding.Z);
-            SpriteBatch.DrawStringEx(style.Text ?? Text, style.Font ?? FontUtil.FontDefault, style.Color, textRect);
+            textRect.Width = (int) (textRect.Width - style.Padding.Y - style.Padding.W);
+            textRect.Height = (int) (textRect.Height - style.Padding.X - style.Padding.Z);
+
+            var text = style.Text ?? Text;
+            var measure =
+                SpriteBatch.Measure(text, style.Font ?? FontUtil.FontDefault, textRect.Width, textRect.Height);
+            textRect.Offset((textRect.Width - measure.X) / 2, (textRect.Height - measure.Y) / 2);
+            SpriteBatch.DrawStringEx(text, style.Font ?? FontUtil.FontDefault, style.Color, textRect);
         }
     }
 }

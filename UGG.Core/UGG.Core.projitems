@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\UnsafeUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platforms\Win\PlatformTool.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Platforms\OSX\PlatformTool.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\GameUI\Panels\BaseGamePanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Content\font.ttf">
@@ -50,5 +51,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Platforms\" />
     <Folder Include="$(MSBuildThisFileDirectory)Platforms\Win\" />
     <Folder Include="$(MSBuildThisFileDirectory)Platforms\OSX\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Component\GameUI\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Component\GameUI\Panels\" />
   </ItemGroup>
 </Project>

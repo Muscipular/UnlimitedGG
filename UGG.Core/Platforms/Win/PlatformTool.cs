@@ -1,14 +1,14 @@
 ﻿using System;
 using UGG.Core.Utilities.Platform;
 
-#if __MACOS__
+#if WINDOWS
 namespace UGG.Core.Platforms
 {
     class PlatformTool : IPlatformTool
     {
-        public RendererType RendererType => RendererType.GL;
+        public RendererType RendererType => RendererType.DX;
 
-        public PlatformType PlatformType => PlatformType.OSX;
+        public PlatformType PlatformType => PlatformType.Window;
     }
 }
 #endif

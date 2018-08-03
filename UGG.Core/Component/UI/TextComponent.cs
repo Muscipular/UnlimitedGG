@@ -35,18 +35,18 @@ namespace UGG.Core.Component.UI
             {
                 width = Rectangle.Width;
             }
-            if (width.HasValue)
-            {
-                width -= Rectangle.X;
-            }
+            //if (width.HasValue && width)
+            //{
+                //width -= Math.Min(0, Rectangle.Right - RectangleAbs.Width);
+            //}
             if (RectangleAbs.Height > 0)
             {
                 height = Rectangle.Height;
             }
-            if (height.HasValue)
-            {
-                height -= Rectangle.Y;
-            }
+            //if (height.HasValue)
+            //{
+                //height -= Math.Min(0, Rectangle.Bottom - RectangleAbs.Height);
+            //}
             SpriteBatch.DrawStringEx(Text, FontFace, Color, RectangleAbs.X, RectangleAbs.Y, width, height);
         }
     }
