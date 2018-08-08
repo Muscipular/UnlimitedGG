@@ -27,7 +27,7 @@ namespace GG.CoreEngine.SubSystems
             {
                 return;
             }
-            var player = playerState.PlayerInfo;
+            var player = playerState.PlayerEntity;
             player.HP = player.MaxHP;
             player.FrameToAttack = 0;
             battleState.EnemyTeam.Clear();
