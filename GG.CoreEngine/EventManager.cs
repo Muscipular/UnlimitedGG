@@ -42,12 +42,15 @@ namespace GG.CoreEngine
                 for (var index = 0; index < list.Count; index++)
                 {
                     var handler = list[index];
-                    if (handler is IWeakEventHandler weakEventHandler)
+                    if (!handler.IsAlive)
                     {
-                        if (!weakEventHandler.IsAlive)
-                        {
-                            list.RemoveAt(index--);
-                        }
+                        list.RemoveAt(index--);
+                        continue;
+                    }
+                    if (handler.IsOnce)
+                    {
+                        list.RemoveAt(index--);
+                        continue;
                     }
                     handler.OnEvent(_engine, args);
                 }

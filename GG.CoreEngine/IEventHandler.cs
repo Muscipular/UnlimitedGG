@@ -7,10 +7,8 @@ namespace GG.CoreEngine
     public interface IEventHandler
     {
         void OnEvent(Engine engine, object arg);
-    }
 
-    public interface IWeakEventHandler : IEventHandler
-    {
+        bool IsOnce { get; }
         bool IsAlive { get; }
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.States;
+using GG.CoreEngine.SubSystems;
 using Newtonsoft.Json;
 
 namespace GG.CoreEngine
@@ -16,18 +18,40 @@ namespace GG.CoreEngine
 
         private Looper looper;
 
-        private BattleManager battleManager;
+        private Dictionary<Type, ISubSystem> subSystems;
 
         protected object locker = new object();
 
         private ulong currentFrame = 0;
 
+        public StateContainer State = new StateContainer(new IState[]
+        {
+            new BattleState(),
+            new PlayerState(),
+            new LogState(),
+        });
+
+
         public Engine()
         {
-            battleManager = new BattleManager(this);
+            subSystems = new Dictionary<Type, ISubSystem>()
+            {
+                { typeof(EncounterSystem), new EncounterSystem(this) },
+                { typeof(BattleSystem), new BattleSystem(this) },
+                { typeof(LootSystem), new LootSystem(this) },
+            };
             eventManager = new EventManager(this);
             commandScheduler = new CommandScheduler(this);
             looper = new Looper(OnFrame);
+        }
+
+        public T GetSubSystem<T>() where T : ISubSystem
+        {
+            if (subSystems.TryGetValue(typeof(T), out var subSystem))
+            {
+                return (T)subSystem;
+            }
+            return default(T);
         }
 
         public bool Running => looper.Running;
@@ -53,13 +77,12 @@ namespace GG.CoreEngine
             }
         }
 
-        private Entity me = new Entity() { Name = "Me", BaseAttackFrame = 60, Attack = 10 };
-
-        private Entity enemy = new Entity() { Name = "Cat", BaseAttackFrame = 20, Attack = 1 };
-
         private void ProcessFrame()
         {
-            battleManager.Battle(new List<Entity>() { me }, new List<Entity>() { enemy });
+            foreach (var (type, subSystem) in subSystems)
+            {
+                subSystem.Process(currentFrame);
+            }
         }
 
         private void OnAfterFrame()
@@ -99,77 +122,5 @@ namespace GG.CoreEngine
             Console.WriteLine($"{eventName}: {JsonConvert.SerializeObject(args)}");
             eventManager.PublishEvent(eventName, args);
         }
-    }
-
-    internal class BattleManager
-    {
-        private readonly Engine _engine;
-
-        public BattleManager(Engine engine)
-        {
-            _engine = engine;
-        }
-
-        private Random rnd = new Random();
-
-        public void Battle(List<Entity> left, List<Entity> right)
-        {
-            if (DoAttack(left, right))
-            {
-                _engine.PublishEvent("battle.end", true);
-                return;
-            }
-            if (DoAttack(right, left))
-            {
-                _engine.PublishEvent("battle.end", false);
-            }
-        }
-
-        private bool DoAttack(List<Entity> lList, List<Entity> rList)
-        {
-            foreach (var actionOne in lList)
-            {
-                if (actionOne.FrameToAttack == 0)
-                {
-                    actionOne.FrameToAttack = (uint)Math.Ceiling(actionOne.BaseAttackFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
-
-                    var target = rList.Count == 1 ? rList[0] : rList[rnd.Next(rList.Count)];
-                    var damage = actionOne.Attack + (actionOne.AttackDelta > 0 ? rnd.Next(0, actionOne.AttackDelta) : 0);
-                    target.HP -= damage;
-                    _engine.PublishEvent("entity.damage", new { Damage = damage, From = actionOne, To = target });
-                    if (target.HP <= 0)
-                    {
-                        _engine.PublishEvent("entity.die", target);
-
-                        if (rList.TrueForAll(c => c.HP <= 0))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                else
-                {
-                    actionOne.FrameToAttack--;
-                }
-            }
-            return false;
-        }
-    }
-
-    internal class Entity
-    {
-        public string Name { get; set; }
-
-        public int HP { get; set; } = 100;
-
-        public int Attack { get; set; } = 1;
-
-        public int AttackDelta { get; set; } = 5;
-
-        public uint BaseAttackFrame { get; set; } = 60;
-
-        public int Speed { get; set; } = 0;
-
-        public uint FrameToAttack { get; set; }
     }
 }

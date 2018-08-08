@@ -33,8 +33,12 @@ namespace GG.Engine.Cli
     {
         public void OnEvent(CoreEngine.Engine engine, object arg)
         {
-            engine.Stop();
+            // engine.Stop();
         }
+
+        public bool IsOnce { get; } = false;
+
+        public bool IsAlive { get; } = true;
     }
 
     internal class TestCommand : ICommand
