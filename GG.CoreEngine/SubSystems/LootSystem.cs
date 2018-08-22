@@ -20,15 +20,15 @@ namespace GG.CoreEngine.SubSystems
             if (battleState.StateMode == BattleStateMode.Loot)
             {
                 var playerState = _engine.State.Get<PlayerState>();
-                playerState.PlayerInfo.Exp += battleState.EnemyTeam.Sum(c => c.Level);
-                playerState.PlayerInfo.Gold += battleState.EnemyTeam.Sum(c => c.Level) * 2;
-                if (playerState.PlayerInfo.Exp >= playerState.PlayerInfo.Level * 5)
+                playerState.PlayerEntity.Exp += battleState.EnemyTeam.Sum(c => c.Level);
+                playerState.PlayerEntity.Gold += battleState.EnemyTeam.Sum(c => c.Level) * 2;
+                if (playerState.PlayerEntity.Exp >= playerState.PlayerEntity.Level * 5)
                 {
-                    playerState.PlayerInfo.Exp -= playerState.PlayerInfo.Level * 5;
-                    playerState.PlayerInfo.Level += 1;
-                    playerState.PlayerInfo.Attack += 1;
-                    playerState.PlayerInfo.Speed += 2;
-                    playerState.PlayerInfo.MaxHP += 3;
+                    playerState.PlayerEntity.Exp -= playerState.PlayerEntity.Level * 5;
+                    playerState.PlayerEntity.Level += 1;
+                    playerState.PlayerEntity.Attack += 1;
+                    playerState.PlayerEntity.Speed += 2;
+                    playerState.PlayerEntity.MaxHP += 3;
                 }
                 battleState.StateMode = BattleStateMode.Encounter;
             }

@@ -23,13 +23,11 @@ namespace GG.CoreEngine.Data
         public int Speed { get; set; } = 0;
 
         public uint FrameToAttack { get; set; }
-
-        public sealed override int GetHashCode() => base.GetHashCode();
     }
 
-    internal class Player : BaseEntity
+    internal class PlayerEntity : BaseEntity
     {
-        public Player()
+        public PlayerEntity()
         {
             Name = "Player";
         }
@@ -39,7 +37,17 @@ namespace GG.CoreEngine.Data
         public int Gold { get; set; }
     }
 
-    internal class Enemy : BaseEntity
+    internal class EnemyData : BaseEntity
+    {
+        public EnemyData()
+        {
+            Name = "Cat_" + GetHashCode();
+        }
+
+        public string Id { get; set; }
+    }
+
+    internal class Enemy : EnemyData
     {
         public Enemy()
         {
