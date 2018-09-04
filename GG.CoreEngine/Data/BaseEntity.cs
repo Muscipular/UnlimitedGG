@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GG.CoreEngine.Data
 {
-    abstract class BaseEntity
+    abstract class BaseEntity : IEntity
     {
         public string Name { get; set; }
 
@@ -25,7 +25,7 @@ namespace GG.CoreEngine.Data
         public uint FrameToAttack { get; set; }
     }
 
-    internal class PlayerEntity : BaseEntity
+    internal class PlayerEntity : IEntity
     {
         public PlayerEntity()
         {
@@ -35,23 +35,72 @@ namespace GG.CoreEngine.Data
         public int Exp { get; set; }
 
         public int Gold { get; set; }
+
+        public int Attack { get; set; }
+
+        public int AttackDelta { get; set; }
+
+        public uint BaseAttackFrame { get; set; }
+
+        public uint FrameToAttack { get; set; }
+
+        public int HP { get; set; }
+
+        public int Level { get; set; }
+
+        public int MaxHP { get; set; }
+
+        public string Name { get; set; }
+
+        public int Speed { get; set; }
     }
 
-    internal class EnemyData : BaseEntity
+    internal class EnemyData : IEntity
     {
-        public EnemyData()
-        {
-            Name = "Cat_" + GetHashCode();
-        }
-
         public string Id { get; set; }
+
+        public int Attack { get; set; }
+
+        public int AttackDelta { get; set; }
+
+        public uint BaseAttackFrame { get; set; }
+
+        public uint FrameToAttack { get; set; }
+
+        public int HP { get; set; }
+
+        public int Level { get; set; }
+
+        public int MaxHP { get; set; }
+
+        public string Name { get; set; }
+
+        public int Speed { get; set; }
     }
 
-    internal class Enemy : EnemyData
+    internal class Enemy : IEntity
     {
-        public Enemy()
+        public Enemy(EnemyData data)
         {
-            Name = "Cat_" + GetHashCode();
+            
         }
+
+        public int Attack { get; set; }
+
+        public int AttackDelta { get; set; }
+
+        public uint BaseAttackFrame { get; set; }
+
+        public uint FrameToAttack { get; set; }
+
+        public int HP { get; set; }
+
+        public int Level { get; set; }
+
+        public int MaxHP { get; set; }
+
+        public string Name { get; set; }
+
+        public int Speed { get; set; }
     }
 }
