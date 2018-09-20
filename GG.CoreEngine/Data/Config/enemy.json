@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "Cat",
+    "Attack": 1,
+    "AttackDelta": 0,
+    "BaseAttackFrame": 60,
+    "HP": 10,
+    "Level": 1,
+    "MaxHP": 10,
+    "Name": "Cat"
+  },
+  {
+    "Id": "Dog",
+    "Attack": 1,
+    "AttackDelta": 3,
+    "BaseAttackFrame": 90,
+    "HP": 15,
+    "Level": 2,
+    "MaxHP": 10,
+    "Name": "Dog"
+  }
+]

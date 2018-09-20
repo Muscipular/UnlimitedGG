@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using GG.CoreEngine.Data;
 using GG.CoreEngine.States;
 using GG.CoreEngine.SubSystems;
 using Newtonsoft.Json;
@@ -34,6 +36,7 @@ namespace GG.CoreEngine
 
         public Engine()
         {
+            Enemies.Load(File.OpenRead("Data/Config/enemy.json"));
             subSystems = new Dictionary<Type, ISubSystem>()
             {
                 { typeof(EncounterSystem), new EncounterSystem(this) },

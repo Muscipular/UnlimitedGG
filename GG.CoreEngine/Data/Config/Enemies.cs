@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using GG.CoreEngine.Utility;
 using Newtonsoft.Json;
 
 namespace GG.CoreEngine.Data
@@ -13,14 +14,22 @@ namespace GG.CoreEngine.Data
 
         public static void Load(Stream stream)
         {
-            var dictionary = new JsonSerializer().Deserialize<EnemyData[]>(new JsonTextReader(new StreamReader(stream)));
-            configs = dictionary.ToDictionary(c => c.Id, c => c);
+            var datas = new JsonSerializer().Deserialize<EnemyData[]>(new JsonTextReader(new StreamReader(stream)));
+            configs = datas.ToDictionary(c => c.Id, c => c);
+        }
+
+        public static void Load(EnemyData[] datas)
+        {
+            configs = datas.ToDictionary(c => c.Id, c => c);
         }
 
         public static Enemy CreateEnemy(string eid)
         {
-            var enemy = new Enemy();
-            return enemy;
+            if (configs.TryGetValue(eid, out var data))
+            {
+                return new Enemy(data);
+            }
+            return null;
         }
     }
 }

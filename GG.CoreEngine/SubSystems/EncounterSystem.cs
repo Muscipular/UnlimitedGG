@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GG.CoreEngine.Data;
 using GG.CoreEngine.States;
+using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.SubSystems
 {
@@ -31,7 +32,11 @@ namespace GG.CoreEngine.SubSystems
             player.HP = player.MaxHP;
             player.FrameToAttack = 0;
             battleState.EnemyTeam.Clear();
-            battleState.EnemyTeam.Add(new Enemy());
+            var count = Rand.Int(1, 3);
+            for (int i = 0; i < count; i++)
+            {
+                battleState.EnemyTeam.Add(Enemies.CreateEnemy(Rand.Bool() ? "Cat" : "Dog"));
+            }
             battleState.PlayerTeam.Clear();
             battleState.PlayerTeam.Add(player);
             battleState.StateMode = BattleStateMode.InBattle;

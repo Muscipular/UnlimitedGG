@@ -14,21 +14,22 @@ namespace GG.CoreEngine.Utility
 
             static PopulateClass()
             {
-                var type1 = typeof(T);
-                var type2 = typeof(T2);
-                var v1 = Expression.Variable(type1);
-                var v2 = Expression.Variable(type2);
-                var set = new HashSet<string>(type1.GetProperties().Where(c => c.CanRead).Select(c => c.Name));
-                set.IntersectWith(type1.GetProperties().Where(c => c.CanWrite).Select(c => c.Name));
-                var block = Expression.Block(set.Select(c => Expression.Assign(Expression.Property(v2, c), Expression.Property(v1, c))));
-                var lambda = Expression.Lambda<Action<T, T2>>(block, v1, v2);
+                var tForm = typeof(T);
+                var tTo = typeof(T2);
+                var vFrom = Expression.Variable(tForm);
+                var vTo = Expression.Variable(tTo);
+                var set = new HashSet<string>(tForm.GetProperties().Where(c => c.CanRead).Select(c => c.Name));
+                set.IntersectWith(tTo.GetProperties().Where(c => c.CanWrite).Select(c => c.Name));
+                var block = Expression.Block(set.Select(c => Expression.Assign(Expression.Property(vTo, c), Expression.Property(vFrom, c))));
+                var lambda = Expression.Lambda<Action<T, T2>>(block, vFrom, vTo);
                 fn = lambda.Compile();
             }
         }
 
-        public static void Populate<T, T2>(T a, T2 b)
+        public static T Populate<T, T2>(this T a, T2 b)
         {
-            PopulateClass<T, T2>.fn(a, b);
+            PopulateClass<T2, T>.fn(b, a);
+            return a;
         }
     }
 }

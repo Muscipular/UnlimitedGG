@@ -11,9 +11,9 @@ namespace GG.CoreEngine.States
 
         public BattleStateMode StateMode { get; set; } = BattleStateMode.Encounter;
 
-        public List<BaseEntity> PlayerTeam { get; set; } = new List<BaseEntity>();
+        public List<IEntity> PlayerTeam { get; set; } = new List<IEntity>();
 
-        public List<BaseEntity> EnemyTeam { get; set; } = new List<BaseEntity>();
+        public List<IEntity> EnemyTeam { get; set; } = new List<IEntity>();
 
         public int WaitFrame { get; set; }
     }

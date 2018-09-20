@@ -19,7 +19,7 @@ namespace GG.CoreEngine.SubSystems
 
         private Random rnd = new Random();
 
-        public (bool End, bool Win) Battle(List<BaseEntity> left, List<BaseEntity> right)
+        public (bool End, bool Win) Battle(List<IEntity> left, List<IEntity> right)
         {
             if (DoAttack(left, right))
             {
@@ -34,7 +34,7 @@ namespace GG.CoreEngine.SubSystems
             return (false, false);
         }
 
-        private bool DoAttack(List<BaseEntity> lList, List<BaseEntity> rList)
+        private bool DoAttack(List<IEntity> lList, List<IEntity> rList)
         {
             foreach (var actionOne in lList)
             {
