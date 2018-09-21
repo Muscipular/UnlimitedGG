@@ -19,6 +19,8 @@ namespace GG.CoreEngine.Data
 
         public int AttackDelta { get; set; } = 3;
 
+        public int Defence { get; set; }
+
         public uint BaseAttackFrame { get; set; } = 60;
 
         public uint FrameToAttack { get; set; } = 0;
@@ -32,5 +34,7 @@ namespace GG.CoreEngine.Data
         public string Name { get; set; }
 
         public int Speed { get; set; }
+
+        public int ReduceDamage { get; set; }
     }
 }

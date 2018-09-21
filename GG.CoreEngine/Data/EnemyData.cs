@@ -21,5 +21,9 @@ namespace GG.CoreEngine.Data
         public int MaxHP { get; set; }
 
         public string Name { get; set; }
+
+        public int Defence { get; set; }
+
+        public int ReduceDamage { get; set; }
     }
 }

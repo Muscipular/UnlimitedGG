@@ -9,3 +9,5 @@ node_modules/
 /lua
 /UGG.Core/Content/*.ttf
 /UGG.Core/Content/*.ttc
+_Resharper*/
+UGG*/

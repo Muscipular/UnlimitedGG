@@ -6,6 +6,8 @@
 
         int AttackDelta { get; set; }
 
+        int Defence { get; set; }
+
         uint BaseAttackFrame { get; set; }
 
         uint FrameToAttack { get; set; }
@@ -19,5 +21,7 @@
         string Name { get; set; }
 
         int Speed { get; set; }
+
+        int ReduceDamage { get; set; }
     }
 }
