@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GG.CoreEngine;
+using GG.CoreEngine.Commands;
 
 namespace GG.Engine.Cli
 {
@@ -13,6 +14,7 @@ namespace GG.Engine.Cli
         static void Main(string[] args)
         {
             var engine = new CoreEngine.Engine();
+            engine.ScheduleCommand(new EnterMapCommand("Map1"));
             engine.ScheduleCommand(new TestCommand("0"));
             engine.ScheduleCommand(new TestCommand("1f"), 1);
             engine.ScheduleCommand(new TestCommand("20f"), 20);

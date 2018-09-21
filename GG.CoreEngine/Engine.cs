@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GG.CoreEngine.Data;
+using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
 using GG.CoreEngine.SubSystems;
 using Newtonsoft.Json;
@@ -31,12 +32,15 @@ namespace GG.CoreEngine
             new BattleState(),
             new PlayerState(),
             new LogState(),
+            new MapState(),
         });
 
 
         public Engine()
         {
-            Enemies.Load(File.OpenRead("Data/Config/enemy.json"));
+            Config<EnemyData>.Load(File.OpenRead("Data/Config/enemy.json"));
+            Config<EncounterSet>.Load(File.OpenRead("Data/Config/encounter.json"));
+            Config<MapData>.Load(File.OpenRead("Data/Config/map.json"));
             subSystems = new Dictionary<Type, ISubSystem>()
             {
                 { typeof(EncounterSystem), new EncounterSystem(this) },

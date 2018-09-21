@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.Data
@@ -14,7 +15,10 @@ namespace GG.CoreEngine.Data
         public Enemy(EnemyData data)
         {
             this.Populate(data);
+            this.Data = data;
         }
+
+        public EnemyData Data { get; set; }
 
         public int Attack { get; set; }
 

@@ -1,0 +1,19 @@
+﻿[
+  {
+    "Id": "Map1",
+    "Name": "Map1",
+    "EncounterSets": {
+      "Map1_1": 4,
+      "Map1_2": 1
+    }
+  },
+  {
+    "Id": "Map2",
+    "Name": "Map2",
+    "EncounterSets": {
+      "Map1_1": 1,
+      "Map1_2": 2,
+      "Map2_1": 4
+    }
+  }
+]

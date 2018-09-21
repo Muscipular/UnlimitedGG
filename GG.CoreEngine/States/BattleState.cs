@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GG.CoreEngine.Data;
+using GG.CoreEngine.Data.Config;
 
 namespace GG.CoreEngine.States
 {
@@ -16,5 +17,7 @@ namespace GG.CoreEngine.States
         public List<IEntity> EnemyTeam { get; set; } = new List<IEntity>();
 
         public int WaitFrame { get; set; }
+
+        public LootData LootData { get; set; }
     }
 }

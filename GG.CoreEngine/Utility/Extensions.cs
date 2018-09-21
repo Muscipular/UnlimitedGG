@@ -31,5 +31,20 @@ namespace GG.CoreEngine.Utility
             PopulateClass<T2, T>.fn(b, a);
             return a;
         }
+
+        public static bool EqualsAs(this float a, float b, float delta = 0.0001f)
+        {
+            return Math.Abs(a - b) < delta;
+        }
+
+        public static bool EqualsAs(this decimal a, decimal b, decimal delta = 0.0001m)
+        {
+            return Math.Abs(a - b) < delta;
+        }
+
+        public static bool EqualsAs(this double a, double b, double delta = 0.0001d)
+        {
+            return Math.Abs(a - b) < delta;
+        }
     }
 }

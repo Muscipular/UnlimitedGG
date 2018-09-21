@@ -14,6 +14,8 @@ namespace GG.CoreEngine.States
         public PlayerInfo PlayerInfo { get; set; } 
 
         public bool ShouldEncounter { get; set; } = true;
+
+        public List<Item> Bag { get; set; } = new List<Item>();
     }
 
     class PlayerInfo

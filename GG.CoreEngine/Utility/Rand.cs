@@ -13,5 +13,10 @@ namespace GG.CoreEngine.Utility
         public static int Int(int min, int max) => random.Next(min, max + 1);
 
         public static bool Bool(float rate = 0.5f) => random.NextDouble() >= rate;
+
+        public static double Double(double min, double max)
+        {
+            return random.NextDouble() * max + min;
+        }
     }
 }
