@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.Data;
+using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
+using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.SubSystems
 {
@@ -25,21 +28,31 @@ namespace GG.CoreEngine.SubSystems
             var lootData = battleState.LootData;
             playerState.PlayerEntity.Exp += lootData.Exp;
             playerState.PlayerEntity.Gold += lootData.Gold;
-            CheckLevelUp(playerState);
+            if (lootData.Item?.Length > 0)
+            {
+                foreach (var item in lootData.Item)
+                {
+                    if (Rand.Bool(item.Rate))
+                    {
+                        var generateItem = GenerateItem(item.Id);
+                        if (generateItem != null)
+                        {
+                            playerState.Bag.Add(generateItem);
+                        }
+                    }
+                }
+            }
+            playerState.ShouldUpdate = true;
             battleState.StateMode = BattleStateMode.Encounter;
         }
 
-        private static void CheckLevelUp(PlayerState playerState)
+        private Item GenerateItem(string itemId)
         {
-            if (playerState.PlayerEntity.Exp < playerState.PlayerEntity.Level * 5)
+            if (Config<ItemData>.Configs.TryGetValue(itemId, out var data))
             {
-                return;
+                return new Item(data);
             }
-            playerState.PlayerEntity.Exp -= playerState.PlayerEntity.Level * 5;
-            playerState.PlayerEntity.Level += 1;
-            playerState.PlayerEntity.Attack += 1;
-            playerState.PlayerEntity.Speed += 2;
-            playerState.PlayerEntity.MaxHP += 3;
+            return null;
         }
     }
 }

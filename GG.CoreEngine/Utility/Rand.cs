@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace GG.CoreEngine.Utility
 {
     static class Rand
     {
-        private static Random random = new Random();
+        private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
 
-        public static int Int(int max) => random.Next(max + 1);
+        public static int Int(int max) => random.Value.Next(max + 1);
 
-        public static int Int(int min, int max) => random.Next(min, max + 1);
+        public static int Int(int min, int max) => random.Value.Next(min, max + 1);
 
-        public static bool Bool(float rate = 0.5f) => random.NextDouble() >= rate;
+        public static bool Bool(double rate = 0.5) => random.Value.NextDouble() >= rate;
 
         public static double Double(double min, double max)
         {
-            return random.NextDouble() * max + min;
+            return random.Value.NextDouble() * max + min;
         }
     }
 }

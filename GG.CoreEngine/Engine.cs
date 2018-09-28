@@ -43,6 +43,7 @@ namespace GG.CoreEngine
             Config<MapData>.Load(File.OpenRead("Data/Config/map.json"));
             subSystems = new Dictionary<Type, ISubSystem>()
             {
+                { typeof(PlayerStateSystem), new PlayerStateSystem(this) },
                 { typeof(EncounterSystem), new EncounterSystem(this) },
                 { typeof(BattleSystem), new BattleSystem(this) },
                 { typeof(LootSystem), new LootSystem(this) },

@@ -16,6 +16,8 @@ namespace GG.CoreEngine.States
         public bool ShouldEncounter { get; set; } = true;
 
         public List<Item> Bag { get; set; } = new List<Item>();
+
+        public bool ShouldUpdate { get; set; } = false;
     }
 
     class PlayerInfo
