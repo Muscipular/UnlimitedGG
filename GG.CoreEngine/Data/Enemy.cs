@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GG.CoreEngine.Data.Config;
+using GG.CoreEngine.Data.Skills;
 using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.Data
@@ -26,9 +27,9 @@ namespace GG.CoreEngine.Data
 
         public int Defence { get; set; }
 
-        public uint BaseAttackFrame { get; set; }
+        public uint BaseActionFrame { get; set; }
 
-        public uint FrameToAttack { get; set; }
+        public uint FrameToAction { get; set; }
 
         public int HP { get; set; }
 
@@ -41,5 +42,6 @@ namespace GG.CoreEngine.Data
         public int Speed { get; set; }
 
         public int ReduceDamage { get; set; }
+
     }
 }

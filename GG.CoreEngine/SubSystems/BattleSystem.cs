@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using GG.CoreEngine.Data;
+using GG.CoreEngine.Data.Skills;
 using GG.CoreEngine.States;
 
 namespace GG.CoreEngine.SubSystems
@@ -39,9 +40,9 @@ namespace GG.CoreEngine.SubSystems
         {
             foreach (var actionOne in lList)
             {
-                if (actionOne.FrameToAttack == 0)
+                if (actionOne.FrameToAction == 0)
                 {
-                    actionOne.FrameToAttack = CalcFrameToAttack(actionOne);
+                    actionOne.FrameToAction = CalcFrameToAction(actionOne);
 
                     var target = rList.Count == 1 ? rList[0] : rList[rnd.Next(rList.Count)];
                     var damage = CalcDamage(actionOne, target);
@@ -59,31 +60,26 @@ namespace GG.CoreEngine.SubSystems
                 }
                 else
                 {
-                    actionOne.FrameToAttack--;
+                    actionOne.FrameToAction--;
                 }
             }
             return false;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private double CalcDefenceReduceRate(IEntity target)
-        {
-            var x = (double)target.Defence;
-            return x / (Math.Abs(x) + Math.Pow(Math.Abs(x), 0.25F) * 3 + 30);
-        }
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int CalcDamage(IEntity actionOne, IEntity target)
         {
             var damage = actionOne.Attack + (actionOne.AttackDelta > 0 ? rnd.Next(0, actionOne.AttackDelta) : 0);
-            damage = Math.Max(0, (int)Math.Ceiling(damage * (1 - CalcDefenceReduceRate(target))) - target.ReduceDamage);
+            damage = Math.Max(0, (int)Math.Ceiling(damage * (1 - target.CalcDefenceReduceRate())) - target.ReduceDamage);
             return damage;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static uint CalcFrameToAttack(IEntity actionOne)
+        private static uint CalcFrameToAction(IEntity actionOne)
         {
-            return (uint)Math.Ceiling(actionOne.BaseAttackFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
+            return (uint)Math.Ceiling(actionOne.BaseActionFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
         }
 
         public void Process(ulong frame)

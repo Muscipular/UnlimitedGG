@@ -49,9 +49,6 @@ namespace GG.CoreEngine.SubSystems
                     break;
                 }
             }
-            var player = playerState.PlayerEntity;
-            player.HP = player.MaxHP;
-            player.FrameToAttack = 0;
             var enemyTeam = battleState.EnemyTeam;
             enemyTeam.Clear();
             int max = set?.MaxCount ?? 10;
@@ -80,6 +77,10 @@ namespace GG.CoreEngine.SubSystems
 
             battleState.LootData = GetLootData(set, enemyTeam.OfType<Enemy>());
             battleState.PlayerTeam.Clear();
+            var player = playerState.PlayerEntity;
+            player.HP = player.MaxHP;
+            player.FrameToAction = 0;
+            player.Effects.Clear();
             battleState.PlayerTeam.Add(player);
             battleState.StateMode = BattleStateMode.InBattle;
             battleState.WaitFrame = 60;

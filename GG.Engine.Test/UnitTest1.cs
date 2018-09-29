@@ -68,5 +68,11 @@ namespace GG.Engine.Test
             output.WriteLine("ops: " + (5000000 * 100 / sw.Elapsed.TotalSeconds));
             output.WriteLine("mspo: " + (sw.Elapsed.TotalSeconds * 1000 / (5000000 * 100)));
         }
+
+        [Fact]
+        public void T2()
+        {
+            
+        }
     }
 }

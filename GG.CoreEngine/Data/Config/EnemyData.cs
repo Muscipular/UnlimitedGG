@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.Data.Skills;
 
 namespace GG.CoreEngine.Data.Config
 {
@@ -43,5 +44,7 @@ namespace GG.CoreEngine.Data.Config
         public int ReduceDamage { get; set; }
 
         public LootData Loot { get; set; }
+
+        public string[] SkillIds { get; set; }
     }
 }

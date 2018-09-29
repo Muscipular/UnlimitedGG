@@ -1,4 +1,6 @@
-﻿namespace GG.CoreEngine.Data
+﻿using GG.CoreEngine.Data.Skills;
+
+namespace GG.CoreEngine.Data
 {
     interface IEntity
     {
@@ -8,9 +10,9 @@
 
         int Defence { get; set; }
 
-        uint BaseAttackFrame { get; set; }
+        uint BaseActionFrame { get; set; }
 
-        uint FrameToAttack { get; set; }
+        uint FrameToAction { get; set; }
 
         int HP { get; set; }
 

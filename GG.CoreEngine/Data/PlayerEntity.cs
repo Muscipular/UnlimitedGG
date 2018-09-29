@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.Data.Skills;
 
 namespace GG.CoreEngine.Data
 {
@@ -21,9 +22,9 @@ namespace GG.CoreEngine.Data
 
         public int Defence { get; set; }
 
-        public uint BaseAttackFrame { get; set; } = 60;
+        public uint BaseActionFrame { get; set; } = 60;
 
-        public uint FrameToAttack { get; set; } = 0;
+        public uint FrameToAction { get; set; } = 0;
 
         public int HP { get; set; } = 100;
 
@@ -36,5 +37,7 @@ namespace GG.CoreEngine.Data
         public int Speed { get; set; }
 
         public int ReduceDamage { get; set; }
+
+        public List<IEffect> Effects { get; set; }
     }
 }
