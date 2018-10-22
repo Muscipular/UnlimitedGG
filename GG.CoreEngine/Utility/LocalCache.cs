@@ -85,5 +85,21 @@ namespace GG.CoreEngine.Utility
         {
             return d.Value;
         }
+
+        public void InvalidCache()
+        {
+            Interlocked.Exchange(ref t, 0L);
+        }
+
+        public void ForceUpdate()
+        {
+            lock (this)
+            {
+                var f = factory();
+                cache = f;
+                init = 1;
+                t = DateTime.Now.Add(CacheTime).Ticks;
+            }
+        }
     }
 }
