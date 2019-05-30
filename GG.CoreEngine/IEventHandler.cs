@@ -4,11 +4,19 @@ using System.Linq;
 
 namespace GG.CoreEngine
 {
-    public interface IEventHandler
+    public interface IEventHandler<in TEvent> where TEvent : IEvent
     {
-        void OnEvent(Engine engine, object arg);
+        Type HandleType { get; }
+        
+        void OnEvent(Engine engine, TEvent arg);
 
         bool IsOnce { get; }
+
         bool IsAlive { get; }
+    }
+
+    public interface IEvent
+    {
+        bool Handled { get; set; }
     }
 }

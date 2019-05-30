@@ -7,6 +7,7 @@ using GG.CoreEngine.Data;
 using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
 using GG.CoreEngine.SubSystems;
+using GG.CoreEngine.Utility;
 using Newtonsoft.Json;
 
 namespace GG.CoreEngine
@@ -120,15 +121,15 @@ namespace GG.CoreEngine
             }
         }
 
-        public void RegisterEvent(string eventName, IEventHandler handler)
+        public void RegisterEvent<T>(IEventHandler<T> handler) where T : IEvent
         {
-            eventManager.RegisterEvent(eventName, handler);
+            eventManager.RegisterEvent(handler);
         }
 
-        public void PublishEvent(string eventName, object args)
+        public void PublishEvent<T>(T args) where T : IEvent
         {
-            Console.WriteLine($"{eventName}: {JsonConvert.SerializeObject(args)}");
-            eventManager.PublishEvent(eventName, args);
+            Console.WriteLine($"{typeof(T).Name}: {JsonConvert.SerializeObject(args)}");
+            eventManager.PublishEvent(args);
         }
     }
 }

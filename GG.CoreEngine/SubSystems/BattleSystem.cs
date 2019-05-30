@@ -7,6 +7,7 @@ using System.Text;
 using GG.CoreEngine.Data;
 using GG.CoreEngine.Data.Skills;
 using GG.CoreEngine.States;
+using GG.CoreEngine.SubSystems.Battle;
 
 namespace GG.CoreEngine.SubSystems
 {
@@ -25,17 +26,23 @@ namespace GG.CoreEngine.SubSystems
         {
             if (DoAttack(left, right))
             {
-                _engine.PublishEvent("battle.end", true);
+                _engine.PublishEvent(new BattleEndEvent()
+                {
+                    State = BattleEndState.Win
+                });
                 return (true, true);
             }
             if (DoAttack(right, left))
             {
-                _engine.PublishEvent("battle.end", false);
+                _engine.PublishEvent(new BattleEndEvent()
+                {
+                    State = BattleEndState.Lose
+                });
                 return (true, false);
             }
             return (false, false);
         }
-
+      
         private bool DoAttack(List<IEntity> lList, List<IEntity> rList)
         {
             foreach (var actionOne in lList)
@@ -47,10 +54,10 @@ namespace GG.CoreEngine.SubSystems
                     var target = rList.Count == 1 ? rList[0] : rList[rnd.Next(rList.Count)];
                     var damage = CalcDamage(actionOne, target);
                     target.HP -= damage;
-                    _engine.PublishEvent("entity.damage", new { Damage = damage, From = actionOne, To = target });
+                    _engine.PublishEvent(new DamagedEvent(damage, actionOne, target));
                     if (target.HP <= 0)
                     {
-                        _engine.PublishEvent("entity.die", target);
+                        _engine.PublishEvent(new EntityDieEvent() { Entity = target });
 
                         if (rList.TrueForAll(c => c.HP <= 0))
                         {

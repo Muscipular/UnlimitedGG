@@ -19,7 +19,7 @@ namespace GG.Engine.Cli
             engine.ScheduleCommand(new TestCommand("1f"), 1);
             engine.ScheduleCommand(new TestCommand("20f"), 20);
             engine.ScheduleCommand(new TestCommand("2s"), TimeSpan.FromSeconds(2));
-            engine.RegisterEvent("battle.end", new EndBattleEvent());
+            // engine.RegisterEvent("battle.end", new EndBattleEvent());
             engine.Start();
             Thread.Sleep(1000);
             engine.ScheduleCommand(new TestCommand("1f-1"), 1);
@@ -31,17 +31,17 @@ namespace GG.Engine.Cli
         }
     }
 
-    internal class EndBattleEvent : IEventHandler
-    {
-        public void OnEvent(CoreEngine.Engine engine, object arg)
-        {
-            // engine.Stop();
-        }
-
-        public bool IsOnce { get; } = false;
-
-        public bool IsAlive { get; } = true;
-    }
+    // internal class EndBattleEvent : IEventHandler
+    // {
+    //     public void OnEvent(CoreEngine.Engine engine, object arg)
+    //     {
+    //         // engine.Stop();
+    //     }
+    //
+    //     public bool IsOnce { get; } = false;
+    //
+    //     public bool IsAlive { get; } = true;
+    // }
 
     internal class TestCommand : ICommand
     {

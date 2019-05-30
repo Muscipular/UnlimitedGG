@@ -7,26 +7,25 @@ namespace GG.CoreEngine
 {
     internal class EventManager
     {
-        private readonly Engine _engine;
+        private class EventHandlers<T> where T : IEvent
+        {
+            public static List<IEventHandler<T>> Handlers = new List<IEventHandler<T>>();
+        }
 
-        private Dictionary<string, List<IEventHandler>> Events;
+        private readonly Engine _engine;
 
         private ReaderWriterLockSlim rwLock;
 
         public EventManager(Engine engine)
         {
             _engine = engine;
-            Events = new Dictionary<string, List<IEventHandler>>();
             rwLock = new ReaderWriterLockSlim();
         }
 
-        public void RegisterEvent(string eventName, IEventHandler handler)
+        public void RegisterEvent<T>(IEventHandler<T> handler) where T : IEvent
         {
             rwLock.EnterWriteLock();
-            if (!Events.TryGetValue(eventName, out var list))
-            {
-                Events.Add(eventName, list = new List<IEventHandler>() { });
-            }
+            var list = EventHandlers<T>.Handlers;
             if (!list.Contains(handler))
             {
                 list.Add(handler);
@@ -34,26 +33,24 @@ namespace GG.CoreEngine
             rwLock.ExitWriteLock();
         }
 
-        public void PublishEvent(string eventName, object args)
+        public void PublishEvent<T>(T args) where T : IEvent
         {
             rwLock.EnterReadLock();
-            if (Events.TryGetValue(eventName, out var list))
+            var list = EventHandlers<T>.Handlers;
+            for (var index = 0; index < list.Count; index++)
             {
-                for (var index = 0; index < list.Count; index++)
+                var handler = list[index];
+                if (!handler.IsAlive)
                 {
-                    var handler = list[index];
-                    if (!handler.IsAlive)
-                    {
-                        list.RemoveAt(index--);
-                        continue;
-                    }
-                    if (handler.IsOnce)
-                    {
-                        list.RemoveAt(index--);
-                        continue;
-                    }
-                    handler.OnEvent(_engine, args);
+                    list.RemoveAt(index--);
+                    continue;
                 }
+                if (handler.IsOnce)
+                {
+                    list.RemoveAt(index--);
+                    continue;
+                }
+                handler.OnEvent(_engine, args);
             }
             rwLock.ExitReadLock();
         }

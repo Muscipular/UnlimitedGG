@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GG.CoreEngine
+namespace GG.CoreEngine.Utility
 {
     internal class ObjectPool<T> where T : class
     {
