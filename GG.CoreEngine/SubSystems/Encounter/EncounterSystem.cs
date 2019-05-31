@@ -8,6 +8,11 @@ using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.SubSystems
 {
+    class EncounterEvent : IEvent
+    {
+        public bool Handled { get; set; }
+    }
+
     class EncounterSystem : ISubSystem
     {
         private readonly Engine _engine;
@@ -34,21 +39,23 @@ namespace GG.CoreEngine.SubSystems
             {
                 return;
             }
-            var rate = mapState.SumEncounterRate;
-            var d = Rand.Double(0, rate);
-            EncounterSet set = null;
-            foreach (var (setId, _rate) in mapState.CurrentMap.EncounterSets)
-            {
-                if (Config<EncounterSet>.Configs.TryGetValue(setId, out var _set))
-                {
-                    set = _set;
-                }
-                d -= _rate;
-                if (d <= 0)
-                {
-                    break;
-                }
-            }
+            var set = GetEncounterSet(mapState);
+            var enemyTeam = SetupEnemyTeam(battleState, set);
+
+            battleState.LootData = GetLootData(set, enemyTeam.OfType<Enemy>());
+            battleState.PlayerTeam.Clear();
+            var player = playerState.PlayerEntity;
+            player.HP = player.MaxHP;
+            player.FrameToAction = player.BaseActionFrame;
+            // player.Effects.Clear();
+            battleState.PlayerTeam.Add(player);
+            battleState.StateMode = BattleStateMode.InBattle;
+            battleState.WaitFrame = 60;
+            _engine.PublishEvent(new EncounterEvent());
+        }
+
+        private List<IEntity> SetupEnemyTeam(BattleState battleState, EncounterSet set)
+        {
             var enemyTeam = battleState.EnemyTeam;
             enemyTeam.Clear();
             int max = set?.MaxCount ?? 10;
@@ -74,16 +81,27 @@ namespace GG.CoreEngine.SubSystems
                     }
                 }
             }
+            return enemyTeam;
+        }
 
-            battleState.LootData = GetLootData(set, enemyTeam.OfType<Enemy>());
-            battleState.PlayerTeam.Clear();
-            var player = playerState.PlayerEntity;
-            player.HP = player.MaxHP;
-            player.FrameToAction = 0;
-            player.Effects.Clear();
-            battleState.PlayerTeam.Add(player);
-            battleState.StateMode = BattleStateMode.InBattle;
-            battleState.WaitFrame = 60;
+        private EncounterSet GetEncounterSet(MapState mapState)
+        {
+            var rate = mapState.SumEncounterRate;
+            var d = Rand.Double(0, rate);
+            EncounterSet set = null;
+            foreach (var (setId, _rate) in mapState.CurrentMap.EncounterSets)
+            {
+                if (Config<EncounterSet>.Configs.TryGetValue(setId, out var _set))
+                {
+                    set = _set;
+                }
+                d -= _rate;
+                if (d <= 0)
+                {
+                    break;
+                }
+            }
+            return set;
         }
 
         private LootData GetLootData(EncounterSet set, IEnumerable<Enemy> enemyTeam)

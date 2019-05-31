@@ -37,7 +37,5 @@ namespace GG.CoreEngine.Data
         public int Speed { get; set; }
 
         public int ReduceDamage { get; set; }
-
-        public List<IEffect> Effects { get; set; }
     }
 }

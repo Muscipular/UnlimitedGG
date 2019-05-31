@@ -29,7 +29,7 @@ namespace GG.CoreEngine.Data.Config
 
         public int AttackDelta { get; set; }
 
-        public uint BaseAttackFrame { get; set; }
+        public uint BaseActionFrame { get; set; }
 
         public int HP { get; set; }
 

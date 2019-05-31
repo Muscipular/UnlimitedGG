@@ -29,6 +29,7 @@ namespace GG.CoreEngine
             if (!list.Contains(handler))
             {
                 list.Add(handler);
+                list.Sort((a, b) => a.Order - b.Order);
             }
             rwLock.ExitWriteLock();
         }

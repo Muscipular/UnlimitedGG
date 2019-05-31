@@ -18,6 +18,7 @@ namespace GG.CoreEngine.SubSystems
         public BattleSystem(Engine engine)
         {
             _engine = engine;
+            _engine.RegisterEvent<EncounterEvent>(new InitBattleHandler());
         }
 
         private Random rnd = new Random();
@@ -42,7 +43,7 @@ namespace GG.CoreEngine.SubSystems
             }
             return (false, false);
         }
-      
+
         private bool DoAttack(List<IEntity> lList, List<IEntity> rList)
         {
             foreach (var actionOne in lList)
@@ -72,7 +73,6 @@ namespace GG.CoreEngine.SubSystems
             }
             return false;
         }
-
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

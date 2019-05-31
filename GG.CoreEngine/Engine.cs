@@ -116,7 +116,7 @@ namespace GG.CoreEngine
         {
             lock (locker)
             {
-                Console.WriteLine($"ScheduleCommand: {command}#{frame} @{currentFrame}");
+                Logger.Verbose("ScheduleCommand", $" {command}#{frame} @{currentFrame}");
                 commandScheduler.ScheduleCommand(command, Math.Max(frame, 0));
             }
         }
@@ -128,7 +128,7 @@ namespace GG.CoreEngine
 
         public void PublishEvent<T>(T args) where T : IEvent
         {
-            Console.WriteLine($"{typeof(T).Name}: {JsonConvert.SerializeObject(args)}");
+            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {JsonConvert.SerializeObject(args)}");
             eventManager.PublishEvent(args);
         }
     }
