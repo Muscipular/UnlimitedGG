@@ -1,4 +1,5 @@
-﻿using GG.CoreEngine.Data.Skills;
+﻿using GG.CoreEngine.Data.Buffers;
+using GG.CoreEngine.Data.Skills;
 
 namespace GG.CoreEngine.Data
 {
@@ -25,5 +26,7 @@ namespace GG.CoreEngine.Data
         int Speed { get; set; }
 
         int ReduceDamage { get; set; }
+
+        IBuffer[] Buffers { get; set; }
     }
 }

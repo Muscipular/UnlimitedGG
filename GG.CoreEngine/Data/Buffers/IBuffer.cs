@@ -4,13 +4,11 @@ namespace GG.CoreEngine.Data.Buffers
 {
     enum BufferType
     {
-        Damage,
+        Temp,
 
-        Health,
+        Equip,
 
-        State,
-
-        None,
+        Passive,
     }
 
     enum DurationMode
@@ -41,9 +39,15 @@ namespace GG.CoreEngine.Data.Buffers
 
         int Order { get; set; }
 
+        bool CanUpdateDuration { get; set; }
+
         BufferCategory Category { get; set; }
 
         BufferType Type { get; set; }
+
+        void OnAddBuffer(IEntity entity, Engine engine);
+
+        void OnRemoveBuffer(IEntity entity, Engine engine);
     }
 
     abstract class Buffer : IBuffer
@@ -60,18 +64,23 @@ namespace GG.CoreEngine.Data.Buffers
 
         public int Order { get; set; }
 
+        public bool CanUpdateDuration { get; set; }
+
         public BufferCategory Category { get; set; }
 
         public BufferType Type { get; set; }
+
+        public virtual void OnAddBuffer(IEntity entity, Engine engine)
+        {
+        }
+
+        public virtual void OnRemoveBuffer(IEntity entity, Engine engine)
+        {
+        }
     }
 
-    class HealthBuffer : Buffer
+    class StateBuffer : Buffer
     {
-        public int Health { get; set; }
-    }
-
-    class DamageBuffer : Buffer
-    {
-        public int Damage { get; set; }
+        
     }
 }

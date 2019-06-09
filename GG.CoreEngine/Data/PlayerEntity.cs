@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.Data.Buffers;
 using GG.CoreEngine.Data.Skills;
 
 namespace GG.CoreEngine.Data
@@ -37,5 +38,7 @@ namespace GG.CoreEngine.Data
         public int Speed { get; set; }
 
         public int ReduceDamage { get; set; }
+
+        public IBuffer[] Buffers { get; set; }
     }
 }

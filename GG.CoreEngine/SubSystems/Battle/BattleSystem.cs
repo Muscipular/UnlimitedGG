@@ -82,7 +82,7 @@ namespace GG.CoreEngine.SubSystems.Battle
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static uint CalcFrameToAction(IEntity actionOne)
+        internal static uint CalcFrameToAction(IEntity actionOne)
         {
             return (uint)Math.Ceiling(actionOne.BaseActionFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
         }

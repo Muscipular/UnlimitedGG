@@ -35,23 +35,14 @@ namespace GG.CoreEngine.SubSystems.Encounter
                 return;
             }
             var set = GetEncounterSet(mapState);
-            var enemyTeam = SetupEnemyTeam(battleState, set);
-
+            var enemyTeam = SetupEnemyTeam(set);
             battleState.LootData = GetLootData(set, enemyTeam.OfType<Enemy>());
-            battleState.PlayerTeam.Clear();
-            var player = playerState.PlayerEntity;
-            player.HP = player.MaxHP;
-            player.FrameToAction = player.BaseActionFrame;
-            // player.Effects.Clear();
-            battleState.PlayerTeam.Add(player);
-            battleState.StateMode = BattleStateMode.InBattle;
-            battleState.WaitFrame = 60;
-            _engine.PublishEvent(new EncounterEvent());
+            _engine.PublishEvent(new EncounterEvent(set, enemyTeam));
         }
 
-        private List<IEntity> SetupEnemyTeam(BattleState battleState, EncounterSet set)
+        private List<IEntity> SetupEnemyTeam(EncounterSet set)
         {
-            var enemyTeam = battleState.EnemyTeam;
+            var enemyTeam = new List<IEntity>();
             enemyTeam.Clear();
             int max = set?.MaxCount ?? 10;
             int min = 1;

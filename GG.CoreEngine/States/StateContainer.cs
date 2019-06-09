@@ -6,7 +6,7 @@ namespace GG.CoreEngine.States
 {
     public class StateContainer
     {
-        public Dictionary<string, IState> States = new Dictionary<string, IState>();
+        private readonly Dictionary<string, IState> States = new Dictionary<string, IState>();
 
 
         public StateContainer(params IState[] states)
