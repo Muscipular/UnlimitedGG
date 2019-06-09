@@ -29,7 +29,7 @@ namespace GG.CoreEngine.Data
             {
                 if (ItemData == null)
                 {
-                    Config<ItemData>.Configs.TryGetValue(DataId, out ItemData);
+                    Config<ItemData>.TryGetData(DataId, out ItemData);
                 }
                 return ItemData;
             }

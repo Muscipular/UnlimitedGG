@@ -5,22 +5,6 @@ using GG.CoreEngine.Data.Skills;
 
 namespace GG.CoreEngine.Data.Config
 {
-    public class LootData
-    {
-        public int Gold { get; set; }
-
-        public int Exp { get; set; }
-
-        public LootItem[] Item { get; set; }
-    }
-
-    public class LootItem
-    {
-        public string Id { get; set; }
-
-        public double Rate { get; set; }
-    }
-
     internal class EnemyData : IHasId
     {
         public string Id { get; set; }

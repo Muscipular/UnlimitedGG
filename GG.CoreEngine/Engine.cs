@@ -7,6 +7,7 @@ using GG.CoreEngine.Data;
 using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
 using GG.CoreEngine.SubSystems;
+using GG.CoreEngine.SubSystems.Encounter;
 using GG.CoreEngine.Utility;
 using Newtonsoft.Json;
 
@@ -14,6 +15,8 @@ namespace GG.CoreEngine
 {
     public class Engine
     {
+        private readonly IDataLoader _loader;
+
         internal const double FrameTime = 1000 / 60f;
 
         private CommandScheduler commandScheduler;
@@ -37,9 +40,10 @@ namespace GG.CoreEngine
         });
 
 
-        public Engine()
+        public Engine(IDataLoader loader)
         {
-            Config<EnemyData>.Load(File.OpenRead("Data/Config/enemy.json"));
+            _loader = loader;
+            Config<EnemyData>.Load(loader);
             Config<EncounterSet>.Load(File.OpenRead("Data/Config/encounter.json"));
             Config<MapData>.Load(File.OpenRead("Data/Config/map.json"));
             subSystems = new Dictionary<Type, ISubSystem>()

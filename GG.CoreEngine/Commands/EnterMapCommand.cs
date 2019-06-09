@@ -11,7 +11,7 @@ namespace GG.CoreEngine.Commands
     {
         public EnterMapCommand(string mapId)
         {
-            if (!Config<MapData>.Configs.ContainsKey(mapId))
+            if (!Config<MapData>.HasKey(mapId))
             {
                 throw new Exception("mapId not found : " + mapId);
             }
@@ -22,7 +22,7 @@ namespace GG.CoreEngine.Commands
 
         void ICommand.Execute(Engine engine)
         {
-            var map = Config<MapData>.Configs[MapId];
+            Config<MapData>.TryGetData(MapId, out var map);
             var mapState = engine.State.Get<MapState>();
             mapState.CurrentMap = map;
             mapState.ShouldEncounter = map.EncounterSets?.Count > 0;

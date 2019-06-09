@@ -48,7 +48,7 @@ namespace GG.CoreEngine.SubSystems
 
         private Item GenerateItem(string itemId)
         {
-            if (Config<ItemData>.Configs.TryGetValue(itemId, out var data))
+            if (Config<ItemData>.TryGetData(itemId, out var data))
             {
                 return new Item(data);
             }

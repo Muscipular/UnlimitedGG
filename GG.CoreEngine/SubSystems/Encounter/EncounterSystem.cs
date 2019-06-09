@@ -6,13 +6,8 @@ using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
 using GG.CoreEngine.Utility;
 
-namespace GG.CoreEngine.SubSystems
+namespace GG.CoreEngine.SubSystems.Encounter
 {
-    class EncounterEvent : IEvent
-    {
-        public bool Handled { get; set; }
-    }
-
     class EncounterSystem : ISubSystem
     {
         private readonly Engine _engine;
@@ -91,7 +86,7 @@ namespace GG.CoreEngine.SubSystems
             EncounterSet set = null;
             foreach (var (setId, _rate) in mapState.CurrentMap.EncounterSets)
             {
-                if (Config<EncounterSet>.Configs.TryGetValue(setId, out var _set))
+                if (Config<EncounterSet>.TryGetData(setId, out var _set))
                 {
                     set = _set;
                 }

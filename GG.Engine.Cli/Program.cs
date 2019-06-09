@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using GG.CoreEngine;
 using GG.CoreEngine.Commands;
+using GG.CoreEngine.Data;
 
 namespace GG.Engine.Cli
 {
+    class Loader : IDataLoader
+    {
+        public Stream Load(string path)
+        {
+            return null;
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
-            var engine = new CoreEngine.Engine();
+            var engine = new CoreEngine.Engine(new Loader());
             engine.ScheduleCommand(new EnterMapCommand("Map1"));
             engine.ScheduleCommand(new TestCommand("0"));
             engine.ScheduleCommand(new TestCommand("1f"), 1);
