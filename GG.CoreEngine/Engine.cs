@@ -15,7 +15,7 @@ namespace GG.CoreEngine
 {
     public class Engine
     {
-        private readonly IDataLoader _loader;
+        private IDataLoader _loader;
 
         internal const double FrameTime = 1000 / 60f;
 
@@ -42,21 +42,34 @@ namespace GG.CoreEngine
 
         public Engine(IDataLoader loader)
         {
+            LoadData(loader);
+            InitComponent();
+            InitSubSystem();
+        }
+
+        private void InitSubSystem()
+        {
+            subSystems = new Dictionary<Type, ISubSystem>();
+            subSystems.Add(typeof(PlayerStateSystem), new PlayerStateSystem(this));
+            subSystems.Add(typeof(EncounterSystem), new EncounterSystem(this));
+            subSystems.Add(typeof(BattleSystem), new BattleSystem(this));
+            subSystems.Add(typeof(LootSystem), new LootSystem(this));
+        }
+
+        private void InitComponent()
+        {
+            eventManager = new EventManager(this);
+            commandScheduler = new CommandScheduler(this);
+            looper = new Looper(OnFrame);
+        }
+
+        private void LoadData(IDataLoader loader)
+        {
             _loader = loader;
             Config<EnemyData>.Load(loader);
             Config<EncounterSet>.Load(loader);
             Config<MapData>.Load(loader);
             Config<ItemData>.Load(loader);
-            subSystems = new Dictionary<Type, ISubSystem>()
-            {
-                { typeof(PlayerStateSystem), new PlayerStateSystem(this) },
-                { typeof(EncounterSystem), new EncounterSystem(this) },
-                { typeof(BattleSystem), new BattleSystem(this) },
-                { typeof(LootSystem), new LootSystem(this) },
-            };
-            eventManager = new EventManager(this);
-            commandScheduler = new CommandScheduler(this);
-            looper = new Looper(OnFrame);
         }
 
         public T GetSubSystem<T>() where T : ISubSystem

@@ -72,14 +72,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\EncounterSet.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
     </Content>
     <Content Include="Data\EnemyData.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
     </Content>
-    <Content Include="Data\ItemData.json" />
+    <Content Include="Data\ItemData.json">
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\MapData.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TransformOnBuild>false</TransformOnBuild>
+      <Link></Link>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
