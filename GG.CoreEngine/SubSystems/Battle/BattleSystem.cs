@@ -46,7 +46,7 @@ namespace GG.CoreEngine.SubSystems.Battle
         {
             foreach (var actionOne in lList)
             {
-                if (actionOne.FrameToAction == 0)
+                if (actionOne.FrameToAction <= 0)
                 {
                     actionOne.FrameToAction = CalcFrameToAction(actionOne);
 
@@ -82,9 +82,9 @@ namespace GG.CoreEngine.SubSystems.Battle
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static uint CalcFrameToAction(IEntity actionOne)
+        internal static int CalcFrameToAction(IEntity actionOne)
         {
-            return (uint)Math.Ceiling(actionOne.BaseActionFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
+            return (int)Math.Ceiling(actionOne.BaseActionFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
         }
 
         public void Process(ulong frame)

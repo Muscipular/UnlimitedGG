@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using GG.CoreEngine.Data;
@@ -18,7 +19,7 @@ namespace GG.CoreEngine
     {
         private IDataLoader _loader;
 
-        internal const double FrameTime = 1000 / 60f;
+        internal const double FrameTime = 1000 / 600f;
 
         private CommandScheduler commandScheduler;
 
@@ -147,7 +148,7 @@ namespace GG.CoreEngine
 
         public void PublishEvent<T>(T args) where T : IEvent
         {
-            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {JsonConvert.SerializeObject(args)}");
+            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {(args is IFormattable f ? f.ToString(null, null): JsonConvert.SerializeObject(args))}");
             eventManager.PublishEvent(args);
         }
     }

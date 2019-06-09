@@ -30,5 +30,7 @@ namespace GG.CoreEngine.Data.Config
         public LootData Loot { get; set; }
 
         public string[] SkillIds { get; set; }
+
+        public int Speed { get; set; }
     }
 }

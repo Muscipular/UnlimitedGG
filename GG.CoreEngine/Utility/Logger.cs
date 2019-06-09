@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading;
 
 
 namespace GG.CoreEngine.Utility
@@ -23,7 +25,26 @@ namespace GG.CoreEngine.Utility
 
         public static void Log(Level level, string tag, FormattableString msg)
         {
-            Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss.sss} {level:G} {tag} {msg.ToString()}");
+            var ss = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {level:G} {tag} {msg.ToString()}";
+            s.Add(ss);
+        }
+
+        static System.Collections.Concurrent.BlockingCollection<string> s = new BlockingCollection<string>();
+
+        static Logger()
+        {
+            var thread = new Thread(() =>
+            {
+                while (true)
+                {
+                    foreach (var s1 in s.GetConsumingEnumerable())
+                    {
+                        Console.WriteLine(s1);
+                    }
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         public static void Verbose(string tag, FormattableString msg) => Log(Level.Verb, tag, msg);

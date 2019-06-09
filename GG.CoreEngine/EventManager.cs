@@ -14,46 +14,44 @@ namespace GG.CoreEngine
 
         private readonly Engine _engine;
 
-        private ReaderWriterLockSlim rwLock;
-
         public EventManager(Engine engine)
         {
             _engine = engine;
-            rwLock = new ReaderWriterLockSlim();
         }
 
         public void RegisterEvent<T>(IEventHandler<T> handler) where T : IEvent
         {
-            rwLock.EnterWriteLock();
-            var list = EventHandlers<T>.Handlers;
-            if (!list.Contains(handler))
+            lock (EventHandlers<T>.Handlers)
             {
-                list.Add(handler);
-                list.Sort((a, b) => a.Order - b.Order);
+                var list = EventHandlers<T>.Handlers;
+                if (!list.Contains(handler))
+                {
+                    list.Add(handler);
+                    list.Sort((a, b) => a.Order - b.Order);
+                }
             }
-            rwLock.ExitWriteLock();
         }
 
         public void PublishEvent<T>(T args) where T : IEvent
         {
-            rwLock.EnterReadLock();
-            var list = EventHandlers<T>.Handlers;
-            for (var index = 0; index < list.Count; index++)
+            lock (EventHandlers<T>.Handlers)
             {
-                var handler = list[index];
-                if (!handler.IsAlive)
+                var list = EventHandlers<T>.Handlers;
+                for (var index = 0; index < list.Count; index++)
                 {
-                    list.RemoveAt(index--);
-                    continue;
+                    var handler = list[index];
+                    if (!handler.IsAlive)
+                    {
+                        list.RemoveAt(index--);
+                        continue;
+                    }
+                    if (handler.IsOnce)
+                    {
+                        list.RemoveAt(index--);
+                    }
+                    handler.OnEvent(_engine, args);
                 }
-                if (handler.IsOnce)
-                {
-                    list.RemoveAt(index--);
-                    continue;
-                }
-                handler.OnEvent(_engine, args);
             }
-            rwLock.ExitReadLock();
         }
     }
 }

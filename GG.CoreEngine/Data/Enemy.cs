@@ -18,6 +18,16 @@ namespace GG.CoreEngine.Data
         {
             this.Populate(data);
             this.Data = data;
+            this.Stats = new Stats()
+            {
+                Attack = data.Attack,
+                AttackDelta = data.AttackDelta,
+                Defence = data.Defence,
+                Speed = data.Speed,
+                ReduceDamage = data.ReduceDamage,
+                BaseActionFrame = data.BaseActionFrame,
+                MaxHP = data.MaxHP,
+            };
         }
 
         public EnemyData Data { get; set; }
@@ -28,9 +38,9 @@ namespace GG.CoreEngine.Data
 
         public int Defence { get; set; }
 
-        public uint BaseActionFrame { get; set; }
+        public int BaseActionFrame { get; set; }
 
-        public uint FrameToAction { get; set; }
+        public int FrameToAction { get; set; }
 
         public int HP { get; set; }
 
@@ -44,6 +54,12 @@ namespace GG.CoreEngine.Data
 
         public int ReduceDamage { get; set; }
 
-        public IBuffer[] Buffers { get; set; }
+        public Stats Stats { get; set; }
+
+        public Stats TempStats { get; set; }
+
+        public Stats MultStats { get; set; } = Stats.BaseMult;
+
+        public IBuffer[] Buffers { get; set; } = Array.Empty<IBuffer>();
     }
 }

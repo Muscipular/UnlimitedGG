@@ -13,19 +13,15 @@ namespace GG.CoreEngine.Data
             Name = "Player";
         }
 
-        public int Exp { get; set; }
-
-        public int Gold { get; set; }
-
         public int Attack { get; set; } = 1;
 
         public int AttackDelta { get; set; } = 3;
 
         public int Defence { get; set; }
 
-        public uint BaseActionFrame { get; set; } = 60;
+        public int BaseActionFrame { get; set; } = 60;
 
-        public uint FrameToAction { get; set; } = 0;
+        public int FrameToAction { get; set; } = 0;
 
         public int HP { get; set; } = 100;
 
@@ -39,6 +35,12 @@ namespace GG.CoreEngine.Data
 
         public int ReduceDamage { get; set; }
 
-        public IBuffer[] Buffers { get; set; }
+        public Stats Stats { get; set; } = Stats.BaseStats;
+
+        public Stats TempStats { get; set; }
+
+        public Stats MultStats { get; set; } = Stats.BaseMult;
+
+        public IBuffer[] Buffers { get; set; } = Array.Empty<IBuffer>();
     }
 }

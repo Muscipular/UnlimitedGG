@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine
 {
@@ -52,16 +54,25 @@ namespace GG.CoreEngine
 
         public void Loop()
         {
+            var sw = Stopwatch.StartNew();
             while (running)
             {
                 if (ms > 0)
                 {
-                    Thread.Sleep((int)Math.Ceiling(ms));
+                    while (ms > 0)
+                    {
+                        sw.Restart();
+                        Thread.Sleep(1);
+                        sw.Stop();
+                        ms -= sw.Elapsed.TotalMilliseconds;
+                    }
                 }
                 var now = DateTime.Now;
+                sw.Restart();
                 Execute(now);
-                ms = Math.Max(Engine.FrameTime - (DateTime.Now - now).TotalMilliseconds, 1);
-                // Console.WriteLine("delta: " + ms);
+                sw.Stop();
+                var d = sw.Elapsed.TotalMilliseconds;
+                ms += Math.Max(Engine.FrameTime - d, 1);
             }
         }
     }

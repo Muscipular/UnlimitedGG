@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GG.CoreEngine.Data;
 using GG.CoreEngine.States;
 
 namespace GG.CoreEngine.SubSystems
@@ -27,15 +28,18 @@ namespace GG.CoreEngine.SubSystems
 
         private static void CheckLevelUp(PlayerState playerState)
         {
-            if (playerState.PlayerEntity.Exp < playerState.PlayerEntity.Level * 5)
+            if (playerState.Exp < playerState.PlayerEntity.Level * 5)
             {
                 return;
             }
-            playerState.PlayerEntity.Exp -= playerState.PlayerEntity.Level * 5;
+            playerState.Exp -= playerState.PlayerEntity.Level * 5;
             playerState.PlayerEntity.Level += 1;
-            playerState.PlayerEntity.Attack += 1;
-            playerState.PlayerEntity.Speed += 2;
-            playerState.PlayerEntity.MaxHP += 3;
+            playerState.PlayerEntity.Stats += new Stats()
+            {
+                Attack = 1, 
+                Speed = 2,
+                MaxHP = 3,
+            };
         }
     }
 }

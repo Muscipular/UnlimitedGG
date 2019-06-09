@@ -26,8 +26,8 @@ namespace GG.CoreEngine.SubSystems
             }
             var playerState = _engine.State.Get<PlayerState>();
             var lootData = battleState.LootData;
-            playerState.PlayerEntity.Exp += lootData.Exp;
-            playerState.PlayerEntity.Gold += lootData.Gold;
+            playerState.Exp += lootData.Exp;
+            playerState.Gold += lootData.Gold;
             if (lootData.Item?.Length > 0)
             {
                 foreach (var item in lootData.Item)
