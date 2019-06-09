@@ -44,8 +44,9 @@ namespace GG.CoreEngine
         {
             _loader = loader;
             Config<EnemyData>.Load(loader);
-            Config<EncounterSet>.Load(File.OpenRead("Data/Config/encounter.json"));
-            Config<MapData>.Load(File.OpenRead("Data/Config/map.json"));
+            Config<EncounterSet>.Load(loader);
+            Config<MapData>.Load(loader);
+            Config<ItemData>.Load(loader);
             subSystems = new Dictionary<Type, ISubSystem>()
             {
                 { typeof(PlayerStateSystem), new PlayerStateSystem(this) },

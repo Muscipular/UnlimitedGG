@@ -15,7 +15,7 @@ namespace GG.Engine.Cli
     {
         public Stream Load(string path)
         {
-            return null;
+            return new MemoryStream(File.ReadAllBytes($"Data/{path}.json"));
         }
     }
 

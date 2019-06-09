@@ -71,13 +71,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\encounter.json">
+    <Content Include="Data\EncounterSet.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\enemy.json">
+    <Content Include="Data\EnemyData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\map.json">
+    <Content Include="Data\ItemData.json" />
+    <Content Include="Data\MapData.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
