@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using GG.CoreEngine.Data;
 using GG.CoreEngine.Data.Skills;
 using GG.CoreEngine.States;
-using GG.CoreEngine.SubSystems.Battle;
+using GG.CoreEngine.SubSystems.Encounter;
 
-namespace GG.CoreEngine.SubSystems
+namespace GG.CoreEngine.SubSystems.Battle
 {
     class BattleSystem : ISubSystem
     {

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GG.Engine.Cli", "GG.Engine.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GG.Engine.Test", "GG.Engine.Test\GG.Engine.Test.csproj", "{012E5177-C798-4953-BFF1-F2F1E611E27E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cli", "cli\cli.csproj", "{85E6AD34-3271-445B-A68B-404D0B6BFA4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{012E5177-C798-4953-BFF1-F2F1E611E27E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{012E5177-C798-4953-BFF1-F2F1E611E27E}.Release|x86.ActiveCfg = Release|Any CPU
 		{012E5177-C798-4953-BFF1-F2F1E611E27E}.Release|x86.Build.0 = Release|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Debug|x86.Build.0 = Debug|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Release|x86.ActiveCfg = Release|Any CPU
+		{85E6AD34-3271-445B-A68B-404D0B6BFA4D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

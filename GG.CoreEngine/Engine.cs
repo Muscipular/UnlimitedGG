@@ -7,6 +7,7 @@ using GG.CoreEngine.Data;
 using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
 using GG.CoreEngine.SubSystems;
+using GG.CoreEngine.SubSystems.Battle;
 using GG.CoreEngine.SubSystems.Encounter;
 using GG.CoreEngine.Utility;
 using Newtonsoft.Json;

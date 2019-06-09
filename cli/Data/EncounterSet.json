@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Id": "Map1_1",
+    "Enemies": {
+      "Cat": { "Min": 1, "Max": 2 },
+      "Dog": { "Min": 0, "Max": 1 }
+    },
+    "MaxCount": 3
+  },
+  {
+    "Id": "Map1_2",
+    "Enemies": {
+      "Dog": { "Min": 1, "Max": 3 },
+      "Cat": { "Min": 0, "Max": 3 }
+    },
+    "MaxCount": 3
+  },
+  {
+    "Id": "Map2_1",
+    "Enemies": {
+      "Dog": { "Min": 2, "Max": 3 },
+      "Cat": { "Min": 1, "Max": 3 }
+    },
+    "MaxCount": 4
+  }
+]
