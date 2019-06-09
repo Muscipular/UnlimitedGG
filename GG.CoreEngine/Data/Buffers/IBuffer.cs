@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GG.CoreEngine.Data.Buffers
 {
@@ -81,6 +82,18 @@ namespace GG.CoreEngine.Data.Buffers
 
     class StateBuffer : Buffer
     {
-        
+        Dictionary<string, double> states = new Dictionary<string, double>();
+
+        public IReadOnlyDictionary<string, double> States => states;
+
+        public override void OnAddBuffer(IEntity entity, Engine engine)
+        {
+            
+        }
+
+        public override void OnRemoveBuffer(IEntity entity, Engine engine)
+        {
+            base.OnRemoveBuffer(entity, engine);
+        }
     }
 }
