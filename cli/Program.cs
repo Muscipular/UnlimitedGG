@@ -24,7 +24,7 @@ namespace GG.Engine.Cli
             engine.ScheduleCommand(new TestCommand("1f-1"), 1);
             while (engine.Running)
             {
-                Thread.Sleep(0);
+                Thread.Sleep(100);
             }
             Console.ReadKey();
         }

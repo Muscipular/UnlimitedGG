@@ -72,7 +72,7 @@ namespace GG.CoreEngine
                 Execute(now);
                 sw.Stop();
                 var d = sw.Elapsed.TotalMilliseconds;
-                ms += Math.Max(Engine.FrameTime - d, 1);
+                ms += Engine.FrameTime - d;
             }
         }
     }

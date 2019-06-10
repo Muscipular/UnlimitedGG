@@ -19,7 +19,7 @@ namespace GG.CoreEngine
     {
         private IDataLoader _loader;
 
-        internal const double FrameTime = 1000 / 600f;
+        internal const double FrameTime = 1000 / 60f;
 
         private CommandScheduler commandScheduler;
 
@@ -44,6 +44,7 @@ namespace GG.CoreEngine
 
         public Engine(IDataLoader loader)
         {
+            _loader = loader;
             LoadData(loader);
             InitComponent();
             InitSubSystem();
@@ -67,7 +68,6 @@ namespace GG.CoreEngine
 
         private void LoadData(IDataLoader loader)
         {
-            _loader = loader;
             Config<EnemyData>.Load(loader);
             Config<EncounterSet>.Load(loader);
             Config<MapData>.Load(loader);

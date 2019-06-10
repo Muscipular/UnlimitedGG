@@ -25,7 +25,7 @@ namespace GG.CoreEngine.Utility
 
         public static void Log(Level level, string tag, FormattableString msg)
         {
-            var ss = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {level:G} {tag} {msg.ToString()}";
+            var ss = $"[{level:G}]{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {tag} {msg.ToString()}";
             s.Add(ss);
         }
 
@@ -35,12 +35,9 @@ namespace GG.CoreEngine.Utility
         {
             var thread = new Thread(() =>
             {
-                while (true)
+                foreach (var s1 in s.GetConsumingEnumerable())
                 {
-                    foreach (var s1 in s.GetConsumingEnumerable())
-                    {
-                        Console.WriteLine(s1);
-                    }
+                    Console.WriteLine(s1);
                 }
             });
             thread.IsBackground = true;

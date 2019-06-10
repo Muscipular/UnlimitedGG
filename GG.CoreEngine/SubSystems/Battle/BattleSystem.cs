@@ -50,7 +50,8 @@ namespace GG.CoreEngine.SubSystems.Battle
                 {
                     actionOne.FrameToAction = CalcFrameToAction(actionOne);
 
-                    var target = rList.Count == 1 ? rList[0] : rList[rnd.Next(rList.Count)];
+                    var liveList = rList.Where(e => e.HP > 0).ToList();
+                    var target = liveList.Count == 1 ? liveList[0] : liveList[rnd.Next(liveList.Count)];
                     var damage = CalcDamage(actionOne, target);
                     target.HP -= damage;
                     _engine.PublishEvent(new DamagedEvent(damage, actionOne, target));
