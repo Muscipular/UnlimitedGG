@@ -15,5 +15,7 @@ namespace GG.CoreEngine.States
         public int AttackDelta { get; set; }
 
         public int Defence { get; set; }
+        
+        public int Level { get; set; }
     }
 }
