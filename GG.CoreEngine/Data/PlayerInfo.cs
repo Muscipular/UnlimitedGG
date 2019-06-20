@@ -22,39 +22,13 @@ namespace GG.CoreEngine.Data
 
         public long Exp { get; set; }
 
-        public Item Head { get; set; } = new Item()
+        public Dictionary<EquipCategory, int> EquipSlot { get; set; } = new[]
         {
-            Stats = new Stats()
-            {
-                Defence = 2,
-            }
-        };
+            EquipCategory.Head, EquipCategory.Body, EquipCategory.Foot,
+            EquipCategory.Hand, EquipCategory.OffHand,
+            EquipCategory.Necklace, EquipCategory.Ring, EquipCategory.Ring
+        }.ToLookup(e => e, e => e).ToDictionary(e => e.Key, e => e.Count());
 
-        public Item MainHand { get; set; } = new Item()
-        {
-            Stats = new Stats()
-            {
-                Attack = 1,
-                AttackDelta = 2,
-            }
-        };
-
-        public Item OffHand { get; set; } = new Item()
-        {
-            Stats = new Stats()
-            {
-                Defence = 1,
-            }
-        };
-
-        public Item Foot { get; set; }
-
-        public Item Body { get; set; }
-
-        public Item Necklace { get; set; }
-
-        public Item Ring1 { get; set; }
-
-        public Item Ring2 { get; set; }
+        public Dictionary<string, Item> Equips { get; set; } = new Dictionary<string, Item>();
     }
 }

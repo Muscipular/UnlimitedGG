@@ -22,14 +22,7 @@ namespace GG.CoreEngine.SubSystems.Battle
             battleState.PlayerTeam.Add(player);
             
             player.Populate(playerState.PlayerInfo);
-            player.Stats += playerState.PlayerInfo.Head?.Stats;
-            player.Stats += playerState.PlayerInfo.Body?.Stats;
-            player.Stats += playerState.PlayerInfo.MainHand?.Stats;
-            player.Stats += playerState.PlayerInfo.OffHand?.Stats;
-            player.Stats += playerState.PlayerInfo.Foot?.Stats;
-            player.Stats += playerState.PlayerInfo.Necklace?.Stats;
-            player.Stats += playerState.PlayerInfo.Ring1?.Stats;
-            player.Stats += playerState.PlayerInfo.Ring2?.Stats;
+            player.Stats += playerState.PlayerInfo.Equips.Aggregate(new Stats(), (p, e) => e.Value.Stats + p);
             
             foreach (var entity in battleState.PlayerTeam)
             {

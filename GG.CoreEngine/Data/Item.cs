@@ -6,6 +6,35 @@ using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.Data
 {
+    enum ItemType
+    {
+        None,
+
+        Potion,
+
+        Equip,
+
+        Misc
+    }
+
+    [Flags]
+    enum EquipCategory
+    {
+        Head,
+
+        Hand,
+
+        OffHand,
+
+        Body,
+
+        Foot,
+
+        Necklace,
+
+        Ring,
+    }
+
     class Item : IHasId
     {
         private ItemData ItemData;
@@ -22,6 +51,10 @@ namespace GG.CoreEngine.Data
         }
 
         public string DataId { get; set; }
+
+        public ItemType Type { get; set; } = ItemType.None;
+
+        public long Category { get; set; }
 
         public Stats Stats { get; set; }
 

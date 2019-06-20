@@ -37,7 +37,7 @@ namespace GG.CoreEngine.SubSystems
                         var generateItem = GenerateItem(item.Id);
                         if (generateItem != null)
                         {
-                            playerState.Bag.Add(generateItem);
+                            playerState.Bag.Add(generateItem.Id, generateItem);
                         }
                     }
                 }
@@ -50,7 +50,10 @@ namespace GG.CoreEngine.SubSystems
         {
             if (Config<ItemData>.TryGetData(itemId, out var data))
             {
-                return new Item(data);
+                return new Item(data)
+                {
+                    Id = Guid.NewGuid().ToString("N")
+                };
             }
             return null;
         }
