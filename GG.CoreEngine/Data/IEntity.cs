@@ -102,6 +102,16 @@ namespace GG.CoreEngine.Data
             };
         }
 
+        public static Stats operator +(Stats left, Stats? right)
+        {
+            return right.HasValue ? left + right.Value : left;
+        }
+
+        public static Stats operator +(Stats? right, Stats left)
+        {
+            return right.HasValue ? left + right.Value : left;
+        }
+
         public static Stats operator -(Stats left, Stats right)
         {
             return new Stats
@@ -113,6 +123,31 @@ namespace GG.CoreEngine.Data
                 MaxHP = left.MaxHP - right.MaxHP,
                 Speed = left.Speed - right.Speed,
                 ReduceDamage = left.ReduceDamage - right.ReduceDamage,
+            };
+        }
+
+        public static Stats operator -(Stats left, Stats? right)
+        {
+            return right.HasValue ? left - right.Value : left;
+        }
+
+
+        public static Stats operator -(Stats? right, Stats left)
+        {
+            return right.HasValue ? left - right.Value : left;
+        }
+
+        public static Stats operator -(Stats left)
+        {
+            return left * new Stats()
+            {
+                Attack = -1,
+                AttackDelta = -1,
+                Defence = -1,
+                BaseActionFrame = -1,
+                MaxHP = -1,
+                Speed = -1,
+                ReduceDamage = -1,
             };
         }
 
@@ -128,6 +163,16 @@ namespace GG.CoreEngine.Data
                 Speed = left.Speed * right.Speed,
                 ReduceDamage = left.ReduceDamage * right.ReduceDamage,
             };
+        }
+
+        public static Stats operator *(Stats left, Stats? right)
+        {
+            return right.HasValue ? left * right.Value : left;
+        }
+
+        public static Stats operator *(Stats? right, Stats left)
+        {
+            return right.HasValue ? left * right.Value : left;
         }
     }
 }

@@ -28,12 +28,12 @@ namespace GG.CoreEngine.SubSystems
 
         private static void CheckLevelUp(PlayerState playerState)
         {
-            if (playerState.Exp < playerState.PlayerEntity.Level * 5)
+            if (playerState.PlayerInfo.Exp < playerState.PlayerInfo.Level * 5)
             {
                 return;
             }
-            playerState.Exp -= playerState.PlayerEntity.Level * 5;
-            playerState.PlayerEntity.Level += 1;
+            playerState.PlayerInfo.Exp -= playerState.PlayerInfo.Level * 5;
+            playerState.PlayerInfo.Level += 1;
             playerState.PlayerEntity.Stats += new Stats()
             {
                 Attack = 1, 

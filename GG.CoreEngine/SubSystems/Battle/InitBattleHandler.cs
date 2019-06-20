@@ -17,19 +17,24 @@ namespace GG.CoreEngine.SubSystems.Battle
             var battleState = engine.State.Get<BattleState>();
             var playerState = engine.State.Get<PlayerState>();
             var player = playerState.PlayerEntity;
-//            player.Stats = new Stats()
-//            {
-//                Attack = playerState.PlayerInfo.Attack,
-//                Defence = playerState.PlayerInfo.Defence,
-//                AttackDelta = playerState.PlayerInfo.AttackDelta,
-//                MaxHP = playerState.PlayerInfo.MaxHP,
-//            };
+            
             battleState.PlayerTeam.Clear();
             battleState.PlayerTeam.Add(player);
+            
+            player.Populate(playerState.PlayerInfo);
+            player.Stats += playerState.PlayerInfo.Head?.Stats;
+            player.Stats += playerState.PlayerInfo.Body?.Stats;
+            player.Stats += playerState.PlayerInfo.MainHand?.Stats;
+            player.Stats += playerState.PlayerInfo.OffHand?.Stats;
+            player.Stats += playerState.PlayerInfo.Foot?.Stats;
+            player.Stats += playerState.PlayerInfo.Necklace?.Stats;
+            player.Stats += playerState.PlayerInfo.Ring1?.Stats;
+            player.Stats += playerState.PlayerInfo.Ring2?.Stats;
+            
             foreach (var entity in battleState.PlayerTeam)
             {
                 entity.ApplyStats();
-                entity.HP = player.MaxHP;
+                entity.HP = entity.MaxHP;
                 entity.FrameToAction = BattleSystem.CalcFrameToAction(entity);
             }
             battleState.EnemyTeam.Clear();

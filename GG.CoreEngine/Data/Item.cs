@@ -6,7 +6,7 @@ using GG.CoreEngine.Utility;
 
 namespace GG.CoreEngine.Data
 {
-    class Item
+    class Item : IHasId
     {
         private ItemData ItemData;
 
@@ -23,6 +23,8 @@ namespace GG.CoreEngine.Data
 
         public string DataId { get; set; }
 
+        public Stats Stats { get; set; }
+
         public ItemData Data
         {
             get
@@ -34,5 +36,9 @@ namespace GG.CoreEngine.Data
                 return ItemData;
             }
         }
+
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+
+        public string Name { get; set; }
     }
 }
