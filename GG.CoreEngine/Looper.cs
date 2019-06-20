@@ -22,11 +22,7 @@ namespace GG.CoreEngine
             Execute = execute ?? throw new ArgumentNullException(nameof(execute));
         }
 
-
-        public bool Running
-        {
-            get { return running; }
-        }
+        public bool Running => running;
 
         public void Start()
         {
