@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using GG.CoreEngine.Data;
-using GG.CoreEngine.Data.Config;
 
 namespace GG.CoreEngine.States
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace GG.CoreEngine.Data.Config
 {
@@ -18,7 +18,7 @@ namespace GG.CoreEngine.Data.Config
 
         public static void Load(Stream stream)
         {
-            var datas = new JsonSerializer().Deserialize<T[]>(new JsonTextReader(new StreamReader(stream)));
+            var datas = Task.Run(() => System.Text.Json.Serialization.JsonSerializer.ReadAsync<T[]>(stream).AsTask()).Result;
             _configs = datas.ToDictionary(c => c.Id, c => c);
         }
 
@@ -29,7 +29,18 @@ namespace GG.CoreEngine.Data.Config
 
         public static void Load(IDataLoader loader)
         {
-            Load(loader.Load(typeof(T).Name));
+            var (stream, shouldRelease) = loader.Load(typeof(T).Name);
+            try
+            {
+                Load(stream);
+            }
+            finally
+            {
+                if (shouldRelease && stream != null)
+                {
+                    stream.Dispose();
+                }
+            }
         }
     }
 }

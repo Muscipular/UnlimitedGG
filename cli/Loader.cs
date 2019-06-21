@@ -8,9 +8,12 @@ namespace GG.Engine.Cli
 {
     class Loader : IDataLoader
     {
-        public Stream Load(string path)
+        private static readonly string[] ResourceNames = typeof(Loader).Assembly.GetManifestResourceNames();
+
+        public (Stream stream, bool shouldRelease) Load(string path)
         {
-            return new MemoryStream(File.ReadAllBytes($"Data/{path}.json"));
+            var name = ResourceNames.FirstOrDefault(e => e.EndsWith($"Data.{path}.json"));
+            return (typeof(Loader).Assembly.GetManifestResourceStream(name), true);
         }
     }
 }

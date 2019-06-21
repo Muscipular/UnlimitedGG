@@ -1,7 +1,5 @@
 using System;
 using System.Linq;
-using Newtonsoft.Json.Serialization;
-
 
 namespace GG.CoreEngine.SubSystems.Battle
 {

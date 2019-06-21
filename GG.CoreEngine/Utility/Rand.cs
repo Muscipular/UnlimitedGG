@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace GG.CoreEngine.Utility
@@ -13,7 +12,7 @@ namespace GG.CoreEngine.Utility
 
         public static int Int(int min, int max) => random.Value.Next(min, max + 1);
 
-        public static bool Bool(double rate = 0.5) => random.Value.NextDouble() >= rate;
+        public static bool Bool(double rate = 0.5) => random.Value.NextDouble() >= (1 - rate);
 
         public static double Double(double min, double max)
         {

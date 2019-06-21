@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GG.CoreEngine.Data.Skills;
 
 namespace GG.CoreEngine.Data.Config
 {

@@ -16,10 +16,10 @@
       "Item": [
         {
           "Id": "1",
-          "Rate": 1
+          "Rate": 0.3
         },
         {
-          "Id": "2",
+          "Id": "3",
           "Rate": 0.5
         }
       ]
@@ -35,6 +35,20 @@
     "Level": 2,
     "MaxHP": 15,
     "Defence": 3,
-    "ReduceDamage": 0
+    "ReduceDamage": 0,
+    "Loot": {
+      "Gold": 2,
+      "Exp": 3,
+      "Item": [
+        {
+          "Id": "2",
+          "Rate": 0.6
+        },
+        {
+          "Id": "7",
+          "Rate": 0.5
+        }
+      ]
+    }
   }
 ]

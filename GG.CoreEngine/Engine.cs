@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 using GG.CoreEngine.Data;
 using GG.CoreEngine.Data.Config;
 using GG.CoreEngine.States;
@@ -11,7 +9,6 @@ using GG.CoreEngine.SubSystems;
 using GG.CoreEngine.SubSystems.Battle;
 using GG.CoreEngine.SubSystems.Encounter;
 using GG.CoreEngine.Utility;
-using Newtonsoft.Json;
 
 namespace GG.CoreEngine
 {
@@ -158,7 +155,7 @@ namespace GG.CoreEngine
 
         public void PublishEvent<T>(T args) where T : IEvent
         {
-            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {(args is IFormattable f ? f.ToString(null, null) : JsonConvert.SerializeObject(args))}");
+            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {(args is IFormattable f ? f.ToString(null, null) : JsonSerializer.ToString(args))}");
             eventManager.PublishEvent(args);
         }
     }

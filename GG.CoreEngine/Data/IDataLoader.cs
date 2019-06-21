@@ -7,6 +7,6 @@ namespace GG.CoreEngine.Data
 {
     public interface IDataLoader
     {
-        Stream Load(string path);
+        (Stream stream, bool shouldRelease) Load(string path);
     }
 }
