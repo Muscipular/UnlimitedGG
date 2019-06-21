@@ -6,7 +6,7 @@ using GG.CoreEngine.Data.Config;
 
 namespace GG.CoreEngine.SubSystems.Encounter
 {
-    class EncounterEvent : IEvent
+    class EncounterEvent : IEvent, IFormattable
     {
         public EncounterSet Set { get; }
 
@@ -19,5 +19,15 @@ namespace GG.CoreEngine.SubSystems.Encounter
         }
 
         public bool Handled { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Set)}: {Set}, {nameof(EnemyTeam)}: {string.Join("; ", EnemyTeam.Select(e => e.ToString()))}";
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return this.ToString();
+        }
     }
 }

@@ -20,19 +20,19 @@ namespace GG.CoreEngine.Data
     [Flags]
     enum EquipCategory
     {
-        Head,
+        Head = 1,
 
-        Hand,
+        Hand = 2,
 
-        OffHand,
+        OffHand = 4,
 
-        Body,
+        Body = 8,
 
-        Foot,
+        Foot = 16,
 
-        Necklace,
+        Necklace = 32,
 
-        Ring,
+        Ring = 64,
     }
 
     class Item : IHasId
@@ -41,9 +41,11 @@ namespace GG.CoreEngine.Data
 
         public Item(ItemData data)
         {
+            var id = Id;
             DataId = data.Id;
             this.Populate(data);
             ItemData = data;
+            Id = id;
         }
 
         public Item()
@@ -73,5 +75,11 @@ namespace GG.CoreEngine.Data
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public string Name { get; set; }
+
+        public bool CanStack { get; set; }
+
+        public int Count { get; set; } = 1;
+
+        public int MaxCount { get; set; } = 1;
     }
 }

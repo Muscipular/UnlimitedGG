@@ -18,7 +18,8 @@ namespace GG.CoreEngine.Commands
         public void Execute(Engine engine)
         {
             var playerState = engine.State.Get<PlayerState>();
-            playerState.Bag.TryGetValue(ItemId, out var item);
+            var bagState = engine.State.Get<BagState>();
+            var item = bagState[ItemId];
             if (item == null || item.Type != ItemType.Equip)
             {
                 return;
@@ -30,14 +31,14 @@ namespace GG.CoreEngine.Commands
             {
                 return;
             }
+            bagState.Remove(item);
             if (count >= n)
             {
                 var (id, value) = equips.First(e => e.Value.Category == item.Category);
                 equips.Remove(id);
-                playerState.Bag.Add(id, value);
+                bagState.Add(value);
             }
             equips.Add(item.Id, item);
-            playerState.Bag.Remove(item.Id);
         }
     }
 }

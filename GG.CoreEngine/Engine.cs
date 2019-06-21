@@ -33,21 +33,27 @@ namespace GG.CoreEngine
 
         private ulong currentFrame = 0;
 
-        public StateContainer State = new StateContainer(new IState[]
-        {
-            new BattleState(),
-            new PlayerState(),
-            new LogState(),
-            new MapState(),
-        });
-
+        public StateContainer State;
 
         public Engine(IDataLoader loader)
         {
             _loader = loader;
             LoadData(loader);
+            InitStates();
             InitComponent();
             InitSubSystem();
+        }
+
+        private void InitStates()
+        {
+            State = new StateContainer(new IState[]
+            {
+                new BattleState(),
+                new PlayerState(),
+                new LogState(),
+                new MapState(),
+                new BagState(),
+            });
         }
 
         private void InitSubSystem()
@@ -57,6 +63,10 @@ namespace GG.CoreEngine
             subSystems.Add(typeof(EncounterSystem), new EncounterSystem(this));
             subSystems.Add(typeof(BattleSystem), new BattleSystem(this));
             subSystems.Add(typeof(LootSystem), new LootSystem(this));
+            foreach (var (key, subSystem) in subSystems)
+            {
+                subSystem.OnInitial(this);
+            }
         }
 
         private void InitComponent()
@@ -148,7 +158,7 @@ namespace GG.CoreEngine
 
         public void PublishEvent<T>(T args) where T : IEvent
         {
-            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {(args is IFormattable f ? f.ToString(null, null): JsonConvert.SerializeObject(args))}");
+            Logger.Verbose(nameof(PublishEvent), $"{typeof(T).Name}: {(args is IFormattable f ? f.ToString(null, null) : JsonConvert.SerializeObject(args))}");
             eventManager.PublishEvent(args);
         }
     }

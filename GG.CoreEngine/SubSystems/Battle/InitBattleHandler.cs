@@ -35,7 +35,7 @@ namespace GG.CoreEngine.SubSystems.Battle
             foreach (var entity in battleState.EnemyTeam)
             {
                 entity.ApplyStats();
-                entity.HP = player.MaxHP;
+                entity.HP = entity.MaxHP;
                 entity.FrameToAction = BattleSystem.CalcFrameToAction(entity);
             }
             battleState.StateMode = BattleStateMode.InBattle;

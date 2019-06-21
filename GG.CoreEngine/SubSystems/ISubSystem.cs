@@ -6,6 +6,8 @@ namespace GG.CoreEngine.SubSystems
 {
     public interface ISubSystem
     {
+        void OnInitial(Engine engine);
+        
         void Process(ulong frame);
     }
 }

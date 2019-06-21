@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "Id": "1",
+    "Name": "Helmet",
+    "Type": 2,
+    "Category": 1,
+    "Stats": {
+      "Defence": 1
+    }
+  },
+  {
+    "Id": "2",
+    "Name": "Helmet2",
+    "Type": 2,
+    "Category": 1,
+    "Stats": {
+      "Defence": 2
+    }
+  },
+  {
+    "Id": "3",
+    "Name": "Axe",
+    "Type": 2,
+    "Category": 2,
+    "Stats": {
+      "Attack": 2
+    }
+  },
+  {
+    "Id": "4",
+    "Name": "Sword",
+    "Type": 2,
+    "Category": 2,
+    "Stats": {
+      "Attack": 3
+    }
+  },
+  {
+    "Id": "5",
+    "Name": "BigSword",
+    "Type": 2,
+    "Category": 6,
+    "Stats": {
+      "Attack": 4
+    }
+  },
+  {
+    "Id": "6",
+    "Name": "Shell",
+    "Type": 2,
+    "Category": 4,
+    "Stats": {
+      "Defence": 1
+    }
+  },
+  {
+    "Id": "7",
+    "Name": "Foot",
+    "Type": 2,
+    "Category": 16,
+    "Stats": {
+      "Defence": 1
+    }
+  },
+  {
+    "Id": "8",
+    "Name": "Armor",
+    "Type": 2,
+    "Category": 8,
+    "Stats": {
+      "Defence": 2
+    }
+  }
+]

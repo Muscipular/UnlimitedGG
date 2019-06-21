@@ -20,5 +20,10 @@ namespace GG.CoreEngine.Data.Config
         public int? MaxCount { get; set; }
 
         public LootSetOverride Loot { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}";
+        }
     }
 }

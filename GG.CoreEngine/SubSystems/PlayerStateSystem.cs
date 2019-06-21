@@ -15,6 +15,11 @@ namespace GG.CoreEngine.SubSystems
             _engine = engine;
         }
 
+        public void OnInitial(Engine engine)
+        {
+            
+        }
+
         public void Process(ulong frame)
         {
             var playerState = _engine.State.Get<PlayerState>();

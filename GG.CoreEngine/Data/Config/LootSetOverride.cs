@@ -6,11 +6,11 @@ namespace GG.CoreEngine.Data.Config
 {
     class LootSetOverride
     {
-        public double? GoldFactory { get; set; }
+        public double? GoldMult { get; set; }
 
-        public double? ExpFactory { get; set; }
+        public double? ExpMult { get; set; }
 
-        public double? ItemFactory { get; set; }
+        public double? ItemMult { get; set; }
 
         public LootMode GoldMode { get; set; }
 

@@ -9,7 +9,21 @@
     "Level": 1,
     "MaxHP": 10,
     "Defence": 1,
-    "ReduceDamage": 1
+    "ReduceDamage": 1,
+    "Loot": {
+      "Gold": 1,
+      "Exp": 1,
+      "Item": [
+        {
+          "Id": "1",
+          "Rate": 1
+        },
+        {
+          "Id": "2",
+          "Rate": 0.5
+        }
+      ]
+    }
   },
   {
     "Id": "Dog",
@@ -19,7 +33,7 @@
     "BaseActionFrame": 90,
     "HP": 15,
     "Level": 2,
-    "MaxHP": 10,
+    "MaxHP": 15,
     "Defence": 3,
     "ReduceDamage": 0
   }

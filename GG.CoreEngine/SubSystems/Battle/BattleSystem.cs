@@ -16,7 +16,6 @@ namespace GG.CoreEngine.SubSystems.Battle
         public BattleSystem(Engine engine)
         {
             _engine = engine;
-            _engine.RegisterEvent<EncounterEvent>(new InitBattleHandler());
         }
 
         private Random rnd = new Random();
@@ -86,6 +85,11 @@ namespace GG.CoreEngine.SubSystems.Battle
         internal static int CalcFrameToAction(IEntity actionOne)
         {
             return (int)Math.Ceiling(actionOne.BaseActionFrame * (100d / Math.Max(10, 100d + actionOne.Speed)));
+        }
+
+        public void OnInitial(Engine engine)
+        {
+            engine.RegisterEvent<EncounterEvent>(new InitBattleHandler());
         }
 
         public void Process(ulong frame)
