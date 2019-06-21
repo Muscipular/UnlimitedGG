@@ -16,7 +16,21 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\GG.CoreEngine\GG.CoreEngine.csproj"/>
+        <EmbeddedResource Include="UI/*" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\GG.CoreEngine\GG.CoreEngine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ceen.Httpd" Version="0.9.7" />
+      <PackageReference Include="Fleck" Version="1.1.0" />
+      <PackageReference Include="Suave" Version="2.5.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="UI" />
     </ItemGroup>
 
 </Project>

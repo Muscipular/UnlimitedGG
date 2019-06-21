@@ -25,11 +25,10 @@ namespace GG.CoreEngine.Utility
 
         public static void Log(Level level, string tag, FormattableString msg)
         {
-            var ss = $"[{level:G}]{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {tag} {msg.ToString()}";
-            s.Add(ss);
+            s.Add($"[{level:G}]{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} {tag} {msg}");
         }
 
-        static System.Collections.Concurrent.BlockingCollection<string> s = new BlockingCollection<string>();
+        static System.Collections.Concurrent.BlockingCollection<FormattableString> s = new BlockingCollection<FormattableString>();
 
         static Logger()
         {
