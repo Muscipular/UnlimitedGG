@@ -9,11 +9,6 @@ using Ceen.Httpd;
 using Ceen.Httpd.Handler;
 using GG.CoreEngine.Commands;
 using GG.CoreEngine.Utility;
-using Microsoft.FSharp.Collections;
-using Microsoft.FSharp.Control;
-using Microsoft.FSharp.Core;
-using Suave;
-using Suave.Sockets;
 
 namespace GG.Engine.Cli
 {

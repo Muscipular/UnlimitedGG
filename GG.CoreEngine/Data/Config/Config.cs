@@ -18,7 +18,7 @@ namespace GG.CoreEngine.Data.Config
 
         public static void Load(Stream stream)
         {
-            var datas = Task.Run(() => System.Text.Json.Serialization.JsonSerializer.ReadAsync<T[]>(stream).AsTask()).Result;
+            var datas = Task.Run(() => System.Text.Json.JsonSerializer.DeserializeAsync<T[]>(stream).AsTask()).Result;
             _configs = datas.ToDictionary(c => c.Id, c => c);
         }
 
